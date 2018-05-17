@@ -1,0 +1,90 @@
+%{
+  /* fcc.tmc: Handles data for the flow controllers:
+     0x10 flow0
+     0x11 flow1
+     0x12 flow2
+     0x13 flow3
+     0x14 FLSET0
+     0x15 FLSET1
+     0x16 FLSET2
+     0x17 FLSET3
+     0x18 CmdStatus
+     0x19 ADC_U2_T
+     0x20 ADC_U3_T
+   */
+  #include "SB.h"
+%}
+TM typedef double FCC_Volts;
+TM typedef unsigned char FCC_status_t { text "%3d"; }
+TM typedef signed short FCC_ADC_t { text "%6.4lf"; convert FCC_Volts; }
+TM typedef unsigned short FCC_DAC_t { text "%6.4lf"; convert FCC_Volts; }
+Calibration (FCC_ADC_t, FCC_Volts) { 0, 0, 32768, 6.144 }
+Calibration (FCC_DAC_t, FCC_Volts) { 0, 0, 65536, 5 }
+
+TM typedef double FCC_SCCM;
+TM typedef FCC_ADC_t FCC_ADC_20_SCCM { text "%5.3lf"; convert FCC_SCCM; }
+Calibration (FCC_ADC_20_SCCM,FCC_SCCM) { 0, 0, 26666.67, 20}
+TM typedef FCC_ADC_t FCC_ADC_500_SCCM { text "%5.2lf"; convert FCC_SCCM; }
+Calibration (FCC_ADC_500_SCCM,FCC_SCCM) { 0, 0, 26666.67, 500}
+TM typedef FCC_ADC_t FCC_ADC_5000_SCCM { text "%5.1lf"; convert FCC_SCCM; }
+Calibration (FCC_ADC_5000_SCCM,FCC_SCCM) { 0, 0, 26666.67, 5000}
+TM typedef FCC_ADC_t FCC_ADC_10000_SCCM { text "%5.0lf"; convert FCC_SCCM; }
+Calibration (FCC_ADC_10000_SCCM,FCC_SCCM) { 0, 0, 26666.67, 10000}
+
+TM typedef FCC_DAC_t FCC_DAC_20_SCCM { text "%6.3lf"; convert FCC_SCCM; }
+Calibration (FCC_DAC_20_SCCM,FCC_SCCM) { 0, 0, 65536, 20}
+TM typedef FCC_DAC_t FCC_DAC_500_SCCM { text "%6.2lf"; convert FCC_SCCM; }
+Calibration (FCC_DAC_500_SCCM,FCC_SCCM) { 0, 0, 65536, 500}
+TM typedef FCC_DAC_t FCC_DAC_5000_SCCM { text "%5.0lf"; convert FCC_SCCM; }
+Calibration (FCC_DAC_5000_SCCM,FCC_SCCM) { 0, 0, 65536, 5000}
+TM typedef FCC_DAC_t FCC_DAC_10000_SCCM { text "%6.0lf"; convert FCC_SCCM; }
+Calibration (FCC_DAC_10000_SCCM,FCC_SCCM) { 0, 0, 65536, 10000}
+
+TM 1 Hz FCC_ADC_5000_SCCM FC0_Flow;
+TM 1 Hz FCC_ADC_500_SCCM FC1_Flow;
+TM 1 Hz FCC_ADC_10000_SCCM FC2_Flow;
+TM 1 Hz FCC_ADC_t FCC_U2_T;
+TM 1 Hz FCC_ADC_t FCC_U3_T;
+TM 1 Hz FCC_DAC_5000_SCCM FC0_Set;
+TM 1 Hz FCC_DAC_500_SCCM FC1_Set;
+TM 1 Hz FCC_DAC_10000_SCCM FC2_Set;
+TM 1 Hz FCC_status_t FCC0_Status;
+
+Group fcc (FC0_Flow, FC1_Flow, FC2_Flow, FCC_U2_T, FCC_U3_T,
+            FC0_Set, FC1_Set, FC2_Set, FCC0_Status) {
+  unsigned short data[9];
+  if (FCC0_collect(data) >= 0) {
+    FC0_Flow = data[0];
+    FC1_Flow = data[1];
+    FC2_Flow = data[2];
+    FC0_Set = data[3];
+    FC1_Set = data[4];
+    FC2_Set = data[5];
+    FCC0_Status = data[6];
+    FCC_U2_T = data[7];
+    FCC_U3_T = data[8];
+  }
+}
+
+TM typedef double FCC2_SCCM { text "%4.0lf"; }
+TM typedef signed short FCC2_10SLM_t { text "%6.0lf"; convert FCC2_SCCM; }
+
+Calibration (FCC2_10SLM_t, FCC2_SCCM) { 5333.333, 0, 28354.667, 10000 }
+TM typedef signed short FCC2_5SLM_t { text "%6.0lf"; convert FCC2_SCCM; }
+calibration (FCC2_5SLM_t, FCC2_SCCM) { 5333.333, 0, 28354.667, 5000 }
+TM typedef double FCC2_TORR { text "%6.2lf"; }
+TM typedef signed short FCC2_Omega_t { text "%6.2lf"; convert FCC2_TORR; }
+calibration (FCC2_Omega_t, FCC2_TORR) { 0, 0, 26666.667, 775.7 }
+
+TM 1 Hz FCC2_10SLM_t SampleFlow; /* FCC2_10SLM_t */
+TM 1 Hz FCC2_5SLM_t PurgeFlow; /* FCC2_5SLM_t */
+TM 1 Hz FCC2_Omega_t OmegaP;
+
+Group fcc2 (SampleFlow, PurgeFlow, OmegaP) {
+  unsigned short data[3];
+  if (FCC2_collect(data) >= 0) {
+    SampleFlow = data[0];
+    PurgeFlow = data[1];
+    OmegaP = data[2];
+  }
+}
