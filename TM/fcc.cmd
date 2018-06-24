@@ -3,7 +3,7 @@
   #include "SB.h"
   /* fcc.cmd */
   #ifdef SERVER
-    int SCCM_Span[3] = { 5000, 500, 10000};
+    int SCCM_Span[3] = { 10, 500, 5000};
   #endif
 %}
 
@@ -51,9 +51,9 @@
   ;
 
 &flowchan <uint16_t>
-  : Zero { $0 = 0; }
-  : Span { $0 = 1; }
-  : Bypass { $0 = 2; }
+  : CO2 { $0 = 0; }
+  : OVOC { $0 = 1; }
+  : Zero { $0 = 2; }
   ;
 
 &OpenCloseCtrl <uint16_t>

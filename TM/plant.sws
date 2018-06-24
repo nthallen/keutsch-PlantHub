@@ -1,0 +1,10 @@
+SW_Variable: SWStat
+SWS_PCTRL_IDLE   1   CO2 Control Idle: Validate CO2_idle; break;
+SWS_PCTRL_ACTIVE 2   CO2 Control Activate:
+  Validate CO2_control; break;
+
+SWS_TIMEWARP   254   Time Warp: break;
+SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
+
+SW_Variable: Flag
+  : Set %d { $0 = $2; }
