@@ -12,7 +12,7 @@ swsbase = plant.sws
 #genuibase = TS.genui
 
 tmcbase = fcc.tmc
-colbase = fcc_col.tmc
+colbase = fcc_col.tmc SB.cc SB.h
 cmdbase = fcc.cmd
 genuibase = fcc.genui
 
@@ -23,7 +23,7 @@ TGTDIR = $(TGTNODE)/home/plant
 IGNORE = Makefile
 
 plantcol : -lsubbuspp
-plantsrvr : -lsubbuspp
+plantsrvr : -lsubbuspp SB.cc SB.h
 plantdisp : fcc_conv.tmc Plant.tbl
 plantrtgext : rtg.tmc /usr/local/share/oui/cic.oui
 doit : plant.doit

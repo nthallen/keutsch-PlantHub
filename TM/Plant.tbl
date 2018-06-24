@@ -1,0 +1,7 @@
+Input "TMbase.tbl";
+Input "fcc.tbl";
+
+{ HBox { |; [FCC]; |; [TMbaseB]; |; };
+  -;
+}
+

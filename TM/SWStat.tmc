@@ -1,0 +1,4 @@
+%{
+  /* SWStat.tmc: typedefs */
+%}
+TM typedef unsigned char UCHAR { text "%3u"; }

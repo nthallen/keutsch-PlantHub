@@ -1,0 +1,9 @@
+ci_sendfcmd(2, "PhRTG Datum CPU_Pct %lu %s\n", itime(), text(CPU_Pct));
+ci_sendfcmd(2, "PhRTG Datum SysTDrift %.3lf %s\n", dtime(), text(SysTDrift));
+
+ci_sendfcmd(2, "PhRTG Datum CO2_Flow %.3lf %.0lf %.0lf\n", dtime(),
+  convert(FC0_Flow), convert(FC0_Set));
+ci_sendfcmd(2, "PhRTG Datum OVOC_Flow %.3lf %.0lf %.0lf\n", dtime(),
+  convert(FC1_Flow), convert(FC1_Set));
+ci_sendfcmd(2, "PhRTG Datum Zero_Flow %.3lf %.0lf %.0lf\n", dtime(),
+  convert(FC2_Flow), convert(FC2_Set));

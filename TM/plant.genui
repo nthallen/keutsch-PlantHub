@@ -1,0 +1,4 @@
+HEADER Plant Chamber Instrument
+MNEMONIC plant
+HOMEDIR PLANT_DATA_DIR
+

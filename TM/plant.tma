@@ -1,0 +1,13 @@
+State Init {
+  > Telemetry Start
+}
+
+State Shutdown {
+  > Quit
+}
+
+Partition
+
+State CO2_idle {}
+
+State CO2_control {}

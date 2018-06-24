@@ -1,27 +1,17 @@
 %{
-  #include "subbuspp.h"
-  statuc subbuspp *FCC0;
+  #include "SB.h"
+
   static subbus_mread_req *FCC0Req;
 
   static int FCC0_collect(unsigned short*data) {
     return (FCC0 ? FCC0->mread_subbus(FCC0Req, data) : 0);
   }
-  static void FCC0_init() {
-    FCC0 = new subbuspp("SB");
-    if (FCC0->load()) {
-      uint16_t BdID = FCC0->sbrd(3);
-      if (BdID != PLANT_FCC_BDID) {
-        nl_error(2, "Incorrect BdID %d: expected %d", BdID, PLANT_FCC_BDID);
-      }
-    } else {
-      nl_error(2, "FCC Subbus library not found");
-      delete FCC0;
-      FCC0 = 0;
-    }
+  static void FCC0_col_init() {
+    FCC0_init();
     FCC0Req = FCC0 ?
       FCC0->pack_mread_request(9,"10,11,12,14,15,16,18,19,1A") :
       0;
   }
 %}
 
-TM INITFUNC FCC0_init();
+TM INITFUNC FCC0_col_init();
