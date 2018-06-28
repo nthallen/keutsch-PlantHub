@@ -23,7 +23,7 @@ TGTDIR = $(TGTNODE)/home/plant
 IGNORE = Makefile
 
 plantcol : -lsubbuspp
-plantsrvr : -lsubbuspp SB.cc SB.h
+plantsrvr : -lsubbuspp SB.cc SB.h SB.oui
 plantdisp : fcc_conv.tmc Plant.tbl
 plantrtgext : rtg.tmc /usr/local/share/oui/cic.oui
 doit : plant.doit
