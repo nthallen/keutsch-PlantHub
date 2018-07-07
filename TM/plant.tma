@@ -11,3 +11,21 @@ Partition
 State CO2_idle {}
 
 State CO2_control {}
+
+Partition
+# Change valve to sample between air going into air into chamber vs air going out of inlet
+# Sun, et al. 2016, AMT sampled air going into chamber once per hour for 10 minutes
+# Data from 00:30 - 09:30 was only considered due to pressure fluctuation as valve switches
+
+
+State Valve_Switch{
+		> Valve 1 On
+		> Flag Set 51
+ +15:00 > Valve 1 Off
+		> Flag Set 50
+ +15:00	> Flag Set 0
+		Validate Valve_Switch;
+}
+
+State Valve_Switch_Idle{
+}

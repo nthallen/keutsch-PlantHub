@@ -1,8 +1,11 @@
 SW_Variable: SWStat
-SWS_PCTRL_IDLE   1   CO2 Control Idle: Validate CO2_idle; break;
-SWS_PCTRL_ACTIVE 2   CO2 Control Activate:
+SWS_PCTRL_IDLE               1   CO2 Control Idle: Validate CO2_idle; break;
+SWS_PCTRL_ACTIVE             2   CO2 Control Activate:
   Validate CO2_control; break;
 
+SWS_VALVE_SWITCHING_ACTIVE   3   Valve Switching Activate: Validate Valve_Switch; break;
+SWS_VALVE_SWITCHING_IDLE	 4   Valve Switching Idle: Validate Valve_Switch_Idle; break;
+  
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
 
