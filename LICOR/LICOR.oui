@@ -1,0 +1,25 @@
+<package> LICOR
+<include> <stdlib.h>
+<include> "LICOR_int.h"
+<include> msg
+<follow> msg
+
+<opts> "d:e"
+<sort>
+	-d <serial device>
+	-e Device does not echo
+<unsort>
+The '-h' message header option will also change the name
+used for command and telemetry communications.
+
+<switch>
+  case 'd':
+    licor_path = optarg;
+    break;
+  case 'h': // use msg header value for name
+    licor_name = optarg;
+    break;
+
+<package> msghdr_default
+<var>
+  char *msg_hdr_default = "LICOR";
