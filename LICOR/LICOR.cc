@@ -27,18 +27,18 @@ LICOR_t::LICOR_t(const char *ser_dev, licor_tm_t *TMdata)
   setup(4800, 8, 'n', 1, 40, 1);
   this->TMdata = TMdata;
   memset(TMdata, 0, sizeof(licor_tm_t));
-  TMid = Col_send_init(licor_name, &TMdata, sizeof(licor_tm_t), 0);
   flush_input();
   flags |= TMgflag | Selector::Sel_Timeout;
   TO.Set(1, 100);
-  TO_reported = false;
 }
 
 LICOR_t::~LICOR_t() {}
 
+const int LICOR_t::TMgflag = Selector::gflag(0);
+
 int LICOR_t::ProcessData(int flag) {
   if (flag & TMgflag) {
-    TMdata->status &= (LICOR_FRESH | LICOR_VFRESH);
+    TMdata->Status &= (LICOR_FRESH | LICOR_VFRESH);
   }
   if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
     float CO2_mV;
@@ -47,7 +47,7 @@ int LICOR_t::ProcessData(int flag) {
     float H2O_ppth;
     float Temp_mV;
     float P_kPa;
-    if (fillbuf() return 1);
+    if (fillbuf()) return 1;
     cp = 0;
     if (not_float(CO2_mV) ||
         not_float(CO2_ppm) ||
@@ -78,4 +78,10 @@ int LICOR_t::ProcessData(int flag) {
     nc = cp = 0;
     TO.Set(1,100);
   }
+  return 0;
 }
+
+Timeout *LICOR_t::GetTimeout() {
+  return &TO;
+}
+
