@@ -1,0 +1,36 @@
+%{
+  /* LICOR.tmc */
+  #include "LICOR.h"
+%}
+TM typedef float CO2_mV_t { text "%7.1f"; }
+TM typedef float CO2_ppm_t { text "%7.2f"; }
+TM typedef float H2O_mV_t { text "%7.2f"; }
+TM typedef float H2O_ppth_t { text "%7.4f"; }
+TM typedef float LICOR_T_mV_t { text "%7.1f"; }
+TM typedef float LICOR_P_t { text "%7.2f"; }
+TM typedef unsigned short LICOR_Status_t { text "%5u"; }
+TM typedef unsigned char LICOR_Stale_t { text "%3u"; }
+TM "Receive" LICOR 1;
+
+TM 1 Hz CO2_mV_t CO2_mV;
+TM 1 Hz CO2_ppm_t CO2_ppm;
+TM 1 Hz H2O_mV_t H2O_mV;
+TM 1 Hz H2O_ppth_t H2O_ppth;
+TM 1 Hz LICOR_T_mV_t LICOR_T_mV;
+TM 1 Hz LICOR_P_t LICOR_P;
+TM 1 Hz LICOR_Status_t LICOR_Status;
+TM 1 Hz LICOR_Stale_t LICOR_Stale;
+
+group LICOR (CO2_mV, CO2_ppm, H2O_mV, H2O_ppth,
+    LICOR_T_mV, LICOR_P, LICOR_Status) {
+  CO2_mV = LICOR.CO2_mV;
+  CO2_ppm = LICOR.CO2_ppm;
+  H2O_mV = LICOR.H2O_mV;
+  H2O_ppth = LICOR.H2O_ppth;
+  LICOR_T_mV = LICOR.Temp_mV;
+  LICOR_P = LICOR.P_kPa;
+  LICOR_Status = LICOR.Status;
+  LICOR_Stale = LICOR_obj->stale(255);
+  LICOR_obj->synch();
+}
+

@@ -1,5 +1,6 @@
 #ifndef LICOR_H_INCLUDED
 #define LICOR_H_INCLUDED
+#include <stdint.h>
 
 typedef struct __attribute__((__packed__)) {
   float CO2_mV;

@@ -17,6 +17,7 @@ cmdbase = fcc.cmd
 genuibase = fcc.genui
 
 Module TMbase
+Module LICOR
 
 SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/plant
@@ -24,7 +25,7 @@ IGNORE = Makefile
 
 plantcol : -lsubbuspp
 plantsrvr : -lsubbuspp SB.cc SB.h SB.oui
-plantdisp : fcc_conv.tmc Plant.tbl
+plantdisp : fcc_conv.tmc LICOR_conv.tmc Plant.tbl
 plantrtgext : rtg.tmc /usr/local/share/oui/cic.oui
 doit : plant.doit
 plantalgo : fcc_conv.tmc plant.tma plant.sws

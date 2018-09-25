@@ -1,0 +1,12 @@
+LICOR {
+  HBox { +-; LICOR; -+ };
+  CO2:  (CO2_mV,7)     mV;
+  CO2:  (CO2_ppm,7)    ppm;
+  H2O:  (H2O_mV,7)     mV;
+  H2O:  (H2O_ppth,7)   ppth;
+  Temp: (LICOR_T_mV,7) mV;
+  P:    (LICOR_P,7)    kPa;
+  Status: (LICOR_dstat,8);
+  Stale:  (LICOR_stale,3);
+}
+

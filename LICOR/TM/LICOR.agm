@@ -1,0 +1,25 @@
+ModuleDef LICOR {
+  Module LICOR collects data from LICOR CO2 instrument
+}
+
+mode (default) {
+  tmcbase = LICOR.tmc
+  colbase = LICOR_col.tmc
+  genuibase = LICOR.genui
+  - : LICOR_conv.tmc:LICOR_conv.tmc.in
+  - : LICOR.tbl:LICOR.tbl.in
+  DISTRIB = @MODDIR@/../LICOR
+  CPPFLAGS = -I @MODDIR@/..
+  %%
+@MODDIR@/../LICOR :
+	cd @MODDIR@/.. && make
+}
+
+%%
+.PHONY : all-LICOR clean-LICOR
+all-dist : all-LICOR
+all-LICOR :
+	cd @MODDIR@/.. && make
+clean-dist : clean-LICOR
+clean-LICOR :
+	cd @MODDIR@/.. && make clean

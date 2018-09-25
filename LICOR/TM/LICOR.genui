@@ -1,0 +1,9 @@
+ 1 CO2_mV LICOR CO2_mV
+ 1 CO2_ppm LICOR CO2_ppm 
+ 1 H2O_mV LICOR H2O_mV
+ 1 H2O_ppth LICOR H2O_ppth
+ 1 LICOR_T_mV LICOR Temp
+ 1 LICOR_P LICOR Pressure
+ 1 Fresh:LICOR_Status:0 LICOR Status
+ 1 Overflow:LICOR_Status:1 LICOR Status
+ 1 LICOR_Stale LICOR Stale

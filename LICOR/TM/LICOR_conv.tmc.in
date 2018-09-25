@@ -1,0 +1,18 @@
+%{
+  const char* LICOR_dstat_text(unsigned short S) {
+    switch (S & (LICOR_VFRESH|LICOR_FRESH)) {
+      case 0:            return " TIMEOUT";
+      case LICOR_FRESH:  return "      OK";
+      case LICOR_VFRESH: return "!!ovflow";
+      case LICOR_VFRESH|LICOR_FRESH:
+                         return "OVERFLOW";
+      default: return "********";
+    }
+  }
+%}
+TM typedef unsigned short LICOR_dstat_t {
+  text "%8d" LICOR_dstat_text();
+}
+
+LICOR_dstat_t LICOR_dstat; Invalidate LICOR_dstat;
+{ LICOR_dstat = LICOR_Status; Validate LICOR_dstat; }
