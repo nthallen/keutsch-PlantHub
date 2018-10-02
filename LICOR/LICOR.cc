@@ -23,22 +23,29 @@ int main( int argc, char **argv) {
 }
 
 LICOR_t::LICOR_t(const char *ser_dev, licor_tm_t *TMdata)
-  : Ser_Sel(ser_dev, O_RDONLY|O_NONBLOCK, 100) {
-  setup(4800, 8, 'n', 1, 40, 1);
+  : Ser_Sel(ser_dev, O_RDONLY|O_NONBLOCK, 58) {
+  setup(4800, 8, 'n', 2, 10, 1);
   this->TMdata = TMdata;
   memset(TMdata, 0, sizeof(licor_tm_t));
   flush_input();
   flags |= TMgflag | Selector::Sel_Timeout;
-  TO.Set(1, 100);
+  TO.Set(2, 0);
 }
 
 LICOR_t::~LICOR_t() {}
 
 const int LICOR_t::TMgflag = Selector::gflag(0);
 
+int LICOR_t::not_Lfloat(float &val) {
+  for (; cp < nc && isspace(buf[cp]); ++cp) {
+    if (buf[cp] == '\r' || buf[cp] == '\n') return 1;
+  }
+  return not_float(val);
+}
+
 int LICOR_t::ProcessData(int flag) {
   if (flag & TMgflag) {
-    TMdata->Status &= (LICOR_FRESH | LICOR_VFRESH);
+    TMdata->Status &= ~(LICOR_FRESH | LICOR_VFRESH);
   }
   if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
     float CO2_mV;
@@ -49,12 +56,12 @@ int LICOR_t::ProcessData(int flag) {
     float P_kPa;
     if (fillbuf()) return 1;
     cp = 0;
-    if (not_float(CO2_mV) ||
-        not_float(CO2_ppm) ||
-        not_float(H2O_mV) ||
-        not_float(H2O_ppth) ||
-        not_float(Temp_mV) ||
-        not_float(P_kPa) ||
+    if (not_Lfloat(CO2_mV) ||
+        not_Lfloat(CO2_ppm) ||
+        not_Lfloat(H2O_mV) ||
+        not_Lfloat(H2O_ppth) ||
+        not_Lfloat(Temp_mV) ||
+        not_Lfloat(P_kPa) ||
         not_str("\r\n")) {
       if (cp >= nc) {
         if (TO.Expired()) {
@@ -62,7 +69,13 @@ int LICOR_t::ProcessData(int flag) {
         } else {
           return 0;
         }
+      } else {
+        cp = 0;
+        if (not_found('\r')) return 0;
+        if (cp < nc && buf[cp] == '\n') ++cp;
       }
+      consume(cp);
+      TO.Set(2,0);
     } else {
       TMdata->CO2_mV = CO2_mV;
       TMdata->CO2_ppm = CO2_ppm;
@@ -74,9 +87,10 @@ int LICOR_t::ProcessData(int flag) {
         TMdata->Status |= LICOR_VFRESH;
       }
       TMdata->Status |= LICOR_FRESH;
+      report_ok();
+      consume(cp);
+      TO.Set(2,0);
     }
-    nc = cp = 0;
-    TO.Set(1,100);
   }
   return 0;
 }

@@ -20,6 +20,7 @@ class LICOR_t : public Ser_Sel {
   private:
     Timeout TO;
     licor_tm_t *TMdata;
+    int not_Lfloat(float &val);
 };
 
 #endif /* __cplusplus */
