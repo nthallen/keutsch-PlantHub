@@ -7,3 +7,7 @@ ci_sendfcmd(2, "PhRTG Datum OVOC_Flow %.3lf %.0lf %.0lf\n", dtime(),
   convert(FC1_Flow), convert(FC1_Set));
 ci_sendfcmd(2, "PhRTG Datum Zero_Flow %.3lf %.0lf %.0lf\n", dtime(),
   convert(FC2_Flow), convert(FC2_Set));
+ci_sendfcmd(2, "PhRTG Datum CO2_ppm %.3lf %s\n", dtime(), text(CO2_ppm));
+ci_sendfcmd(2, "PhRTG Datum H2O_ppth %.3lf %s\n", dtime(), text(H2O_ppth));
+ci_sendfcmd(2, "PhRTG Datum LICOR_P %.3lf %s\n", dtime(), text(LICOR_P));
+ci_sendfcmd(2, "PhRTG Datum LICOR_T_mV %.3lf %s\n", dtime(), text(LICOR_T_mV));

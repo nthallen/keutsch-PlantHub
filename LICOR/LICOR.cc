@@ -12,6 +12,14 @@ int main( int argc, char **argv) {
   { Selector S;
     Cmd_Selectee Cmd;
     licor_tm_t TMdata;
+    TMdata.Status = 0;
+    TMdata.CO2_mV = 0;
+    TMdata.CO2_ppm = 0;
+    TMdata.H2O_mV = 0;
+    TMdata.H2O_ppth = 0;
+    TMdata.Temp_mV = 0;
+    TMdata.P_kPa = 0;
+
     LICOR_t LICOR(licor_path, &TMdata);
     TM_Selectee TM(licor_name, &TMdata, sizeof(licor_tm_t));
     S.add_child(&Cmd);
@@ -24,7 +32,7 @@ int main( int argc, char **argv) {
 
 LICOR_t::LICOR_t(const char *ser_dev, licor_tm_t *TMdata)
   : Ser_Sel(ser_dev, O_RDONLY|O_NONBLOCK, 58) {
-  setup(4800, 8, 'n', 2, 56, 1);
+  setup(4800, 8, 'n', 2, 56, 5);
   this->TMdata = TMdata;
   memset(TMdata, 0, sizeof(licor_tm_t));
   flush_input();
@@ -36,6 +44,10 @@ LICOR_t::~LICOR_t() {}
 
 const int LICOR_t::TMgflag = Selector::gflag(0);
 
+/**
+ * This is a wrapper on not_float to prevent not_float
+ * from accepting \r\n.
+ **/
 int LICOR_t::not_Lfloat(float &val) {
   for (; cp < nc && isspace(buf[cp]); ++cp) {
     if (buf[cp] == '\r' || buf[cp] == '\n') return 1;
@@ -67,11 +79,15 @@ int LICOR_t::ProcessData(int flag) {
         if (TO.Expired()) {
           report_err("Timeout reading from LICOR");
         } else {
+          update_tc_vmin(56-nc);
           return 0;
         }
       } else {
         cp = 0;
-        if (not_found('\r')) return 0;
+        if (not_found('\r')) {
+          update_tc_vmin(56-nc);
+          return 0;
+        }
         if (cp < nc && buf[cp] == '\n') ++cp;
       }
     } else {
@@ -81,7 +97,7 @@ int LICOR_t::ProcessData(int flag) {
       TMdata->H2O_ppth = H2O_ppth;
       TMdata->Temp_mV = Temp_mV;
       TMdata->P_kPa = P_kPa;
-      if (TMdata->Status | LICOR_FRESH) {
+      if (TMdata->Status & LICOR_FRESH) {
         TMdata->Status |= LICOR_VFRESH;
       }
       TMdata->Status |= LICOR_FRESH;
