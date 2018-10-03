@@ -24,7 +24,7 @@ int main( int argc, char **argv) {
 
 LICOR_t::LICOR_t(const char *ser_dev, licor_tm_t *TMdata)
   : Ser_Sel(ser_dev, O_RDONLY|O_NONBLOCK, 58) {
-  setup(4800, 8, 'n', 2, 10, 1);
+  setup(4800, 8, 'n', 2, 56, 1);
   this->TMdata = TMdata;
   memset(TMdata, 0, sizeof(licor_tm_t));
   flush_input();
@@ -74,8 +74,6 @@ int LICOR_t::ProcessData(int flag) {
         if (not_found('\r')) return 0;
         if (cp < nc && buf[cp] == '\n') ++cp;
       }
-      consume(cp);
-      TO.Set(2,0);
     } else {
       TMdata->CO2_mV = CO2_mV;
       TMdata->CO2_ppm = CO2_ppm;
@@ -88,9 +86,10 @@ int LICOR_t::ProcessData(int flag) {
       }
       TMdata->Status |= LICOR_FRESH;
       report_ok();
-      consume(cp);
-      TO.Set(2,0);
     }
+    consume(cp);
+    update_tc_vmin(56-nc);
+    TO.Set(2,0);
   }
   return 0;
 }
