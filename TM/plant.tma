@@ -1,3 +1,7 @@
+%{
+  #include "msg.h"
+%}
+
 State Init {
   > Telemetry Start
 }
@@ -29,3 +33,105 @@ State Valve_Switch{
 
 State Valve_Switch_Idle{
 }
+
+Partition
+
+# This partition and the two following monitor the flow
+# controllers and reports if the setpoint and the flow
+# don't match.
+
+{
+  TM typedef double FC_adV_t;
+  FC_adV_t FC0_adV; Invalidate FC0_adV;
+  FC_adV_t FC1_adV; Invalidate FC1_adV;
+  FC_adV_t FC2_adV; Invalidate FC2_adV;
+  depending on (FC0_Set once, FC0_Flow once) {
+    double FC_dV;
+    FC_dV = convert(FC0_Set) - convert(FC0_Flow);
+    FC0_adV = FC_dV >= 0 ? FC_dV : -FC_dV;
+    Validate FC0_adV;
+  }
+  depending on (FC1_Set once, FC1_Flow once) {
+    double FC_dV;
+    FC_dV = convert(FC1_Set) - convert(FC1_Flow);
+    FC1_adV = FC_dV >= 1 ? FC_dV : -FC_dV;
+    Validate FC1_adV;
+  }
+  depending on (FC2_Set once, FC2_Flow once) {
+    double FC_dV;
+    FC_dV = convert(FC2_Set) - convert(FC2_Flow);
+    FC2_adV = FC_dV >= 2 ? FC_dV : -FC_dV;
+    Validate FC2_adV;
+  }
+}
+
+State FC0_Monitor NoLog {
+  Hold Until (FC0_adV >= 0.2);
+  Hold Until (FC0_adV < 0.2) or 10
+  else {
+    msg(2, "FC0 flow is not stable: FC0_adV = %.2lf", FC0_adV);
+    Validate FC0_Deviating;
+  }
+  Validate FC0_Monitor;
+}
+
+State FC0_Deviating NoLog {
+  +0  { ci_sendfcmd(2, "Flow CO2 Set Volts %.2lf\n",
+          convert(FC0_Set));
+      }
+  +1  Hold Until (FC0_adV < 0.2) or 10
+      else Validate FC0_Deviating;
+  +1  {
+        msg(0, "FC0 flow stablized");
+        Validate FC0_Monitor;
+      }
+}
+
+Partition
+
+State FC1_Monitor NoLog {
+  Hold Until (FC1_adV >= 0.2);
+  Hold Until (FC1_adV < 0.2) or 10
+  else {
+    msg(2, "FC1 flow is not stable: FC1_adV = %.2lf", FC1_adV);
+    Validate FC1_Deviating;
+  }
+  Validate FC1_Monitor;
+}
+
+State FC1_Deviating NoLog {
+  +0  { ci_sendfcmd(2, "Flow OVOC Set Volts %.2lf\n",
+          convert(FC1_Set));
+      }
+  +1  Hold Until (FC1_adV < 0.2) or 10
+      else Validate FC1_Deviating;
+  +1  {
+        msg(0, "FC1 flow stablized");
+        Validate FC1_Monitor;
+      }
+}
+
+Partition
+
+State FC2_Monitor NoLog {
+  Hold Until (FC2_adV >= 0.2);
+  Hold Until (FC2_adV < 0.2) or 10
+  else {
+    msg(2, "FC2 flow is not stable: FC2_adV = %.2lf", FC2_adV);
+    Validate FC2_Deviating;
+  }
+  Validate FC2_Monitor;
+}
+
+State FC2_Deviating NoLog {
+  +0  { ci_sendfcmd(2, "Flow Zero Set Volts %.2lf\n",
+          convert(FC2_Set));
+      }
+  +1  Hold Until (FC2_adV < 0.2) or 10
+      else Validate FC2_Deviating;
+  +1  {
+        msg(0, "FC2 flow stablized");
+        Validate FC2_Monitor;
+      }
+}
+
