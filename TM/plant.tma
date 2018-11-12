@@ -54,13 +54,13 @@ Partition
   depending on (FC1_Set once, FC1_Flow once) {
     double FC_dV;
     FC_dV = convert(FC1_Set) - convert(FC1_Flow);
-    FC1_adV = FC_dV >= 1 ? FC_dV : -FC_dV;
+    FC1_adV = FC_dV >= 0 ? FC_dV : -FC_dV;
     Validate FC1_adV;
   }
   depending on (FC2_Set once, FC2_Flow once) {
     double FC_dV;
     FC_dV = convert(FC2_Set) - convert(FC2_Flow);
-    FC2_adV = FC_dV >= 2 ? FC_dV : -FC_dV;
+    FC2_adV = FC_dV >= 0 ? FC_dV : -FC_dV;
     Validate FC2_adV;
   }
 }
@@ -82,7 +82,7 @@ State FC0_Deviating NoLog {
   +1  Hold Until (FC0_adV < 0.2) or 10
       else Validate FC0_Deviating;
   +1  {
-        msg(0, "FC0 flow stablized");
+        msg(0, "FC0 flow stabilized");
         Validate FC0_Monitor;
       }
 }
@@ -106,7 +106,7 @@ State FC1_Deviating NoLog {
   +1  Hold Until (FC1_adV < 0.2) or 10
       else Validate FC1_Deviating;
   +1  {
-        msg(0, "FC1 flow stablized");
+        msg(0, "FC1 flow stabilized");
         Validate FC1_Monitor;
       }
 }
@@ -130,7 +130,7 @@ State FC2_Deviating NoLog {
   +1  Hold Until (FC2_adV < 0.2) or 10
       else Validate FC2_Deviating;
   +1  {
-        msg(0, "FC2 flow stablized");
+        msg(0, "FC2 flow stabilized");
         Validate FC2_Monitor;
       }
 }
