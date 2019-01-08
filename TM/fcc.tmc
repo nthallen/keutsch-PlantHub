@@ -71,8 +71,8 @@ Group fcc (FC0_Flow, FC1_Flow, FC2_Flow, FCC_U2_T, FCC_U3_T,
     FC0_Set = data[3];
     FC1_Set = data[4];
     FC2_Set = data[5];
-    FCC0_Status = data[6];
-    FCC_U2_T = data[7];
-    FCC_U3_T = data[8];
+    FCC_U2_T = data[6];
+    FCC_U3_T = data[7];
+    FCC0_Status = data[8];
   }
 }

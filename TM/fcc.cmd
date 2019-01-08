@@ -34,12 +34,12 @@
   : Flow &flowchan Solenoid &OpenCloseCtrl * {
       uint16_t cmd = ($2<<2) + $4;
       nl_error(0, "FCC command is %u", cmd);
-      if (FCC0) FCC0->sbwr(0x18, cmd);
+      if (FCC0) FCC0->sbwr(0x1A, cmd);
       else nl_error(2, "FCC not present");
     }
   : Valve &ValveSelect &OpenClose * {
       uint16_t cmd = 38 + $2*2 + $3;
-      if (FCC0) FCC0->sbwr(0x18, cmd);
+      if (FCC0) FCC0->sbwr(0x1A, cmd);
       else nl_error(2, "FCC not present");
     }
   ;
