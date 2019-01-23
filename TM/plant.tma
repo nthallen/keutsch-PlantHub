@@ -1,5 +1,6 @@
 %{
   #include "msg.h"
+  #include "tmatime.h"
 %}
 
 State Init {
@@ -33,6 +34,35 @@ State Valve_Switch{
 
 State Valve_Switch_Idle{
 }
+
+
+Partition
+
+# Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
+# Currently hard-coded for 4:30 in the morning (10:30 UTC)
+# ssm is seconds since midnight
+
+State Auto_Start_Flow_Idle{}
+
+State Auto_Start_Flow{
++10 {
+  long unixtime;
+  long ssm;
+  unixtime = itime();
+  ssm = unixtime % 86400;
+
+  if (ssm >= 3600*10.5)
+	Validate Auto_Start_Flow_Execute;
+  
+  else Validate Auto_Start_Flow;
+  }
+}
+
+State Auto_Start_Flow_Execute{
+	> Flow CO2 Set Volts 0.893
+	Validate Auto_State_Flow_Idle;
+}
+
 
 Partition
 
