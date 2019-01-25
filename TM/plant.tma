@@ -42,7 +42,8 @@ Partition
 # Currently hard-coded for 4:30 in the morning (10:30 UTC)
 # ssm is seconds since midnight
 
-State Auto_Start_Flow_Idle{}
+State Auto_Start_Flow_Idle{
+}
 
 State Auto_Start_Flow{
 +10 {
