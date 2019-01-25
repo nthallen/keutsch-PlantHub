@@ -1,6 +1,6 @@
 %{
   #include "msg.h"
-  #include "tmatime.h"
+  #include "tmctime.h"
 %}
 
 State Init {
@@ -60,7 +60,7 @@ State Auto_Start_Flow{
 
 State Auto_Start_Flow_Execute{
 	> Flow CO2 Set Volts 0.893
-	Validate Auto_State_Flow_Idle;
+	Validate Auto_Start_Flow_Idle;
 }
 
 
