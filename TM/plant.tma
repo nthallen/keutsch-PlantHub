@@ -51,7 +51,7 @@ State Auto_Start_Flow{
   unixtime = itime();
   ssm = unixtime % 86400;
 
-  if (ssm >= 3600*10.5)
+  if (ssm >= 3600*9.5)
 	Validate Auto_Start_Flow_Execute;
   
   else Validate Auto_Start_Flow;
