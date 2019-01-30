@@ -13,6 +13,26 @@ State Shutdown {
 
 Partition
 
+State FCC_Test_idle {}
+
+State FCC_Test {
+		> Flag Set 1
+	    > Flow CO2 Set Volts 0.05
+		> Flow OVOC Set Volts 0.05
+		> Flow Zero Set Volts 0.05
+ +10:00	> Flag Set 2
+	    > Flow CO2 Set Volts 0.5
+		> Flow OVOC Set Volts 0.5
+		> Flow Zero Set Volts 0.5
+ +10:00	> Flag Set 3
+	    > Flow CO2 Set Volts 5
+		> Flow OVOC Set Volts 5
+		> Flow Zero Set Volts 5
+	    Validate FCC_Test_idle;
+}
+
+Partition
+
 State CO2_idle {}
 
 State CO2_control {}

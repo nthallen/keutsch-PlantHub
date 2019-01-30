@@ -9,7 +9,10 @@ SWS_VALVE_SWITCHING_IDLE	 4   Valve Switching Idle: Validate Valve_Switch_Idle; 
 SWS_AUTO_START_FLOW_IDLE	 5   Auto Start Flow Idle: Validate Auto_Start_Flow_Idle; break;
 SWS_AUTO_START_FLOW_ACTIVE   6   Auto Start Flow Activate: Validate Auto_Start_Flow; break;
 SWS_AUTO_START_FLOW_EXECUTE  7   Auto Start Flow Execute: Validate Auto_Start_Flow_Execute; break;
-  
+
+SWS_FCC_TEST_IDLE            8   FCC Test Idle: Validate FCC_Test_idle; break;
+SWS_FCC_TEST                 9   FCC Test Execute: Validate FCC_Test; break;  
+
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
 
