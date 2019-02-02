@@ -32,12 +32,6 @@ State FCC_Test {
 }
 
 Partition
-
-State CO2_idle {}
-
-State CO2_control {}
-
-Partition
 # Change valve to sample between air going into air into chamber vs air going out of inlet
 # Sun, et al. 2016, AMT sampled air going into chamber once per hour for 10 minutes
 # Data from 00:30 - 09:30 was only considered due to pressure fluctuation as valve switches
@@ -67,9 +61,9 @@ Partition
   /* UpdatePeriod = 5; */
 %}
 
-State CO2_idle {}
+State CO2_Idle {}
 
-State CO2_control_init {
+State CO2_Control_Init {
   { CO2_integral = 0; 
   Validate CO2_control;
   }
