@@ -57,28 +57,28 @@ Partition
   #define CO2_GI (20)
   #define CO2_CLIP_LIMIT 200
   #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
-  #define CO2_SETPOINT (430.0)
+  #define CO2_SETPOINT (430)
   /* UpdatePeriod = 5; */
 %}
 
 State CO2_Idle {}
 
-State CO2_Control_Init {
-  { CO2_integral = 0; 
-  Validate CO2_control;
-  }
-}
+
+
+
+
+
 
 State CO2_control nolog {
-  +5
+  +10
   { double err_term, rate_adj;
     err_term = (convert(CO2_ppm)-CO2_SETPOINT);
-    CO2_integral += err_term;
+    CO2_integral += 0.001 * err_term;
     if (CO2_integral > CO2_INT_LIMIT)
       CO2_integral = CO2_INT_LIMIT;
     else if (CO2_integral < -CO2_INT_LIMIT)
       CO2_integral = -CO2_INT_LIMIT;
-    rate_adj = 100 - err_term * CO2_GP -
+    rate_adj = 60 - err_term * CO2_GP -
       CO2_integral * CO2_GI;
     if (rate_adj > CO2_CLIP_LIMIT)
       rate_adj = CO2_CLIP_LIMIT;
