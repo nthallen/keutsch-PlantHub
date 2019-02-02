@@ -42,7 +42,6 @@ Partition
 # Sun, et al. 2016, AMT sampled air going into chamber once per hour for 10 minutes
 # Data from 00:30 - 09:30 was only considered due to pressure fluctuation as valve switches
 
-
 State Valve_Switch{
 		> Valve 1 On
 		> Flag Set 51
@@ -55,6 +54,46 @@ State Valve_Switch{
 State Valve_Switch_Idle{
 }
 
+
+Partition
+
+%{
+  double CO2_integral;
+  #define CO2_GP (50)
+  #define CO2_GI (20)
+  #define CO2_CLIP_LIMIT 200
+  #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
+  #define CO2_SETPOINT (430.0)
+  /* UpdatePeriod = 5; */
+%}
+
+State CO2_idle {}
+
+State CO2_control_init {
+  { CO2_integral = 0; 
+  Validate CO2_control;
+  }
+}
+
+State CO2_control nolog {
+  +5
+  { double err_term, rate_adj;
+    err_term = (convert(CO2_ppm)-CO2_SETPOINT);
+    CO2_integral += err_term;
+    if (CO2_integral > CO2_INT_LIMIT)
+      CO2_integral = CO2_INT_LIMIT;
+    else if (CO2_integral < -CO2_INT_LIMIT)
+      CO2_integral = -CO2_INT_LIMIT;
+    rate_adj = 100 - err_term * CO2_GP -
+      CO2_integral * CO2_GI;
+    if (rate_adj > CO2_CLIP_LIMIT)
+      rate_adj = CO2_CLIP_LIMIT;
+    else if (rate_adj < 0) rate_adj = 0;
+    if (rate_adj != FC0_Set)
+      ci_sendfcmd(2, "Flow CO2 Set SCCM %.0lf\n", rate_adj);
+    Validate CO2_control;
+  }
+}
 
 Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
