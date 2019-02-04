@@ -53,8 +53,8 @@ Partition
 
 %{
   double CO2_integral;
-  #define CO2_GP (50)
-  #define CO2_GI (20)
+  #define CO2_GP (1)
+  #define CO2_GI (0.2)
   #define CO2_CLIP_LIMIT 200
   #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
   #define CO2_SETPOINT (430)
@@ -62,12 +62,6 @@ Partition
 %}
 
 State CO2_Idle {}
-
-
-
-
-
-
 
 State CO2_control nolog {
   +10

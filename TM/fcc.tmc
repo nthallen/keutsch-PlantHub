@@ -13,7 +13,7 @@
      0x1A ADC_U3_T
      
      For the Plant Chamber:
-     Flow 0 is CO2 10 SCCM
+     Flow 0 is CO2 200 SCCM
      Flow 1 is OVOC 500 SCCM
      Flow 2 is Zero 5000 SCCM
      Flow 3 is unused
@@ -31,8 +31,8 @@ Calibration (FCC_DAC_t, FCC_Volts) { 0, 0, 65536, 5 }
 TM typedef double FCC_SCCM;
 TM typedef FCC_ADC_t FCC_ADC_10_SCCM { text "%6.3lf"; convert FCC_SCCM; }
 Calibration (FCC_ADC_10_SCCM,FCC_SCCM) { 0, 0, 26666.67, 10}
-TM typedef FCC_ADC_t FCC_ADC_20_SCCM { text "%6.3lf"; convert FCC_SCCM; }
-Calibration (FCC_ADC_20_SCCM,FCC_SCCM) { 0, 0, 26666.67, 20}
+TM typedef FCC_ADC_t FCC_ADC_200_SCCM { text "%6.3lf"; convert FCC_SCCM; }
+Calibration (FCC_ADC_200_SCCM,FCC_SCCM) { 0, 0, 26666.67, 200}
 TM typedef FCC_ADC_t FCC_ADC_500_SCCM { text "%6.2lf"; convert FCC_SCCM; }
 Calibration (FCC_ADC_500_SCCM,FCC_SCCM) { 0, 0, 26666.67, 500}
 TM typedef FCC_ADC_t FCC_ADC_5000_SCCM { text "%6.1lf"; convert FCC_SCCM; }
@@ -42,8 +42,8 @@ Calibration (FCC_ADC_10000_SCCM,FCC_SCCM) { 0, 0, 26666.67, 10000}
 
 TM typedef FCC_DAC_t FCC_DAC_10_SCCM { text "%6.3lf"; convert FCC_SCCM; }
 Calibration (FCC_DAC_10_SCCM,FCC_SCCM) { 0, 0, 65536, 10}
-TM typedef FCC_DAC_t FCC_DAC_20_SCCM { text "%6.3lf"; convert FCC_SCCM; }
-Calibration (FCC_DAC_20_SCCM,FCC_SCCM) { 0, 0, 65536, 20}
+TM typedef FCC_DAC_t FCC_DAC_200_SCCM { text "%6.3lf"; convert FCC_SCCM; }
+Calibration (FCC_DAC_200_SCCM,FCC_SCCM) { 0, 0, 65536, 200}
 TM typedef FCC_DAC_t FCC_DAC_500_SCCM { text "%6.2lf"; convert FCC_SCCM; }
 Calibration (FCC_DAC_500_SCCM,FCC_SCCM) { 0, 0, 65536, 500}
 TM typedef FCC_DAC_t FCC_DAC_5000_SCCM { text "%6.1lf"; convert FCC_SCCM; }
