@@ -15,11 +15,16 @@
   : Flag &Flag { SWData.Flag = $2; }
   ;
 &SWStat <unsigned char>
-  : CO2 Control Idle { $0 = SWS_PCTRL_IDLE; }
-  : Set %d { $0 = $2; }
-  : CO2 Control Activate { $0 = SWS_PCTRL_ACTIVE; }
   : Valve Switching Activate { $0 = SWS_VALVE_SWITCHING_ACTIVE; }
+  : Set %d { $0 = $2; }
   : Valve Switching Idle { $0 = SWS_VALVE_SWITCHING_IDLE; }
+  : Auto Start Flow Idle { $0 = SWS_AUTO_START_FLOW_IDLE; }
+  : Auto Start Flow Activate { $0 = SWS_AUTO_START_FLOW_ACTIVE; }
+  : Auto Start Flow Execute { $0 = SWS_AUTO_START_FLOW_EXECUTE; }
+  : FCC Test Idle { $0 = SWS_FCC_TEST_IDLE; }
+  : FCC Test Execute { $0 = SWS_FCC_TEST; }
+  : CO2 Control Idle { $0 = SWS_CO2_CONTROL_IDLE; }
+  : CO2 Control Initialize { $0 = SWS_CO2_CONTROL_INITIALIZE; }
   : Time Warp { $0 = SWS_TIMEWARP; }
   : Shutdown { $0 = SWS_SHUTDOWN; }
   ;

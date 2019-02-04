@@ -29,3 +29,5 @@ plantdisp : fcc_conv.tmc LICOR_conv.tmc Plant.tbl
 plantrtgext : rtg.tmc /usr/local/share/oui/cic.oui
 doit : plant.doit
 plantalgo : fcc_conv.tmc plant.tma plant.sws
+%%
+CXXFLAGS=-g
