@@ -76,3 +76,53 @@ Group fcc (FC0_Flow, FC1_Flow, FC2_Flow, FCC_U2_T, FCC_U3_T,
     FCC0_Status = data[8];
   }
 }
+
+TM typedef unsigned short I2C_word { text "%5u"; }
+TM typedef double TS_CELCIUS;
+TM typedef unsigned long I2C_TS_T_t { text "%.2lf"; convert TS_CELCIUS; }
+TM typedef unsigned char I2C_byte { text "%3u"; }
+TM typedef I2C_word I2C_hexword { text "%04X"; }
+TM typedef I2C_word SHT31_Temp_t { text "%6.2lf"; convert TS_CELCIUS; }
+Calibration (SHT31_Temp_t, TS_CELCIUS) {
+  0, -45, 65535, 130
+}
+
+TM typedef double RH_t;
+TM typedef I2C_word SHT31_RH_t { text "%6.2lf"; convert RH_t; }
+Calibration (SHT31_RH_t, RH_t) {
+  0, 0, 65535, 100
+}
+
+TM 1 Hz I2C_word TS_Addr;
+TM 1 Hz I2C_word TS_Count;
+TM 1 Hz I2C_TS_T_t TS_Temp;
+TM 1 Hz I2C_byte TS_state;
+TM 1 Hz I2C_byte TS_error;
+TM 1 Hz I2C_byte TS_ovflow;
+TM 1 Hz I2C_hexword SHT31_Status;
+TM 1 Hz SHT31_Temp_t SHT31_Temp;
+TM 1 Hz SHT31_RH_t SHT31_RH;
+TM 1 Hz I2C_byte SHT31_I2C_err;
+TM 1 Hz I2C_byte SHT31_state;
+TM 1 Hz I2C_byte SHT31_CRC_err;
+
+Group i2c (TS_Addr, TS_Count, TS_Temp, TS_error, TS_state,
+    TS_ovflow, SHT31_Status, SHT31_Temp, SHT31_RH,
+    SHT31_I2C_err, SHT31_state, SHT31_CRC_err) {
+  unsigned short data[9];
+  if (I2C_collect(data) >= 0) {
+    TS_Addr = data[0];
+    TS_Count = data[1];
+    TS_Temp = data[2] + (data[3] << 16);
+    TS_error = data[4] & 0xF;
+    TS_state = (data[4] & 0x70) >> 4;
+    TS_ovflow = data[4] >> 8;
+    SHT31_Status = data[5];
+    SHT31_Temp = data[6];
+    SHT31_RH = data[7];
+    SHT31_I2C_err = data[8] & 0xF;
+    SHT31_state = (data[8] >> 4) & 0xF;
+    SHT31_CRC_err = data[8] >> 8;
+  }
+}
+

@@ -1,44 +1,57 @@
 
 --------Frame Statistics-----------
-Major Frame: 1 minor frames, 1 Hz
-Minor Frame: 59 bytes, 1 Hz
+Major Frame: 2 minor frames, 1 Hz
+Minor Frame: 42 bytes, 2 Hz
 Effective Frame Dimensions:
-  1 Rows 59 Columns
-  1 rows/sec
-  472 bits/sec
-  Data:  440 bits/sec  93 %
-  Synch: 32 bits/sec  7 %
-  Empty: 0 bits/sec  0 %
+  2 Rows 42 Columns
+  2 rows/sec
+  672 bits/sec
+  Data:  600 bits/sec  89 %
+  Synch: 64 bits/sec  10 %
+  Empty: 8 bits/sec  1 %
 -------End of Frame Statistics-----
 
 
 --------PCM Definition-------------
-1/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
-1/1 Hz 26 bytes Group LICOR (1,0,2,26)
-1/1 Hz 2 bytes Member LICOR_Status (1,0,2,2)
-1/1 Hz 4 bytes Member LICOR_P (1,0,4,4)
-1/1 Hz 4 bytes Member LICOR_T_mV (1,0,8,4)
-1/1 Hz 4 bytes Member H2O_ppth (1,0,12,4)
-1/1 Hz 4 bytes Member H2O_mV (1,0,16,4)
-1/1 Hz 4 bytes Member CO2_ppm (1,0,20,4)
-1/1 Hz 4 bytes Member CO2_mV (1,0,24,4)
-1/1 Hz 17 bytes Group fcc (1,0,28,17)
-1/1 Hz 1 bytes Member FCC0_Status (1,0,28,1)
-1/1 Hz 2 bytes Member FC2_Set (1,0,29,2)
-1/1 Hz 2 bytes Member FC1_Set (1,0,31,2)
-1/1 Hz 2 bytes Member FC0_Set (1,0,33,2)
-1/1 Hz 2 bytes Member FCC_U3_T (1,0,35,2)
-1/1 Hz 2 bytes Member FCC_U2_T (1,0,37,2)
-1/1 Hz 2 bytes Member FC2_Flow (1,0,39,2)
-1/1 Hz 2 bytes Member FC1_Flow (1,0,41,2)
-1/1 Hz 2 bytes Member FC0_Flow (1,0,43,2)
-1/1 Hz 4 bytes Datum SysTDrift (1,0,45,4)
-1/1 Hz 2 bytes Datum Disk (1,0,49,2)
-1/1 Hz 2 bytes Datum freemem (1,0,51,2)
-1/1 Hz 1 bytes Datum CPU_Pct (1,0,53,1)
-1/1 Hz 1 bytes Datum Flag (1,0,54,1)
-1/1 Hz 1 bytes Datum LICOR_Stale (1,0,55,1)
-1/1 Hz 1 bytes Datum SWStat (1,0,56,1)
-1/1 Hz 2 bytes Datum Synch (1,0,57,2)
+2/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
+2/1 Hz 2 bytes Datum Synch (1,0,40,2)
+1/1 Hz 26 bytes Group LICOR (2,0,2,26)
+1/1 Hz 2 bytes Member LICOR_Status (2,0,2,2)
+1/1 Hz 4 bytes Member LICOR_P (2,0,4,4)
+1/1 Hz 4 bytes Member LICOR_T_mV (2,0,8,4)
+1/1 Hz 4 bytes Member H2O_ppth (2,0,12,4)
+1/1 Hz 4 bytes Member H2O_mV (2,0,16,4)
+1/1 Hz 4 bytes Member CO2_ppm (2,0,20,4)
+1/1 Hz 4 bytes Member CO2_mV (2,0,24,4)
+1/1 Hz 4 bytes Datum SysTDrift (2,0,28,4)
+1/1 Hz 2 bytes Datum Disk (2,0,32,2)
+1/1 Hz 2 bytes Datum freemem (2,0,34,2)
+1/1 Hz 1 bytes Datum CPU_Pct (2,0,36,1)
+1/1 Hz 1 bytes Datum Flag (2,0,37,1)
+1/1 Hz 1 bytes Datum LICOR_Stale (2,0,38,1)
+1/1 Hz 1 bytes Datum SWStat (2,0,39,1)
+1/1 Hz 20 bytes Group i2c (2,1,2,20)
+1/1 Hz 1 bytes Member SHT31_CRC_err (2,1,2,1)
+1/1 Hz 1 bytes Member SHT31_state (2,1,3,1)
+1/1 Hz 1 bytes Member SHT31_I2C_err (2,1,4,1)
+1/1 Hz 2 bytes Member SHT31_RH (2,1,5,2)
+1/1 Hz 2 bytes Member SHT31_Temp (2,1,7,2)
+1/1 Hz 2 bytes Member SHT31_Status (2,1,9,2)
+1/1 Hz 1 bytes Member TS_ovflow (2,1,11,1)
+1/1 Hz 1 bytes Member TS_state (2,1,12,1)
+1/1 Hz 1 bytes Member TS_error (2,1,13,1)
+1/1 Hz 4 bytes Member TS_Temp (2,1,14,4)
+1/1 Hz 2 bytes Member TS_Count (2,1,18,2)
+1/1 Hz 2 bytes Member TS_Addr (2,1,20,2)
+1/1 Hz 17 bytes Group fcc (2,1,22,17)
+1/1 Hz 1 bytes Member FCC0_Status (2,1,22,1)
+1/1 Hz 2 bytes Member FC2_Set (2,1,23,2)
+1/1 Hz 2 bytes Member FC1_Set (2,1,25,2)
+1/1 Hz 2 bytes Member FC0_Set (2,1,27,2)
+1/1 Hz 2 bytes Member FCC_U3_T (2,1,29,2)
+1/1 Hz 2 bytes Member FCC_U2_T (2,1,31,2)
+1/1 Hz 2 bytes Member FC2_Flow (2,1,33,2)
+1/1 Hz 2 bytes Member FC1_Flow (2,1,35,2)
+1/1 Hz 2 bytes Member FC0_Flow (2,1,37,2)
 -------End of PCM Definition-------
 

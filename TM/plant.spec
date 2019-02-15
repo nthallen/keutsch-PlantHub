@@ -11,7 +11,7 @@ swsbase = plant.sws
 #extbase = TS_conv.tmc
 #genuibase = TS.genui
 
-tmcbase = fcc.tmc
+tmcbase = fcc.tmc T30K1MTS.tmc
 colbase = fcc_col.tmc SB.cc SB.h
 cmdbase = fcc.cmd
 genuibase = fcc.genui

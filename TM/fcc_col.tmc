@@ -2,14 +2,21 @@
   #include "SB.h"
 
   static subbus_mread_req *FCC0Req;
+  static subbus_mread_req *I2CReq;
 
   static int FCC0_collect(unsigned short*data) {
     return (FCC0 ? FCC0->mread_subbus(FCC0Req, data) : 0);
+  }
+  static int I2C_collect(unsigned short*data) {
+    return (FCC0 ? FCC0->mread_subbus(I2CReq, data) : 0);
   }
   static void FCC0_col_init() {
     FCC0_init();
     FCC0Req = FCC0 ?
       FCC0->pack_mread_request(9,"10,11,12,14,15,16,18,19,1A") :
+      0;
+    I2CReq = FCC0 ?
+      FCC0->pack_mread_request(9,"20:1:28") :
       0;
   }
 %}
