@@ -79,7 +79,7 @@ Group fcc (FC0_Flow, FC1_Flow, FC2_Flow, FCC_U2_T, FCC_U3_T,
 
 TM typedef unsigned short I2C_word { text "%5u"; }
 TM typedef double TS_CELCIUS;
-TM typedef unsigned long I2C_TS_T_t { text "%.2lf"; convert TS_CELCIUS; }
+TM typedef unsigned long I2C_TS_T_t { text "%6.2lf"; convert TS_CELCIUS; }
 TM typedef unsigned char I2C_byte { text "%3u"; }
 TM typedef I2C_word I2C_hexword { text "%04X"; }
 TM typedef I2C_word SHT31_Temp_t { text "%6.2lf"; convert TS_CELCIUS; }

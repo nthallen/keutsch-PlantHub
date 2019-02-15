@@ -1,8 +1,10 @@
 Input "TMbase.tbl";
 Input "fcc.tbl";
 Input "LICOR.tbl";
+Input "ts_rh.tbl";
 
-{ HBox { |+; [LICOR]; |+; [FCC]; |+; [TMbaseB]; |+; };
+{ HBox { |+; [LICOR]; |+; [FCC]; |+; };
+  HBox { |+; [TS_RH]; |+; [TS_RH_Eng]; |+; [TMbaseB]; |+; };
   -;
 }
 
