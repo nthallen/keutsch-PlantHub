@@ -11,3 +11,6 @@ ci_sendfcmd(2, "PhRTG Datum CO2_ppm %.3lf %s\n", dtime(), text(CO2_ppm));
 ci_sendfcmd(2, "PhRTG Datum H2O_ppth %.3lf %s\n", dtime(), text(H2O_ppth));
 ci_sendfcmd(2, "PhRTG Datum LICOR_P %.3lf %s\n", dtime(), text(LICOR_P));
 ci_sendfcmd(2, "PhRTG Datum LICOR_T_mV %.3lf %s\n", dtime(), text(LICOR_T_mV));
+ci_sendfcmd(2, "PhRTG Datum Leaf_RH_T %.3lf %.2lf %.2lf\n",
+  dtime(), convert(TS_Temp), convert(SHT31_Temp));
+ci_sendfcmd(2, "PhRTG Datum RH %.3lf %s\n", dtime(), text(SHT31_RH));
