@@ -31,9 +31,9 @@
   1 SHT31_I2C_err Eng SHT_err 
   1 SHT31_CRC_err Eng CRC_err
 
-  1 Pending:SHT31_Status:15 SHT31 Status "%.0lf" 
-  1 Heater:SHT31_Status:13  SHT31 Status "%.0lf" 
-  1 RHtrack:SHT31_Status:11 SHT31 Status "%.0lf" 
-  1 SysRst:SHT31_Status:4   SHT31 Status "%.0lf" 
-  1 CmdErr:SHT31_Status:1   SHT31 Status "%.0lf" 
-  1 WCksum:SHT31_Status:0   SHT31 Status "%.0lf" 
+  1 Pending:SHT31_Status:15 SHT31 Status %.0lf 
+  1 Heater:SHT31_Status:13  SHT31 Status %.0lf 
+  1 RHtrack:SHT31_Status:11 SHT31 Status %.0lf 
+  1 SysRst:SHT31_Status:4   SHT31 Status %.0lf 
+  1 CmdErr:SHT31_Status:1   SHT31 Status %.0lf 
+  1 WCksum:SHT31_Status:0   SHT31 Status %.0lf 
