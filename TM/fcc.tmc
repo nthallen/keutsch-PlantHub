@@ -105,11 +105,16 @@ TM 1 Hz SHT31_RH_t SHT31_RH;
 TM 1 Hz I2C_byte SHT31_I2C_err;
 TM 1 Hz I2C_byte SHT31_state;
 TM 1 Hz I2C_byte SHT31_CRC_err;
+TM 1 Hz I2C_byte I2C_state;
+TM 1 Hz I2C_byte I2C_ts_state;
+TM 1 Hz I2C_byte I2C_sht_state;
+TM 1 Hz I2C_hexword I2C_intflag;
+TM 1 Hz I2C_hexword I2C_status;
 
 Group i2c (TS_Addr, TS_Count, TS_Temp, TS_error, TS_state,
     TS_ovflow, SHT31_Status, SHT31_Temp, SHT31_RH,
     SHT31_I2C_err, SHT31_state, SHT31_CRC_err) {
-  unsigned short data[9];
+  unsigned short data[12];
   if (I2C_collect(data) >= 0) {
     TS_Addr = data[0];
     TS_Count = data[1];
@@ -123,6 +128,11 @@ Group i2c (TS_Addr, TS_Count, TS_Temp, TS_error, TS_state,
     SHT31_I2C_err = data[8] & 0xF;
     SHT31_state = (data[8] >> 4) & 0xF;
     SHT31_CRC_err = data[8] >> 8;
+    I2C_state = (data[9] >> 7) & 1;
+    I2C_ts_state = (data[9] >> 4) & 7;
+    I2C_sht_state = data[9] & 0xF;
+    I2C_intflag = data[10];
+    I2C_status = data[11];
   }
 }
 

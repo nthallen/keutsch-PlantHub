@@ -16,7 +16,7 @@
       FCC0->pack_mread_request(9,"10,11,12,14,15,16,18,19,1A") :
       0;
     I2CReq = FCC0 ?
-      FCC0->pack_mread_request(9,"20:1:28") :
+      FCC0->pack_mread_request(12,"20:1:2A") :
       0;
   }
 %}

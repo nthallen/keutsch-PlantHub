@@ -11,11 +11,18 @@ TS_RH_Eng {
   HBox { +-; "Temp Sensor"; -+ };
   Addr:   (TS_Addr);
   Count:  (TS_Count);
-  { Err: (TS_state,3) (TS_error,3) };
+  { St: (TS_state,3) Err: (TS_error,3) };
   OVFlow: (TS_ovflow,3);
 
   HBox { +-; SHT31; -+ };
   Status: (SHT31_Status,4);
-  { Err: (SHT31_I2C_err,3) (SHT31_state,3) };
+  { St: (SHT31_state,3) Err: (SHT31_I2C_err,3) };
   CRC_err: (SHT31_CRC_err,3);
+}
+
+I2C_Debug {
+  HBox { +-; Debug; -+ };
+  { St: (I2C_state,3) (I2C_ts_state,3) (I2C_sht_state,3) };
+  INTFLAG: (I2C_intflag,4);
+  STATUS:  (I2C_status,4);
 }
