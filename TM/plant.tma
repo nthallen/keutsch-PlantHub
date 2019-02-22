@@ -106,7 +106,7 @@ State Auto_Start_Flow{
 }
 
 State Auto_Start_Flow_Execute{
-	> Flow CO2 Set Volts 0.893
+	> Flow CO2 Set Volts 0.445
 	Validate Auto_Start_Flow_Idle;
 }
 
