@@ -30,6 +30,16 @@
   1 SHT31_state Eng SHT_state
   1 SHT31_I2C_err Eng SHT_err 
   1 SHT31_CRC_err Eng CRC_err
+  1 I2C_state Eng States
+  1 I2C_ts_state Eng States
+  1 I2C_sht_state Eng States
+  1 Error:I2C_intflag:7 Eng Bits %.0lf
+  1 SB:I2C_intflag:1 Eng Bits %.0lf
+  1 MB:I2C_intflag:0 Eng Bits %.0lf
+  1 RXNACK:I2C_status:2 Eng Bits %.0lf
+  1 ARBLOST:I2C_status:1 Eng Bits %.0lf
+  1 BUSERR:I2C_status:0 Eng Bits %.0lf
+  1 I2C_status Eng Status %.0lf
 
   1 Pending:SHT31_Status:15 SHT31 Status %.0lf 
   1 Heater:SHT31_Status:13  SHT31 Status %.0lf 
