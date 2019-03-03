@@ -53,7 +53,7 @@ Partition
 
 %{
   double CO2_integral;
-  #define CO2_GP (1)
+  #define CO2_GP (0.1)
   #define CO2_GI (0.2)
   #define CO2_CLIP_LIMIT 200
   #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
@@ -67,7 +67,7 @@ State CO2_control nolog {
   +10
   { double err_term, rate_adj;
     err_term = (convert(CO2_ppm)-CO2_SETPOINT);
-    CO2_integral += 0.001 * err_term;
+    CO2_integral += err_term;
     if (CO2_integral > CO2_INT_LIMIT)
       CO2_integral = CO2_INT_LIMIT;
     else if (CO2_integral < -CO2_INT_LIMIT)
@@ -106,7 +106,7 @@ State Auto_Start_Flow{
 }
 
 State Auto_Start_Flow_Execute{
-	> Flow CO2 Set Volts 0.893
+	> Flow CO2 Set Volts 0.445
 	Validate Auto_Start_Flow_Idle;
 }
 
