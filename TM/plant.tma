@@ -79,7 +79,7 @@ State Auto_Start_Flow_noSteps{
   unixtime = itime();
   ssm = unixtime % 86400;
 
-  if (ssm >= 3600*9.0)
+  if (ssm >= 3600*8.0)
 	Validate Auto_Start_Flow_Execute_noSteps;
   
   else Validate Auto_Start_Flow_noSteps;
@@ -94,7 +94,7 @@ State Auto_Start_Flow_withSteps{
   unixtime = itime();
   ssm = unixtime % 86400;
 
-  if (ssm >= 3600*9.0)
+  if (ssm >= 3600*8.0)
 	Validate Auto_Start_Flow_Execute_withSteps;
   
   else Validate Auto_Start_Flow_withSteps;
