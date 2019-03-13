@@ -17,11 +17,11 @@ Partition
 # Data from 00:30 - 09:30 was only considered due to pressure fluctuation as valve switches
 
 State Valve_Switch{
-		> Valve 1 On
-		> Flag Set 51
- +6:00  > Valve 1 Off
+		> Valve 1 Off
 		> Flag Set 50
- +14:00	> Flag Set 0
+ +30:00 > Valve 1 On
+		> Flag Set 51
+  +5:00	> Flag Set 0
 		Validate Valve_Switch;
 }
 
@@ -107,13 +107,13 @@ State Auto_Start_Flow_Execute_noSteps{
 }
 
 State Auto_Start_Flow_Execute_withSteps{
-	        > Flow CO2 Set Volts 0.447
+	        > Flow CO2 Set Volts 0.22
 			Validate Valve_Switch;
- +07:00:00	> Flow CO2 Set Volts 0.893
- +02:20:00	> Flow CO2 Set Volts 1.786
- +02:20:00	> Flow CO2 Set Volts 2.679
- +02:20:00	> Flow CO2 Set Volts 3.572
- +02:20:00	> Flow CO2 Set Volts 4.465
+ +07:00:00	> Flow CO2 Set Volts 0.44
+ +02:20:00	> Flow CO2 Set Volts 0.89
+ +02:20:00	> Flow CO2 Set Volts 1.32
+ +02:20:00	> Flow CO2 Set Volts 1.78
+ +02:20:00	> Flow CO2 Set Volts 2.22
  +02:20:00	> Flow CO2 Set Volts 0
 			> Flag Set 0
 			Validate Valve_Switch_Idle;
