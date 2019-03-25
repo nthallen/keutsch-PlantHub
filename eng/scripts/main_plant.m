@@ -138,87 +138,110 @@ clear('ax1','ax2','ax3','ax4','ax5','ax6','h','hLines','file_exist_check')
 
 %% Find Indices for each HCHO Step for Equilibration Correction
 
-% 3600 s chosen since chamber equilibrates within this time
-%p.hcho([Step1(1:3600); Step2(1:3600); Step3(1:3600)]) = NaN;
+% % 3600 s chosen since chamber equilibrates within this time
+% %p.hcho([Step1(1:3600); Step2(1:3600); Step3(1:3600)]) = NaN;
+% 
+% % Find Bypass Indices for each Step 
+%  Step1_bypass = find(p.FC0_Set == 0.22 & p.Flag == 51);
+%  Step2_bypass = find(p.FC0_Set == 0.44 & p.Flag == 51);
+%  Step3_bypass = find(p.FC0_Set == 0.89 & p.Flag == 51);
+%  Step4_bypass = find(p.FC0_Set == 1.32 & p.Flag == 51);
+%  Step5_bypass = find(p.FC0_Set == 1.7799 & p.Flag == 51);
+%  Step6_bypass = find(p.FC0_Set == 2.2199 & p.Flag == 51);
+% 
+% % Find Chamber Indices for each Step 
+%  Step1_chamber = find(p.FC0_Set == 0.22 & p.Flag == 50);
+%  Step2_chamber = find(p.FC0_Set == 0.44 & p.Flag == 50);
+%  Step3_chamber = find(p.FC0_Set == 0.89 & p.Flag == 50);
+%  Step4_chamber = find(p.FC0_Set == 1.32 & p.Flag == 50);
+%  Step5_chamber = find(p.FC0_Set == 1.7799 & p.Flag == 50);
+%  Step6_chamber = find(p.FC0_Set == 2.2199 & p.Flag == 50);
+%  
+% % Apply Bypass Indices to HCHO data and Extract Time for Steps 1 - 6
+% Step1_bypass_hcho = p.hcho(Step1_bypass);
+% Step1_bypass_time = posixtime(p.plant_datetime(Step1_bypass));
+% Step1_bypass_time = Step1_bypass_time - Step1_bypass_time(1); 
+% 
+% Step2_bypass_hcho = p.hcho(Step2_bypass);
+% Step2_bypass_time = posixtime(p.plant_datetime(Step2_bypass));
+% Step2_bypass_time = Step2_bypass_time - Step2_bypass_time(1);
+%  
+% Step3_bypass_hcho = p.hcho(Step3_bypass);
+% Step3_bypass_time = posixtime(p.plant_datetime(Step3_bypass));
+% Step3_bypass_time = Step3_bypass_time - Step3_bypass_time(1);
+% 
+% Step4_bypass_hcho = p.hcho(Step4_bypass);
+% Step4_bypass_time = posixtime(p.plant_datetime(Step4_bypass));
+% Step4_bypass_time = Step4_bypass_time - Step4_bypass_time(1); 
+% 
+% Step5_bypass_hcho = p.hcho(Step5_bypass);
+% Step5_bypass_time = posixtime(p.plant_datetime(Step5_bypass));
+% Step5_bypass_time = Step5_bypass_time - Step5_bypass_time(1);
+%  
+% Step6_bypass_hcho = p.hcho(Step6_bypass);
+% Step6_bypass_time = posixtime(p.plant_datetime(Step6_bypass));
+% Step6_bypass_time = Step6_bypass_time - Step6_bypass_time(1);
+% 
+% 
+% 
+% % Apply Chamber Indices to HCHO data and Extract Time for Steps 1 - 6 
+% Step1_chamber_hcho = p.hcho(Step1_chamber);
+% Step1_chamber_time = posixtime(p.plant_datetime(Step1_chamber));
+% Step1_chamber_time = Step1_chamber_time - Step1_chamber_time(1); 
+% 
+% Step2_chamber_hcho = p.hcho(Step2_chamber);
+% Step2_chamber_time = posixtime(p.plant_datetime(Step2_chamber));
+% Step2_chamber_time = Step2_chamber_time - Step2_chamber_time(1);
+%  
+% Step3_chamber_hcho = p.hcho(Step3_chamber);
+% Step3_chamber_time = posixtime(p.plant_datetime(Step3_chamber));
+% Step3_chamber_time = Step3_chamber_time - Step3_chamber_time(1);
+% 
+% Step4_chamber_hcho = p.hcho(Step4_chamber);
+% Step4_chamber_time = posixtime(p.plant_datetime(Step4_chamber));
+% Step4_chamber_time = Step4_chamber_time - Step4_chamber_time(1); 
+% 
+% Step5_chamber_hcho = p.hcho(Step5_chamber);
+% Step5_chamber_time = posixtime(p.plant_datetime(Step5_chamber));
+% Step5_chamber_time = Step5_chamber_time - Step5_chamber_time(1);
+%  
+% Step6_chamber_hcho = p.hcho(Step6_chamber);
+% Step6_chamber_time = posixtime(p.plant_datetime(Step6_chamber));
+% Step6_chamber_time = Step6_chamber_time - Step6_chamber_time(1);
+% 
+% % Save Data to a .mat file to send to IGOR for Equilibration Time Determination 
+%  save('HCHO_Steps.mat','Step1_bypass_time','Step1_bypass_hcho','Step1_chamber_time','Step1_chamber_hcho',...%,...
+%       'Step2_bypass_time','Step2_bypass_hcho','Step2_chamber_time','Step2_chamber_hcho',...
+%       'Step3_bypass_time','Step3_bypass_hcho','Step3_chamber_time','Step3_chamber_hcho',...
+%       'Step4_bypass_time','Step4_bypass_hcho','Step4_chamber_time','Step4_chamber_hcho',...
+%       'Step5_bypass_time','Step5_bypass_hcho','Step5_chamber_time','Step5_chamber_hcho',...
+%       'Step6_bypass_time','Step6_bypass_hcho','Step6_chamber_time','Step6_chamber_hcho');
+% 
+% % You may want to take these individual steps and now plot in Igor for
+% % equilibration times
 
-% Find Bypass Indices for each Step 
- Step1_bypass = find(p.FC0_Set == 0.22 & p.Flag == 51);
- Step2_bypass = find(p.FC0_Set == 0.44 & p.Flag == 51);
- Step3_bypass = find(p.FC0_Set == 0.89 & p.Flag == 51);
- Step4_bypass = find(p.FC0_Set == 1.32 & p.Flag == 51);
- Step5_bypass = find(p.FC0_Set == 1.7799 & p.Flag == 51);
- Step6_bypass = find(p.FC0_Set == 2.2199 & p.Flag == 51);
 
-% Find Chamber Indices for each Step 
- Step1_chamber = find(p.FC0_Set == 0.22 & p.Flag == 50);
- Step2_chamber = find(p.FC0_Set == 0.44 & p.Flag == 50);
- Step3_chamber = find(p.FC0_Set == 0.89 & p.Flag == 50);
- Step4_chamber = find(p.FC0_Set == 1.32 & p.Flag == 50);
- Step5_chamber = find(p.FC0_Set == 1.7799 & p.Flag == 50);
- Step6_chamber = find(p.FC0_Set == 2.2199 & p.Flag == 50);
- 
-% Apply Bypass Indices to HCHO data and Extract Time for Steps 1 - 6
-Step1_bypass_hcho = p.hcho(Step1_bypass);
-Step1_bypass_time = posixtime(p.plant_datetime(Step1_bypass));
-Step1_bypass_time = Step1_bypass_time - Step1_bypass_time(1); 
+%% Calculate VPD (Vapor Pressure Deficit) for Future Use
 
-Step2_bypass_hcho = p.hcho(Step2_bypass);
-Step2_bypass_time = posixtime(p.plant_datetime(Step2_bypass));
-Step2_bypass_time = Step2_bypass_time - Step2_bypass_time(1);
- 
-Step3_bypass_hcho = p.hcho(Step3_bypass);
-Step3_bypass_time = posixtime(p.plant_datetime(Step3_bypass));
-Step3_bypass_time = Step3_bypass_time - Step3_bypass_time(1);
+% From the twin cuvette paper, use 'crotch' equation (Goff-Gratch Equation)
 
-Step4_bypass_hcho = p.hcho(Step4_bypass);
-Step4_bypass_time = posixtime(p.plant_datetime(Step4_bypass));
-Step4_bypass_time = Step4_bypass_time - Step4_bypass_time(1); 
+% Saturation Water Vapor Pressure (hPa)
+Tst = 373.15; %K Steam-point temperature
+est = 1013.25; %hPa Steam-point pressure
+T = p.TS_Temp + 273.15;%K
+sat_H2O_vapor = zeros(size(T));
 
-Step5_bypass_hcho = p.hcho(Step5_bypass);
-Step5_bypass_time = posixtime(p.plant_datetime(Step5_bypass));
-Step5_bypass_time = Step5_bypass_time - Step5_bypass_time(1);
- 
-Step6_bypass_hcho = p.hcho(Step6_bypass);
-Step6_bypass_time = posixtime(p.plant_datetime(Step6_bypass));
-Step6_bypass_time = Step6_bypass_time - Step6_bypass_time(1);
+for i=1:length(T)
+sat_H2O_vapor(i) = 10.^(-7.90298*((Tst/T(i))-1) + 5.02808*log10(Tst/T(i))...
+    -1.3816e-7*(10.^(11.344*(1-(T(i)/Tst)))-1)...
+    + 8.1328e-3*(10.^(-3.49149*((Tst/T(i))-1))-1)+log10(est));
+end
 
+% Calculate Vapor Pressure Deficit
+P_chamber = 101.325; %kPa (must be in this unit)
+p.VPD = 100*sat_H2O_vapor./(P_chamber*1000) - p.H2O_ppth*(10^-3);
+% Will parse times corresponding to chamber sampling in the next section.
 
-
-% Apply Chamber Indices to HCHO data and Extract Time for Steps 1 - 6 
-Step1_chamber_hcho = p.hcho(Step1_chamber);
-Step1_chamber_time = posixtime(p.plant_datetime(Step1_chamber));
-Step1_chamber_time = Step1_chamber_time - Step1_chamber_time(1); 
-
-Step2_chamber_hcho = p.hcho(Step2_chamber);
-Step2_chamber_time = posixtime(p.plant_datetime(Step2_chamber));
-Step2_chamber_time = Step2_chamber_time - Step2_chamber_time(1);
- 
-Step3_chamber_hcho = p.hcho(Step3_chamber);
-Step3_chamber_time = posixtime(p.plant_datetime(Step3_chamber));
-Step3_chamber_time = Step3_chamber_time - Step3_chamber_time(1);
-
-Step4_chamber_hcho = p.hcho(Step4_chamber);
-Step4_chamber_time = posixtime(p.plant_datetime(Step4_chamber));
-Step4_chamber_time = Step4_chamber_time - Step4_chamber_time(1); 
-
-Step5_chamber_hcho = p.hcho(Step5_chamber);
-Step5_chamber_time = posixtime(p.plant_datetime(Step5_chamber));
-Step5_chamber_time = Step5_chamber_time - Step5_chamber_time(1);
- 
-Step6_chamber_hcho = p.hcho(Step6_chamber);
-Step6_chamber_time = posixtime(p.plant_datetime(Step6_chamber));
-Step6_chamber_time = Step6_chamber_time - Step6_chamber_time(1);
-
-% Save Data to a .mat file to send to IGOR for Equilibration Time Determination 
- save('HCHO_Steps.mat','Step1_bypass_time','Step1_bypass_hcho','Step1_chamber_time','Step1_chamber_hcho',...%,...
-      'Step2_bypass_time','Step2_bypass_hcho','Step2_chamber_time','Step2_chamber_hcho',...
-      'Step3_bypass_time','Step3_bypass_hcho','Step3_chamber_time','Step3_chamber_hcho',...
-      'Step4_bypass_time','Step4_bypass_hcho','Step4_chamber_time','Step4_chamber_hcho',...
-      'Step5_bypass_time','Step5_bypass_hcho','Step5_chamber_time','Step5_chamber_hcho',...
-      'Step6_bypass_time','Step6_bypass_hcho','Step6_chamber_time','Step6_chamber_hcho');
-
-% You may want to take these individual steps and now plot in Igor for
-% equilibration times
 
 %% Parsing of Bypass vs Chamber
 % Flag 51 - Sampling Bypass
@@ -227,8 +250,8 @@ Step6_chamber_time = Step6_chamber_time - Step6_chamber_time(1);
 BypassIndices = find(p.Flag==51);
 ChamberIndices = find(p.Flag==50);
 
-[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 60);  % MAY NEED TO CHANGE
-[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 90); % MAY NEED TO CHANGE
+[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 60);
+[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 1000);
 
 % Separate bypass data from chamber data
 
@@ -243,6 +266,7 @@ Chamber_posixtime = p.Tplanteng_1(ChamberIndices);
 Chamber_CO2       = p.CO2_ppm(ChamberIndices);
 Chamber_H2O       = p.H2O_ppth(ChamberIndices);
 Chamber_HCHO      = p.hcho(ChamberIndices);
+Chamber_VPD       = p.VPD(ChamberIndices);
 
 if s.engplot
  figure
@@ -275,25 +299,24 @@ if s.engplot
  plot(Chamber_datetime,Chamber_HCHO)
  hold on
  plot(p.plant_datetime,5*p.FC0_Set)
- hold on
- plot(FILIF.datetime1Hz,FILIF.Flag)
 end
 
-%% Chunk and Interpolation of Bypass H2O Data
-% Chunking bypass data in order to average each bypass chunk for later
-% interpolation
 
+%% Calculation of CO2 and H2O Differences Between Chamber and Bypass
+
+% H2O Difference Calculation
+% Chunk and Interpolation of Bypass H2O Data
 bypass_chunks = chunker(BypassIndices);
 
 %Find average counts for each offline data chunk. Using interpolation 
 %between the two adjacent offline counts averages, put onlines and average
 %offlines on same time basis.
 
-l=size(bypass_chunks,1);
-bypass_avg_chunks=nan(l,1);
-time_avg_bypass=nan(1,1);
+len=size(bypass_chunks,1);
+bypass_avg_chunks=nan(len,1);
+time_avg_bypass=nan(len,1);
 
-for i=1:l
+for i=1:len
    j = bypass_chunks(i,1):bypass_chunks(i,2);
    bypass_avg_chunks(i) = nanmean(p.H2O_ppth(j));
    time_avg_bypass(i) = nanmean(p.Tplanteng_1(j));
@@ -311,95 +334,107 @@ plot(Chamber_datetime,chamber_bypass_H2O,'.')
 
 % Obtain difference between chamber and bypass H2O
 
-H2O_diff = Chamber_H2O - chamber_bypass_H2O;
+f.H2O_diff = Chamber_H2O - chamber_bypass_H2O;
 
-figure,plot(Chamber_datetime,H2O_diff,'.')
-
-%% Define P_in and P_out
-
-%p.p_in = (p.hcho + s.source_term)*(1-s.wall_loss_fraction);
-%p.p_out = p.hcho/(1-s.wall_loss_fraction) - s.source_term;
-
-p.p_in = p.hcho*(1-s.wall_loss_fraction) + s.source_term;
-p.p_out = p.hcho;
-
-%% Chunk and Interpolation of Bypass and Chamber HCHO Data
-% Chunking bypass and chamber data
-
-p_in_chunks = chunker(BypassIndices);
+% CO2 Difference Calculation
+% Chunk and Interpolation of Bypass CO2 Data
+bypass_chunks = chunker(BypassIndices);
 
 %Find average counts for each offline data chunk. Using interpolation 
 %between the two adjacent offline counts averages, put onlines and average
 %offlines on same time basis.
 
-l=size(p_in_chunks,1);
-p_in_avg_chunks=nan(l,1);
-time_p_in_avg_chunks=nan(1,1);
+len=size(bypass_chunks,1);
+bypass_avg_chunks=nan(len,1);
+time_avg_bypass=nan(len,1);
 
-for i=1:l
-   j = p_in_chunks(i,1):p_in_chunks(i,2);
-   p_in_avg_chunks(i) = nanmean(p.p_in(j));
-   time_p_in_avg_chunks(i) = nanmean(p.Tplanteng_1(j));
+for i=1:len
+   j = bypass_chunks(i,1):bypass_chunks(i,2);
+   bypass_avg_chunks(i) = nanmean(p.CO2_ppm(j));
+   time_avg_bypass(i) = nanmean(p.Tplanteng_1(j));
 end
 
-datetime_p_in_avg_chunks = datetime(time_p_in_avg_chunks,'ConvertFrom','posixtime');
+time_avg_bypass_datetime = datetime(time_avg_bypass,'ConvertFrom','posixtime');
 
-figure,plot(datetime_p_in_avg_chunks,p_in_avg_chunks,'.')
+% Interpolation of bypass data
+chamber_bypass_CO2 = interp1(time_avg_bypass_datetime,bypass_avg_chunks,Chamber_datetime);
 
-%% Chunk and Interpolation of Bypass and Chamber HCHO Data
-% Chunking bypass and chamber data
 
-p_out_chunks = chunker(ChamberIndices);
+figure,plot(Chamber_datetime,Chamber_CO2,'.')
+hold on
+plot(Chamber_datetime,chamber_bypass_CO2,'.')
 
-%Find average counts for each offline data chunk. Using interpolation 
-%between the two adjacent offline counts averages, put onlines and average
-%offlines on same time basis.
+% Obtain difference between chamber and bypass CO2
 
-l=size(p_out_chunks,1);
-p_out_avg_chunks=nan(l,1);
-time_p_out_avg_chunks=nan(1,1);
+f.CO2_diff = Chamber_CO2 - chamber_bypass_CO2;
 
-for i=1:l
-   j = p_out_chunks(i,1):p_out_chunks(i,2);
-   p_out_avg_chunks(i) = nanmean(p.p_out(j));
-   time_p_out_avg_chunks(i) = nanmean(p.Tplanteng_1(j));
-end
+%% Calculate CO2 and H2O Fluxes
 
-datetime_p_out_avg_chunks = datetime(time_p_out_avg_chunks,'ConvertFrom','posixtime');
+% Calculation of Molar Flow Rate (mol/s)
+s.pressure = 1; %atm
+s.temperature = 273.15; %K - Under standard conditions
+s.R = 0.0821; % L*atm / mol*K
+n_out = s.pressure*(s.flow_rate/1000)*(1/60)/(s.R*s.temperature); % mol/s
+
+% Obtain CO2 and H2O Fluxes
+f.flux_CO2 = f.CO2_diff*(10^-6)*n_out*(1/s.leaf_area)*(10^6)*(100)^2; % umol/m^2*s 
+f.flux_H2O = f.H2O_diff*(10^-3)*n_out*(1/s.leaf_area)*(10^3)*(100)^2; % mmol/m^2*s
 
 figure
-plot(datetime_p_in_avg_chunks,p_in_avg_chunks,'.-')
+plot(Chamber_datetime,f.flux_H2O)
+title('H2O Flux')
+
+figure
+plot(Chamber_datetime,f.flux_CO2)
+title('CO2 Flux')
+
+
+%% Calculation of Stomatal Conductance
+
+f.gs = f.flux_H2O./Chamber_VPD; % Bulk Stomatal Conductance
+
+figure,plot(Chamber_datetime,f.gs)
+
+%% Chunk and Interpolation of Bypass HCHO Data
+
+bypass_HCHO_chunks = chunker(BypassIndices);
+
+%Find average counts for each offline data chunk. Using interpolation 
+%between the two adjacent offline counts averages, put onlines and average
+%offlines on same time basis.
+
+l=size(bypass_HCHO_chunks,1);
+bypass_avg_HCHO_chunks=nan(l,1);
+bypass_avg_time_chunks=nan(1,1);
+
+for i=1:l
+   j = bypass_HCHO_chunks(i,1):bypass_HCHO_chunks(i,2);
+   bypass_avg_HCHO_chunks(i) = nanmean(p.hcho(j));
+   bypass_avg_time_chunks(i) = nanmean(p.Tplanteng_1(j));
+end
+
+bypass_avg_datetime_chunks = datetime(bypass_avg_time_chunks,'ConvertFrom','posixtime');
+
+figure,plot(bypass_avg_datetime_chunks,bypass_avg_HCHO_chunks,'.')
+
+%% Convert to Blank Chamber Out Using Bypass HCHO
+
+c_out_blank = s.blank_conversion_slope*bypass_avg_HCHO_chunks + s.blank_conversion_intercept;
+
+c_out_blank_interp = interp1(bypass_avg_datetime_chunks,c_out_blank,Chamber_datetime);
+
+figure,plot(Chamber_datetime,c_out_blank_interp,'.')
+
+%% Calculation of HCHO Flux and Normalized HCHO Flux
+
+% Take HCHO difference between c_out and c_out_blank
+f.HCHO_diff = Chamber_HCHO - c_out_blank_interp;
+f.flux_HCHO = f.HCHO_diff*(10^-9)*n_out*(1/s.leaf_area)*(10^9)*(100)^2; % nmol/m^2*s 
+
+f.flux_HCHO_norm_gs = f.flux_HCHO./f.gs;
+
+figure,plot(Chamber_datetime,f.flux_HCHO,'.')
 hold on
-plot(datetime_p_out_avg_chunks,p_out_avg_chunks,'.-')
+plot(Chamber_datetime,f.flux_HCHO_norm_gs,'.')
 
-%% Calculation of Flux
-
-% Interpolation of p_in data. p_in_interpol is used for flux
-p.p_in_interpol = interp1(datetime_p_in_avg_chunks,p_in_avg_chunks,p.plant_datetime);
-
-figure,plot(p.plant_datetime,p.p_in_interpol,'.')
-
-% P_out - P_in Difference
-p.diff = p.p_out - p.p_in_interpol;
-f.diff = p.diff(ChamberIndices); % Still in units of ppbv
-f.diff_datetime = p.plant_datetime(ChamberIndices);
-f.posixtime = posixtime(f.diff_datetime);
-
-% Calculation of Number Density in Air
-s.pressure = 1; %atm
-s.temperature = nanmean(p.SHT31_Temp) + 273.15; %K
-s.R = 82.06; % cm^3*atm / mol*K
-n_air = s.pressure*(6.02*10^23)/(s.R*s.temperature);
-
-% Convert HCHO from ppbv to molecules/cm^3
-f.n_hcho = f.diff * n_air * (10^-9);
-
-f.flux = (s.flow_rate/s.leaf_area)*f.n_hcho; % molecules/cm^2 * min
-
-f.flux_final = f.flux*(100)^2 *(6.02*10^-23)*(1/60)*(10^9); % nmol/m^2*s
-
-
-[f.flux_avg_time, f.flux_avg_hcho] = binavg(f.posixtime,f.flux_final,120);
-f.flux_avg_datetime = datetime(f.flux_avg_time,'ConvertFrom','posixtime');
-
-figure,plot(f.flux_avg_datetime,f.flux_avg_hcho)
+figure,plot(Chamber_datetime,Chamber_HCHO)
