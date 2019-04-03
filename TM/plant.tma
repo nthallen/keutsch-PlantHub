@@ -86,8 +86,12 @@ State Auto_Start_Flow_noSteps{
   }
 }
 
+State Auto_Start_Flow_Execute_noSteps{
+	> Flow CO2 Set Volts 0.11
+	Validate Auto_Start_Flow_Idle;
+}
 
-State Auto_Start_Flow_withSteps{
+State Auto_Start_Flow_withStepsC{
 +10 {
   long unixtime;
   long ssm;
@@ -95,25 +99,76 @@ State Auto_Start_Flow_withSteps{
   ssm = unixtime % 86400;
 
   if (ssm >= 3600*8.0)
-	Validate Auto_Start_Flow_Execute_withSteps;
+	Validate Auto_Start_Flow_Execute_withStepsC;
   
-  else Validate Auto_Start_Flow_withSteps;
+  else Validate Auto_Start_Flow_withStepsC;
   }
 }
 
-State Auto_Start_Flow_Execute_noSteps{
-	> Flow CO2 Set Volts 0.11
-	Validate Auto_Start_Flow_Idle;
+State Auto_Start_Flow_Execute_withStepsC{
+	        > Flow CO2 Set Volts 0.44
+			Validate Valve_Switch;
+ +07:00:00	> Flow CO2 Set Volts 0.88
+ +02:20:00	> Flow CO2 Set Volts 0.66
+ +02:20:00	> Flow CO2 Set Volts 0.11
+ +02:20:00	> Flow CO2 Set Volts 0.22
+ +02:20:00	> Flow CO2 Set Volts 0.44
+ +02:20:00	> Flow CO2 Set Volts 0
+			> Flag Set 0
+			Validate Valve_Switch_Idle;
+			Validate Auto_Start_Flow_Idle;		
 }
 
-State Auto_Start_Flow_Execute_withSteps{
+State Auto_Start_Flow_withStepsB{
++10 {
+  long unixtime;
+  long ssm;
+  unixtime = itime();
+  ssm = unixtime % 86400;
+
+  if (ssm >= 3600*8.0)
+	Validate Auto_Start_Flow_Execute_withStepsB;
+  
+  else Validate Auto_Start_Flow_withStepsB;
+  }
+}
+
+State Auto_Start_Flow_Execute_withStepsB{
+	        > Flow CO2 Set Volts 0.88
+			Validate Valve_Switch;
+ +07:00:00	> Flow CO2 Set Volts 0.44
+ +02:20:00	> Flow CO2 Set Volts 0.66
+ +02:20:00	> Flow CO2 Set Volts 0.22
+ +02:20:00	> Flow CO2 Set Volts 0.44
+ +02:20:00	> Flow CO2 Set Volts 0.11
+ +02:20:00	> Flow CO2 Set Volts 0
+			> Flag Set 0
+			Validate Valve_Switch_Idle;
+			Validate Auto_Start_Flow_Idle;		
+}
+
+State Auto_Start_Flow_withStepsA{
++10 {
+  long unixtime;
+  long ssm;
+  unixtime = itime();
+  ssm = unixtime % 86400;
+
+  if (ssm >= 3600*8.0)
+	Validate Auto_Start_Flow_Execute_withStepsA;
+  
+  else Validate Auto_Start_Flow_withStepsA;
+  }
+}
+
+State Auto_Start_Flow_Execute_withStepsA{
 	        > Flow CO2 Set Volts 0.11
 			Validate Valve_Switch;
  +07:00:00	> Flow CO2 Set Volts 0.22
- +02:20:00	> Flow CO2 Set Volts 0.33
+ +02:20:00	> Flow CO2 Set Volts 0.44
+ +02:20:00	> Flow CO2 Set Volts 0.88
  +02:20:00	> Flow CO2 Set Volts 0.44
  +02:20:00	> Flow CO2 Set Volts 0.66
- +02:20:00	> Flow CO2 Set Volts 0.88
  +02:20:00	> Flow CO2 Set Volts 0
 			> Flag Set 0
 			Validate Valve_Switch_Idle;

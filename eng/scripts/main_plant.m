@@ -253,32 +253,64 @@ ChamberIndices = find(p.Flag==50);
 [BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 60);
 [ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 1000);
 
-% Separate bypass data from chamber data
+% Separate bypass data from chamber data. All times in p are at 1 Hz.
 
-Bypass_datetime  = p.plant_datetime(BypassIndices);
-Bypass_posixtime = p.Tplanteng_1(BypassIndices);
-Bypass_CO2       = p.CO2_ppm(BypassIndices);
-Bypass_H2O       = p.H2O_ppth(BypassIndices);
-Bypass_HCHO      = p.hcho(BypassIndices);
+Bypass_datetime_1Hz  = p.plant_datetime(BypassIndices);
+Bypass_posixtime_1Hz = p.Tplanteng_1(BypassIndices);
+Bypass_CO2_1Hz       = p.CO2_ppm(BypassIndices);
+Bypass_H2O_1Hz       = p.H2O_ppth(BypassIndices);
+Bypass_HCHO_1Hz      = p.hcho(BypassIndices);
 
-Chamber_datetime  = p.plant_datetime(ChamberIndices);
-Chamber_posixtime = p.Tplanteng_1(ChamberIndices);
-Chamber_CO2       = p.CO2_ppm(ChamberIndices);
-Chamber_H2O       = p.H2O_ppth(ChamberIndices);
-Chamber_HCHO      = p.hcho(ChamberIndices);
-Chamber_VPD       = p.VPD(ChamberIndices);
+Chamber_datetime_1Hz  = p.plant_datetime(ChamberIndices);
+Chamber_posixtime_1Hz = p.Tplanteng_1(ChamberIndices);
+Chamber_CO2_1Hz       = p.CO2_ppm(ChamberIndices);
+Chamber_H2O_1Hz       = p.H2O_ppth(ChamberIndices);
+Chamber_HCHO_1Hz      = p.hcho(ChamberIndices);
+Chamber_VPD_1Hz       = p.VPD(ChamberIndices);
+
+% Averaging
+time_avg = 120; % Averaging time for data in seconds
+
+[~, Bypass_CO2] = binavg(Bypass_posixtime_1Hz, Bypass_CO2_1Hz,time_avg);
+[~, Bypass_H2O] = binavg(Bypass_posixtime_1Hz, Bypass_H2O_1Hz,time_avg);
+[Bypass_posixtime, Bypass_HCHO] = binavg(Bypass_posixtime_1Hz, Bypass_HCHO_1Hz,time_avg);
+
+% Remove NaNs
+temp_matrix = [Bypass_posixtime' Bypass_CO2 Bypass_H2O Bypass_HCHO];
+temp_matrix(any(isnan(temp_matrix),2),:) = [];
+Bypass_posixtime = temp_matrix(:,1);
+Bypass_CO2 = temp_matrix(:,2);
+Bypass_H2O = temp_matrix(:,3);
+Bypass_HCHO = temp_matrix(:,4);
+Bypass_datetime = datetime(Bypass_posixtime,'ConvertFrom','posixtime');
+
+[~, Chamber_CO2] = binavg(Chamber_posixtime_1Hz, Chamber_CO2_1Hz,time_avg);
+[~, Chamber_H2O] = binavg(Chamber_posixtime_1Hz, Chamber_H2O_1Hz,time_avg);
+[~, Chamber_HCHO] = binavg(Chamber_posixtime_1Hz, Chamber_HCHO_1Hz,time_avg);
+[Chamber_posixtime, Chamber_VPD] = binavg(Chamber_posixtime_1Hz, Chamber_VPD_1Hz,time_avg);
+
+% Remove NaNs
+temp_matrix = [Chamber_posixtime' Chamber_CO2 Chamber_H2O Chamber_HCHO Chamber_VPD];
+temp_matrix(any(isnan(temp_matrix),2),:) = [];
+Chamber_posixtime = temp_matrix(:,1);
+Chamber_CO2 = temp_matrix(:,2);
+Chamber_H2O = temp_matrix(:,3);
+Chamber_HCHO = temp_matrix(:,4);
+Chamber_VPD = temp_matrix(:,5);
+Chamber_datetime = datetime(Chamber_posixtime,'ConvertFrom','posixtime');
+
 
 if s.engplot
  figure
  subplot(2,2,1)
- plot(Bypass_datetime,Bypass_CO2)
+ plot(Bypass_datetime,Bypass_CO2,'.')
  hold on
- plot(Chamber_datetime,Chamber_CO2)
+ plot(Chamber_datetime,Chamber_CO2,'.')
  title('CO_2')
  subplot(2,2,2)
- plot(Bypass_datetime,Bypass_H2O)
+ plot(Bypass_datetime,Bypass_H2O,'.')
  hold on
- plot(Chamber_datetime,Chamber_H2O)
+ plot(Chamber_datetime,Chamber_H2O,'.')
  title('H_2O')
  subplot(2,2,3)
  plot(p.plant_datetime,p.SHT31_Temp)
@@ -289,14 +321,10 @@ if s.engplot
  plot(p.plant_datetime,p.SHT31_RH)
  title('RH')
  
- [bypass_30s_time, bypass_30s_hcho] = binavg(Bypass_posixtime,Bypass_HCHO,30); % 
- [chamber_30s_time, chamber_30s_hcho] = binavg(Chamber_posixtime,Chamber_HCHO,30);
- bypass_30s_datetime = datetime(bypass_30s_time,'ConvertFrom','posixtime'); % Convert to datetime
- chamber_30s_datetime = datetime(chamber_30s_time,'ConvertFrom','posixtime');
- 
- figure,plot(Bypass_datetime,Bypass_HCHO)
+
+ figure,plot(Bypass_datetime,Bypass_HCHO,'.')
  hold on
- plot(Chamber_datetime,Chamber_HCHO)
+ plot(Chamber_datetime,Chamber_HCHO,'.')
  hold on
  plot(p.plant_datetime,5*p.FC0_Set)
 end
@@ -394,6 +422,7 @@ title('CO2 Flux')
 f.gs = f.flux_H2O./Chamber_VPD; % Bulk Stomatal Conductance
 
 figure,plot(Chamber_datetime,f.gs)
+title('H2O Stomatal Conductance')
 
 %% Chunk and Interpolation of Bypass HCHO Data
 
@@ -438,3 +467,31 @@ hold on
 plot(Chamber_datetime,f.flux_HCHO_norm_gs,'.')
 
 figure,plot(Chamber_datetime,Chamber_HCHO)
+
+
+%%
+chamber = [mean(s1c(:,2)), mean(s2c(:,2)), mean(s3c(:,2)), mean(s4c(:,2)), mean(s5c(:,2)), mean(s6c(:,2))];
+chamber_err = [std(s1c(:,2)), std(s2c(:,2)), std(s3c(:,2)), std(s4c(:,2)), std(s5c(:,2)), std(s6c(:,2))];
+flux = [mean(s1(:,2)), mean(s2(:,2)), mean(s3(:,2)), mean(s4(:,2)), mean(s5(:,2)), mean(s6(:,2))];
+flux_err = [std(s1(:,2)), std(s2(:,2)), std(s3(:,2)), std(s4(:,2)), std(s5(:,2)), std(s6(:,2))];
+chamber = chamber';
+chamber_err = chamber_err';
+flux = flux';
+flux_err = flux_err';
+save('HCHO_norm_flux_120s_Mar28Blank.mat','chamber','chamber_err','flux','flux_err')
+
+%%
+
+figure
+errorbar(Day1.chamber,Day1.flux,Day1.flux_err,Day1.flux_err,Day1.chamber_err,Day1.chamber_err,'b.','MarkerSize',12)
+hold on
+errorbar(Day2.chamber,Day2.flux,Day2.flux_err,Day2.flux_err,Day2.chamber_err,Day2.chamber_err,'r.','MarkerSize',12)
+hold on
+errorbar(Day3.chamber,Day3.flux,Day3.flux_err,Day3.flux_err,Day3.chamber_err,Day3.chamber_err,'g.','MarkerSize',12)
+
+syms x
+fplot(-0.0005616*x+0.00018,[0 20],'r')
+
+title('Compensation Points for Plant F Golden Pothos')
+xlabel('Chamber HCHO / ppbv')
+ylabel('Normalized Flux')
