@@ -40,7 +40,7 @@ end
 FILIF.posixtime = posixtime(FILIF.datetime);
 p.Tplanteng_1 = posixtime(p.plant_datetime);
 
-%% TIME AVERAGE HCHO DATA
+%% TIME AVERAGE HCHO DATA AND INTERPOLATE ONTO PLANT TIME BASIS
 
 [FILIF.time_1Hz, FILIF.hcho_1Hz] = binavg(FILIF.posixtime,FILIF.hcho,1);
 p.hcho = interp1(FILIF.time_1Hz,FILIF.hcho_1Hz,p.Tplanteng_1);
@@ -77,13 +77,13 @@ if s.graphical_removal
     h.Motion = 'horizontal';
     h.Enable = 'on';
     ax1 = subplot(3,2,1);
-    hLines = plot(p.plant_datetime,p.CO2_ppm);
+    hLines = plot(p.plant_datetime,p.hcho);
 
     ax2 = subplot(3,2,2);
     plot(p.plant_datetime,p.H2O_ppth)
     
     ax3 = subplot(3,2,3);
-    plot(p.plant_datetime,p.hcho)
+    plot(p.plant_datetime,p.CO2_ppm)
     
     ax4 = subplot(3,2,4);
     plot(p.plant_datetime,p.SHT31_RH)
@@ -483,14 +483,16 @@ save('HCHO_norm_flux_120s_Mar28Blank.mat','chamber','chamber_err','flux','flux_e
 %%
 
 figure
-errorbar(Day1.chamber,Day1.flux,Day1.flux_err,Day1.flux_err,Day1.chamber_err,Day1.chamber_err,'b.','MarkerSize',12)
-hold on
-errorbar(Day2.chamber,Day2.flux,Day2.flux_err,Day2.flux_err,Day2.chamber_err,Day2.chamber_err,'r.','MarkerSize',12)
-hold on
-errorbar(Day3.chamber,Day3.flux,Day3.flux_err,Day3.flux_err,Day3.chamber_err,Day3.chamber_err,'g.','MarkerSize',12)
+% errorbar(Day1.chamber,Day1.flux,Day1.flux_err,Day1.flux_err,Day1.chamber_err,Day1.chamber_err,'b.','MarkerSize',12)
+% hold on
+% errorbar(Day2.chamber,Day2.flux,Day2.flux_err,Day2.flux_err,Day2.chamber_err,Day2.chamber_err,'r.','MarkerSize',12)
+% hold on
+% errorbar(Day3.chamber,Day3.flux,Day3.flux_err,Day3.flux_err,Day3.chamber_err,Day3.chamber_err,'g.','MarkerSize',12)
 
+errorbar(chamber,flux,flux_err,flux_err,chamber_err,chamber_err,'.','MarkerSize',12)
+hold on
 syms x
-fplot(-0.0005616*x+0.00018,[0 20],'r')
+fplot(-0.000537399976615926*x+0.000102510481285949,[0 20],'r')
 
 title('Compensation Points for Plant F Golden Pothos')
 xlabel('Chamber HCHO / ppbv')

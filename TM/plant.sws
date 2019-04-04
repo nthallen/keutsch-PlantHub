@@ -12,8 +12,8 @@ SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSB  9   Auto Start Flow Execute WithStepsB:
 SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSC  10   Auto Start Flow Activate WithStepsC: Validate Auto_Start_Flow_withStepsC; break;
 SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSC 11   Auto Start Flow Execute WithStepsC: Validate Auto_Start_Flow_Execute_withStepsC; break;
 
-SWS_CO2_CONTROL_IDLE	     8   CO2 Control Idle: Validate CO2_Idle; break;
-SWS_CO2_CONTROL_INITIALIZE   9   CO2 Control Initialize: Validate CO2_control; break;
+SWS_CO2_CONTROL_IDLE	     12   CO2 Control Idle: Validate CO2_Idle; break;
+SWS_CO2_CONTROL_INITIALIZE   13   CO2 Control Initialize: Validate CO2_control; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
