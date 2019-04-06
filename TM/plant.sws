@@ -20,3 +20,6 @@ SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
 
 SW_Variable: Flag
   : Set %d { $0 = $2; }
+  
+SW_Variable: Flag2
+  : Set %d { $0 = $2; }

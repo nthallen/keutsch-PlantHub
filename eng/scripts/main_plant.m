@@ -482,17 +482,17 @@ save('HCHO_norm_flux_120s_Mar28Blank.mat','chamber','chamber_err','flux','flux_e
 
 %%
 
-figure
+figure ('DefaultAxesFontSize',18)
 % errorbar(Day1.chamber,Day1.flux,Day1.flux_err,Day1.flux_err,Day1.chamber_err,Day1.chamber_err,'b.','MarkerSize',12)
 % hold on
 % errorbar(Day2.chamber,Day2.flux,Day2.flux_err,Day2.flux_err,Day2.chamber_err,Day2.chamber_err,'r.','MarkerSize',12)
 % hold on
 % errorbar(Day3.chamber,Day3.flux,Day3.flux_err,Day3.flux_err,Day3.chamber_err,Day3.chamber_err,'g.','MarkerSize',12)
 
-errorbar(chamber,flux,flux_err,flux_err,chamber_err,chamber_err,'.','MarkerSize',12)
+errorbar(chamber,flux,flux_err,flux_err,chamber_err,chamber_err,'.','MarkerSize',15, 'LineWidth',1)
 hold on
 syms x
-fplot(-0.000537399976615926*x+0.000102510481285949,[0 20],'r')
+fplot(-0.000537399976615926*x+0.000102510481285949,[0 20],'r','LineWidth',2)
 
 title('Compensation Points for Plant F Golden Pothos')
 xlabel('Chamber HCHO / ppbv')

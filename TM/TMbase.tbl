@@ -1,5 +1,7 @@
 TMbase {
   CPU:    (CPU_Pct,3)  %;
+  Flag:   (Flag,3);
+  Flag2:  (Flag2,3);
   RAM:    (freemem,7) MB;
   Disk:   (Disk,5)     %;
   TDrift: (SysTDrift,7) sec;
