@@ -2,15 +2,18 @@ SW_Variable: SWStat
 SWS_VALVE_SWITCHING_ACTIVE   1   Valve Switching Activate: Validate Valve_Switch; break;
 SWS_VALVE_SWITCHING_IDLE	 2   Valve Switching Idle: Validate Valve_Switch_Idle; break;
 
-SWS_AUTO_START_FLOW_IDLE	 3   Auto Start Flow Idle: Validate Auto_Start_Flow_Idle; break;
-SWS_AUTO_START_FLOW_ACTIVE   4   Auto Start Flow Activate: Validate Auto_Start_Flow; break;
-SWS_AUTO_START_FLOW_EXECUTE  5   Auto Start Flow Execute: Validate Auto_Start_Flow_Execute; break;
+SWS_AUTO_START_FLOW_IDLE	             3   Auto Start Flow Idle: Validate Auto_Start_Flow_Idle; break;
+SWS_AUTO_START_FLOW_ACTIVE_NO_STEPS      4   Auto Start Flow Activate NoSteps: Validate Auto_Start_Flow_noSteps; break;
+SWS_AUTO_START_FLOW_EXECUTE_NO_STEPS     5   Auto Start Flow Execute NoSteps: Validate Auto_Start_Flow_Execute_noSteps; break;
+SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSA   6   Auto Start Flow Activate WithSteps A: Validate Auto_Start_Flow_withStepsA; break;
+SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSA  7   Auto Start Flow Execute WithSteps A: Validate Auto_Start_Flow_Execute_withStepsA; break;
+SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSB   8   Auto Start Flow Activate WithSteps B: Validate Auto_Start_Flow_withStepsB; break;
+SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSB  9   Auto Start Flow Execute WithSteps B: Validate Auto_Start_Flow_Execute_withStepsB; break;
+SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSC  10   Auto Start Flow Activate WithSteps C: Validate Auto_Start_Flow_withStepsC; break;
+SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSC 11   Auto Start Flow Execute WithSteps C: Validate Auto_Start_Flow_Execute_withStepsC; break;
 
-SWS_FCC_TEST_IDLE            6   FCC Test Idle: Validate FCC_Test_idle; break;
-SWS_FCC_TEST                 7   FCC Test Execute: Validate FCC_Test; break;
-
-SWS_CO2_CONTROL_IDLE	     8   CO2 Control Idle: Validate CO2_Idle; break;
-SWS_CO2_CONTROL_INITIALIZE   9   CO2 Control Initialize: Validate CO2_control; break;
+SWS_CO2_CONTROL_IDLE	     12   CO2 Control Idle: Validate CO2_Idle; break;
+SWS_CO2_CONTROL_INITIALIZE   13   CO2 Control Initialize: Validate CO2_control; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
