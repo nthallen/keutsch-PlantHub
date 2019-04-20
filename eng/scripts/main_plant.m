@@ -42,7 +42,7 @@ p.Tplanteng_1 = posixtime(p.plant_datetime);
 
 %% TIME AVERAGE HCHO DATA AND INTERPOLATE ONTO PLANT TIME BASIS
 
-[FILIF.time_1Hz, FILIF.hcho_1Hz] = binavg(FILIF.posixtime,FILIF.hcho,1);
+[FILIF.time_1Hz, FILIF.hcho_1Hz] = binavg_FILIF(FILIF.posixtime,FILIF.hcho,1);
 p.hcho = interp1(FILIF.time_1Hz,FILIF.hcho_1Hz,p.Tplanteng_1);
 
 
@@ -77,13 +77,13 @@ if s.graphical_removal
     h.Motion = 'horizontal';
     h.Enable = 'on';
     ax1 = subplot(3,2,1);
-    hLines = plot(p.plant_datetime,p.hcho);
+    hLines = plot(p.plant_datetime,p.CO2_ppm);
 
     ax2 = subplot(3,2,2);
     plot(p.plant_datetime,p.H2O_ppth)
     
     ax3 = subplot(3,2,3);
-    plot(p.plant_datetime,p.CO2_ppm)
+    plot(p.plant_datetime,p.hcho)
     
     ax4 = subplot(3,2,4);
     plot(p.plant_datetime,p.SHT31_RH)
@@ -269,11 +269,11 @@ Chamber_HCHO_1Hz      = p.hcho(ChamberIndices);
 Chamber_VPD_1Hz       = p.VPD(ChamberIndices);
 
 % Averaging
-time_avg = 120; % Averaging time for data in seconds
+time_avg = 90; % Averaging time for data in seconds
 
-[~, Bypass_CO2] = binavg(Bypass_posixtime_1Hz, Bypass_CO2_1Hz,time_avg);
-[~, Bypass_H2O] = binavg(Bypass_posixtime_1Hz, Bypass_H2O_1Hz,time_avg);
-[Bypass_posixtime, Bypass_HCHO] = binavg(Bypass_posixtime_1Hz, Bypass_HCHO_1Hz,time_avg);
+[~, Bypass_CO2] = binavg_plant(Bypass_posixtime_1Hz, Bypass_CO2_1Hz,time_avg);
+[~, Bypass_H2O] = binavg_plant(Bypass_posixtime_1Hz, Bypass_H2O_1Hz,time_avg);
+[Bypass_posixtime, Bypass_HCHO] = binavg_plant(Bypass_posixtime_1Hz, Bypass_HCHO_1Hz,time_avg);
 
 % Remove NaNs
 temp_matrix = [Bypass_posixtime' Bypass_CO2 Bypass_H2O Bypass_HCHO];
@@ -284,10 +284,10 @@ Bypass_H2O = temp_matrix(:,3);
 Bypass_HCHO = temp_matrix(:,4);
 Bypass_datetime = datetime(Bypass_posixtime,'ConvertFrom','posixtime');
 
-[~, Chamber_CO2] = binavg(Chamber_posixtime_1Hz, Chamber_CO2_1Hz,time_avg);
-[~, Chamber_H2O] = binavg(Chamber_posixtime_1Hz, Chamber_H2O_1Hz,time_avg);
-[~, Chamber_HCHO] = binavg(Chamber_posixtime_1Hz, Chamber_HCHO_1Hz,time_avg);
-[Chamber_posixtime, Chamber_VPD] = binavg(Chamber_posixtime_1Hz, Chamber_VPD_1Hz,time_avg);
+[~, Chamber_CO2] = binavg_plant(Chamber_posixtime_1Hz, Chamber_CO2_1Hz,time_avg);
+[~, Chamber_H2O] = binavg_plant(Chamber_posixtime_1Hz, Chamber_H2O_1Hz,time_avg);
+[~, Chamber_HCHO] = binavg_plant(Chamber_posixtime_1Hz, Chamber_HCHO_1Hz,time_avg);
+[Chamber_posixtime, Chamber_VPD] = binavg_plant(Chamber_posixtime_1Hz, Chamber_VPD_1Hz,time_avg);
 
 % Remove NaNs
 temp_matrix = [Chamber_posixtime' Chamber_CO2 Chamber_H2O Chamber_HCHO Chamber_VPD];
@@ -303,14 +303,14 @@ Chamber_datetime = datetime(Chamber_posixtime,'ConvertFrom','posixtime');
 if s.engplot
  figure
  subplot(2,2,1)
- plot(Bypass_datetime,Bypass_CO2,'.')
+ plot(Bypass_datetime,Bypass_CO2,'.','MarkerSize',15)
  hold on
- plot(Chamber_datetime,Chamber_CO2,'.')
+ plot(Chamber_datetime,Chamber_CO2,'.','MarkerSize',15)
  title('CO_2')
  subplot(2,2,2)
- plot(Bypass_datetime,Bypass_H2O,'.')
+ plot(Bypass_datetime,Bypass_H2O,'.','MarkerSize',15)
  hold on
- plot(Chamber_datetime,Chamber_H2O,'.')
+ plot(Chamber_datetime,Chamber_H2O,'.','MarkerSize',15)
  title('H_2O')
  subplot(2,2,3)
  plot(p.plant_datetime,p.SHT31_Temp)
@@ -322,9 +322,9 @@ if s.engplot
  title('RH')
  
 
- figure,plot(Bypass_datetime,Bypass_HCHO,'.')
+ figure,plot(Bypass_datetime,Bypass_HCHO,'.','MarkerSize',20)
  hold on
- plot(Chamber_datetime,Chamber_HCHO,'.')
+ plot(Chamber_datetime,Chamber_HCHO,'.','MarkerSize',20)
  hold on
  plot(p.plant_datetime,5*p.FC0_Set)
 end
@@ -444,7 +444,7 @@ end
 
 bypass_avg_datetime_chunks = datetime(bypass_avg_time_chunks,'ConvertFrom','posixtime');
 
-figure,plot(bypass_avg_datetime_chunks,bypass_avg_HCHO_chunks,'.')
+figure,plot(bypass_avg_datetime_chunks,bypass_avg_HCHO_chunks,'.','MarkerSize',15)
 
 %% Convert to Blank Chamber Out Using Bypass HCHO
 
@@ -452,7 +452,7 @@ c_out_blank = s.blank_conversion_slope*bypass_avg_HCHO_chunks + s.blank_conversi
 
 c_out_blank_interp = interp1(bypass_avg_datetime_chunks,c_out_blank,Chamber_datetime);
 
-figure,plot(Chamber_datetime,c_out_blank_interp,'.')
+figure,plot(Chamber_datetime,c_out_blank_interp,'.','MarkerSize',15)
 
 %% Calculation of HCHO Flux and Normalized HCHO Flux
 
@@ -465,20 +465,68 @@ f.flux_HCHO_norm_gs = f.flux_HCHO./f.gs;
 figure,plot(Chamber_datetime,f.flux_HCHO,'.')
 hold on
 plot(Chamber_datetime,f.flux_HCHO_norm_gs,'.')
+hold on
+plot(p.plant_datetime,p.Flag2)
 
-figure,plot(Chamber_datetime,Chamber_HCHO)
+figure,plot(Chamber_datetime,c_out_blank_interp,'.','MarkerSize',15)
+hold on
+plot(Chamber_datetime,Chamber_HCHO,'.','MarkerSize',15)
+hold on
+plot(p.plant_datetime,p.Flag2)
 
+
+if isfield(p,'Flag2')
+    
+    Chamber_Flag2 = interp1(p.plant_datetime,p.Flag2,Chamber_datetime);
+    Equilibrated_Indices  = find(Chamber_Flag2==30); % 30 represents times when steps are equilibrated; defined prior to experiment
+
+    % Chunk equilibrated indices to break into their respective steps
+    equilibrated_chunks = chunker(Equilibrated_Indices);
+    
+    o.flux_HCHO = [];
+    o.flux_HCHO_norm_gs = [];
+    o.Chamber_HCHO = [];
+    o.flux_HCHO_std = [];
+    o.flux_HCHO_norm_gs_std = [];
+    o.Chamber_HCHO_std = [];
+    o.Chamber_Blank_HCHO = [];
+    o.Chamber_Blank_HCHO_std = [];
+    
+    for i = 1:size(equilibrated_chunks,1)
+        o.flux_HCHO(i) = mean(f.flux_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        o.flux_HCHO_norm_gs(i) = mean(f.flux_HCHO_norm_gs(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        o.Chamber_HCHO(i) = mean(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        o.Chamber_Blank_HCHO(i) = mean(c_out_blank_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        
+        o.flux_HCHO_std(i) = std(f.flux_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        o.flux_HCHO_norm_gs_std(i) = std(f.flux_HCHO_norm_gs(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        o.Chamber_HCHO_std(i) = std(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+        o.Chamber_Blank_HCHO_std(i) = std(c_out_blank_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+    end
+end
 
 %%
-chamber = [mean(s1c(:,2)), mean(s2c(:,2)), mean(s3c(:,2)), mean(s4c(:,2)), mean(s5c(:,2)), mean(s6c(:,2))];
-chamber_err = [std(s1c(:,2)), std(s2c(:,2)), std(s3c(:,2)), std(s4c(:,2)), std(s5c(:,2)), std(s6c(:,2))];
-flux = [mean(s1(:,2)), mean(s2(:,2)), mean(s3(:,2)), mean(s4(:,2)), mean(s5(:,2)), mean(s6(:,2))];
-flux_err = [std(s1(:,2)), std(s2(:,2)), std(s3(:,2)), std(s4(:,2)), std(s5(:,2)), std(s6(:,2))];
-chamber = chamber';
-chamber_err = chamber_err';
-flux = flux';
-flux_err = flux_err';
-save('HCHO_norm_flux_120s_Mar28Blank.mat','chamber','chamber_err','flux','flux_err')
+
+flux_HCHO = o.flux_HCHO';
+flux_HCHO_norm_gs = o.flux_HCHO_norm_gs';
+chamber_HCHO = o.Chamber_HCHO';
+flux_HCHO_std = o.flux_HCHO_std';
+flux_HCHO_norm_gs_std = o.flux_HCHO_norm_gs_std';
+chamber_HCHO_std = o.Chamber_HCHO_std';
+chamber_blank_HCHO = o.Chamber_Blank_HCHO';
+chamber_blank_HCHO_std = o.Chamber_Blank_HCHO_std';
+save('plant_output_R.mat','flux_HCHO','flux_HCHO_norm_gs','chamber_HCHO',...
+    'flux_HCHO_std','flux_HCHO_norm_gs_std','chamber_HCHO_std',...
+    'chamber_blank_HCHO','chamber_blank_HCHO_std')
+save('plant_output_MATLAB.mat','o')
+
+figure,plot(chamber_HCHO,flux_HCHO_norm_gs,'.','MarkerSize',15)
+
+figure,plot(chamber_blank_HCHO,chamber_HCHO,'.','MarkerSize',15)
+hold on
+syms x
+fplot(x,[0 20],'r','LineWidth',2)
+
 
 %%
 
@@ -497,3 +545,10 @@ fplot(-0.000537399976615926*x+0.000102510481285949,[0 20],'r','LineWidth',2)
 title('Compensation Points for Plant F Golden Pothos')
 xlabel('Chamber HCHO / ppbv')
 ylabel('Normalized Flux')
+
+%%
+figure, errorbar(Day1.bypass,Day1.chamber,Day1.chamber_err,Day1.chamber_err,Day1.bypass_err,Day1.bypass_err,'.','MarkerSize',15)
+hold on
+errorbar(Day2.bypass,Day2.chamber,Day2.chamber_err,Day2.chamber_err,Day2.bypass_err,Day2.bypass_err,'.','MarkerSize',15)
+syms x
+fplot(0.961*x +0.25,[0 20],'r','LineWidth',2)
