@@ -106,22 +106,22 @@ State Auto_Start_Flow_withStepsC{
 }
 
 State Auto_Start_Flow_Execute_withStepsC{
-	        > Flow CO2 Set Volts 0.44
+	        > Flow CO2 Set Volts 0.1375
 			Validate Valve_Switch;
  +05:45:00  > Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.88
+ +01:15:00	> Flow CO2 Set Volts 0.165
 			> Flag2 Set 0
  +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.66
+ +01:15:00	> Flow CO2 Set Volts 0.1925
+			> Flag2 Set 0
+ +01:05:00	> Flag2 Set 30
+ +01:15:00	> Flow CO2 Set Volts 0.055
 			> Flag2 Set 0
  +01:05:00	> Flag2 Set 30
  +01:15:00	> Flow CO2 Set Volts 0.11
 			> Flag2 Set 0
  +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.22
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.44
+ +01:15:00	> Flow CO2 Set Volts 0.0825
 			> Flag2 Set 0
  +01:05:00	> Flag2 Set 30
  +01:15:00  > Flow CO2 Set Volts 0
