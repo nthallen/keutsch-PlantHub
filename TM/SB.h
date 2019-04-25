@@ -3,7 +3,8 @@
 #define tick_sic()
 #define disarm_sic()
 
-#define PLANT_FCC_BDID 13
+#define PLANT_FCC_BDID 7
+#define PLANT_INST_ID 3
 
 extern subbuspp *FCC0;
 
