@@ -2,14 +2,15 @@
 %
 %% Initialization
 
-T_bub = 273.15 + 23.3; %K
-P_bub = 995; %hPa
-T_mix = 273.15 + 23.3; %K 296.25 redundant
+T_bub = 273.15 + 23.8; %K
+P_bub = 982; %hPa
+T_mix = 273.15 + 23.0; %K 296.25 redundant
 P_mix = 995; %hPa redundant
 WetFlow = 200; %sccm
 DryFlow = 300; %sccm
 
 %% Equations
+
 
 % Determine Saturation Mixing Ratio over Liquid Water using
 % Murphy & Koop relationsclehip (SMRwmk in ppmv)

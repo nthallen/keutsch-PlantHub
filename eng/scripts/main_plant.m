@@ -136,91 +136,6 @@ end
 
 clear('ax1','ax2','ax3','ax4','ax5','ax6','h','hLines','file_exist_check')
 
-%% Find Indices for each HCHO Step for Equilibration Correction
-
-% % 3600 s chosen since chamber equilibrates within this time
-% %p.hcho([Step1(1:3600); Step2(1:3600); Step3(1:3600)]) = NaN;
-% 
-% % Find Bypass Indices for each Step 
-%  Step1_bypass = find(p.FC0_Set == 0.22 & p.Flag == 51);
-%  Step2_bypass = find(p.FC0_Set == 0.44 & p.Flag == 51);
-%  Step3_bypass = find(p.FC0_Set == 0.89 & p.Flag == 51);
-%  Step4_bypass = find(p.FC0_Set == 1.32 & p.Flag == 51);
-%  Step5_bypass = find(p.FC0_Set == 1.7799 & p.Flag == 51);
-%  Step6_bypass = find(p.FC0_Set == 2.2199 & p.Flag == 51);
-% 
-% % Find Chamber Indices for each Step 
-%  Step1_chamber = find(p.FC0_Set == 0.22 & p.Flag == 50);
-%  Step2_chamber = find(p.FC0_Set == 0.44 & p.Flag == 50);
-%  Step3_chamber = find(p.FC0_Set == 0.89 & p.Flag == 50);
-%  Step4_chamber = find(p.FC0_Set == 1.32 & p.Flag == 50);
-%  Step5_chamber = find(p.FC0_Set == 1.7799 & p.Flag == 50);
-%  Step6_chamber = find(p.FC0_Set == 2.2199 & p.Flag == 50);
-%  
-% % Apply Bypass Indices to HCHO data and Extract Time for Steps 1 - 6
-% Step1_bypass_hcho = p.hcho(Step1_bypass);
-% Step1_bypass_time = posixtime(p.plant_datetime(Step1_bypass));
-% Step1_bypass_time = Step1_bypass_time - Step1_bypass_time(1); 
-% 
-% Step2_bypass_hcho = p.hcho(Step2_bypass);
-% Step2_bypass_time = posixtime(p.plant_datetime(Step2_bypass));
-% Step2_bypass_time = Step2_bypass_time - Step2_bypass_time(1);
-%  
-% Step3_bypass_hcho = p.hcho(Step3_bypass);
-% Step3_bypass_time = posixtime(p.plant_datetime(Step3_bypass));
-% Step3_bypass_time = Step3_bypass_time - Step3_bypass_time(1);
-% 
-% Step4_bypass_hcho = p.hcho(Step4_bypass);
-% Step4_bypass_time = posixtime(p.plant_datetime(Step4_bypass));
-% Step4_bypass_time = Step4_bypass_time - Step4_bypass_time(1); 
-% 
-% Step5_bypass_hcho = p.hcho(Step5_bypass);
-% Step5_bypass_time = posixtime(p.plant_datetime(Step5_bypass));
-% Step5_bypass_time = Step5_bypass_time - Step5_bypass_time(1);
-%  
-% Step6_bypass_hcho = p.hcho(Step6_bypass);
-% Step6_bypass_time = posixtime(p.plant_datetime(Step6_bypass));
-% Step6_bypass_time = Step6_bypass_time - Step6_bypass_time(1);
-% 
-% 
-% 
-% % Apply Chamber Indices to HCHO data and Extract Time for Steps 1 - 6 
-% Step1_chamber_hcho = p.hcho(Step1_chamber);
-% Step1_chamber_time = posixtime(p.plant_datetime(Step1_chamber));
-% Step1_chamber_time = Step1_chamber_time - Step1_chamber_time(1); 
-% 
-% Step2_chamber_hcho = p.hcho(Step2_chamber);
-% Step2_chamber_time = posixtime(p.plant_datetime(Step2_chamber));
-% Step2_chamber_time = Step2_chamber_time - Step2_chamber_time(1);
-%  
-% Step3_chamber_hcho = p.hcho(Step3_chamber);
-% Step3_chamber_time = posixtime(p.plant_datetime(Step3_chamber));
-% Step3_chamber_time = Step3_chamber_time - Step3_chamber_time(1);
-% 
-% Step4_chamber_hcho = p.hcho(Step4_chamber);
-% Step4_chamber_time = posixtime(p.plant_datetime(Step4_chamber));
-% Step4_chamber_time = Step4_chamber_time - Step4_chamber_time(1); 
-% 
-% Step5_chamber_hcho = p.hcho(Step5_chamber);
-% Step5_chamber_time = posixtime(p.plant_datetime(Step5_chamber));
-% Step5_chamber_time = Step5_chamber_time - Step5_chamber_time(1);
-%  
-% Step6_chamber_hcho = p.hcho(Step6_chamber);
-% Step6_chamber_time = posixtime(p.plant_datetime(Step6_chamber));
-% Step6_chamber_time = Step6_chamber_time - Step6_chamber_time(1);
-% 
-% % Save Data to a .mat file to send to IGOR for Equilibration Time Determination 
-%  save('HCHO_Steps.mat','Step1_bypass_time','Step1_bypass_hcho','Step1_chamber_time','Step1_chamber_hcho',...%,...
-%       'Step2_bypass_time','Step2_bypass_hcho','Step2_chamber_time','Step2_chamber_hcho',...
-%       'Step3_bypass_time','Step3_bypass_hcho','Step3_chamber_time','Step3_chamber_hcho',...
-%       'Step4_bypass_time','Step4_bypass_hcho','Step4_chamber_time','Step4_chamber_hcho',...
-%       'Step5_bypass_time','Step5_bypass_hcho','Step5_chamber_time','Step5_chamber_hcho',...
-%       'Step6_bypass_time','Step6_bypass_hcho','Step6_chamber_time','Step6_chamber_hcho');
-% 
-% % You may want to take these individual steps and now plot in Igor for
-% % equilibration times
-
-
 %% Calculate VPD (Vapor Pressure Deficit) for Future Use
 
 % From the twin cuvette paper, use 'crotch' equation (Goff-Gratch Equation)
@@ -269,7 +184,7 @@ Chamber_HCHO_1Hz      = p.hcho(ChamberIndices);
 Chamber_VPD_1Hz       = p.VPD(ChamberIndices);
 
 % Averaging
-time_avg = 90; % Averaging time for data in seconds
+time_avg = 10; % Averaging time for data in seconds
 
 [~, Bypass_CO2] = binavg_plant(Bypass_posixtime_1Hz, Bypass_CO2_1Hz,time_avg);
 [~, Bypass_H2O] = binavg_plant(Bypass_posixtime_1Hz, Bypass_H2O_1Hz,time_avg);
@@ -328,6 +243,21 @@ if s.engplot
  hold on
  plot(p.plant_datetime,5*p.FC0_Set)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 %% Calculation of CO2 and H2O Differences Between Chamber and Bypass
