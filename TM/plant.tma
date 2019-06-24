@@ -81,7 +81,7 @@ State LCMQ_Test_Activate {
 			> Flag2 Set 3
  +10:00     > Valve 1 On
             > Flag Set 51
-			> Flag2 Set 4		
+			> Flag2 Set 4
  +10:00	    > Flow CO2 Set Volts 0
  	        > Valve 1 Off
 			> Flag Set 0
