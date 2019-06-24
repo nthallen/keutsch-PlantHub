@@ -144,8 +144,7 @@ State Auto_Start_Flow_Execute_withStepsB{
  +10:00     > Flow CO2 Set Volts 0.5
             > Flag2 Set 5
  +10:00     > Flag2 Set 6
- +10:00     > Flow CO2 Set Volts 0
-            > Flag2 Set 7			
+ +10:00     > Flow CO2 Set Volts 0			
 			Validate Valve_Switch_Idle;
 			Validate Auto_Start_Flow_Idle;		
 }
