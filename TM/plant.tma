@@ -132,26 +132,45 @@ State Auto_Start_Flow_Execute_withStepsC{
 }
 
 State Auto_Start_Flow_withStepsB{
-            Validate Auto_Start_Flow_Execute_withStepsB;
++10 {
+  long unixtime;
+  long ssm;
+  unixtime = itime();
+  ssm = unixtime % 86400;
+
+  if (ssm >= 3600*8.0)
+	Validate Auto_Start_Flow_Execute_withStepsB;
+  
+  else Validate Auto_Start_Flow_withStepsB;
+  }
 }
 
 State Auto_Start_Flow_Execute_withStepsB{
-	        > Flow CO2 Set Volts 0
+	        > Flow CO2 Set Volts 0.11
 			Validate Valve_Switch;
-            > Flag2 Set 1
- +10:00 	> Flag2 Set 2
- +10:00		> Flow CO2 Set Volts 0.25
-        	> Flag2 Set 3
- +10:00     > Flag2 Set 4
- +10:00     > Flow CO2 Set Volts 0.5
-            > Flag2 Set 5
- +10:00     > Flag2 Set 6
- +10:00     > Flow CO2 Set Volts 0
-            > Flag Set 0
-            > Flag2 Set 0			
+ +05:45:00  > Flag2 Set 30
+ +01:15:00	> Flow CO2 Set Volts 0.22
+			> Flag2 Set 0
+ +01:05:00	> Flag2 Set 30
+ +01:15:00	> Flow CO2 Set Volts 0.44
+			> Flag2 Set 0
+ +01:05:00	> Flag2 Set 30
+ +01:15:00	> Flow CO2 Set Volts 0.66
+			> Flag2 Set 0
+ +01:05:00	> Flag2 Set 30
+ +01:15:00	> Flow CO2 Set Volts 0.44
+			> Flag2 Set 0
+ +01:05:00	> Flag2 Set 30
+ +01:15:00	> Flow CO2 Set Volts 0.66
+			> Flag2 Set 0
+ +01:05:00	> Flag2 Set 30
+ +01:15:00  > Flow CO2 Set Volts 0
+			> Flag Set 0
+			> Flag2 Set 0
 			Validate Valve_Switch_Idle;
 			Validate Auto_Start_Flow_Idle;		
 }
+
 
 State Auto_Start_Flow_withStepsA{
 +10 {
