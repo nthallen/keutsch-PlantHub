@@ -64,6 +64,40 @@ State CO2_control nolog {
 }
 
 Partition
+
+State LCMQ_Test_Idle {}
+
+State LCMQ_Test_Activate {
+            > Flow CO2 Set Volts 0
+			> Valve 1 Off
+			> Flag Set 50
+			> Flag2 Set 1
+ +10:00     > Valve 1 On
+            > Flag Set 51
+			> Flag2 Set 2
+ +10:00	    > Flow CO2 Set Volts 0.25
+			> Valve 1 Off
+			> Flag Set 50
+			> Flag2 Set 3
+ +10:00     > Valve 1 On
+            > Flag Set 51
+			> Flag2 Set 4
+ +10:00     > Flow CO2 Set Volts 0.5
+            > Valve 1 Off
+			> Flag Set 50
+			> Flag2 Set 5
+ +10:00     > Valve 1 On
+            > Flag Set 51
+            > Flag2 Set 6			
+ +10:00	    > Flow CO2 Set Volts 0
+ 	        > Valve 1 Off
+			> Flag Set 0
+			> Flag2 Set 0
+			Validate LCMQ_Test_Idle;
+}
+
+
+Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
 # Currently hard-coded for 4:00 in the morning (10:00 UTC)
 # ssm is seconds since midnight

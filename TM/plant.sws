@@ -15,6 +15,9 @@ SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSC 11   Auto Start Flow Execute WithSteps C
 SWS_CO2_CONTROL_IDLE	     12   CO2 Control Idle: Validate CO2_Idle; break;
 SWS_CO2_CONTROL_INITIALIZE   13   CO2 Control Initialize: Validate CO2_control; break;
 
+SWS_LCMQ_TEST_IDLE	     14   LCMQ Test Idle: Validate LCMQ_Test_Idle; break;
+SWS_LCMQ_TEST_ACTIVATE   15   LCMQ Test Activate: Validate LCMQ_Test_Activate; break;
+
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
 
