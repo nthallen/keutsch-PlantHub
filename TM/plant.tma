@@ -21,7 +21,7 @@ State Valve_Switch{
 		> Flag Set 50
  +10:00 > Valve 1 On
 		> Flag Set 51
- +10:00	> Flag Set 0
+ +03:00	> Flag Set 0
 		Validate Valve_Switch;
 }
 
