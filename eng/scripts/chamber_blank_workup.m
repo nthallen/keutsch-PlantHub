@@ -1,6 +1,6 @@
 %% Preamble
 
-% Use this script for general workup of plant experiment data
+% Use this script for general workup of chamber blanks
 
 %% SETTINGS AND FOLDER INITIALIZATION
 % Settings for a run are located in a user-defined config.ini file. Please
@@ -136,27 +136,6 @@ end
 
 clear('ax1','ax2','ax3','ax4','ax5','ax6','h','hLines','file_exist_check')
 
-%% Calculate VPD (Vapor Pressure Deficit) for Future Use
-
-% From the twin cuvette paper, use 'crotch' equation (Goff-Gratch Equation)
-
-% Saturation Water Vapor Pressure (hPa)
-Tst = 373.15; %K Steam-point temperature
-est = 1013.25; %hPa Steam-point pressure
-T = p.TS_Temp + 273.15;%K
-sat_H2O_vapor = zeros(size(T));
-
-for i=1:length(T)
-sat_H2O_vapor(i) = 10.^(-7.90298*((Tst/T(i))-1) + 5.02808*log10(Tst/T(i))...
-    -1.3816e-7*(10.^(11.344*(1-(T(i)/Tst)))-1)...
-    + 8.1328e-3*(10.^(-3.49149*((Tst/T(i))-1))-1)+log10(est));
-end
-
-% Calculate Vapor Pressure Deficit
-P_chamber = 101.325; %kPa (must be in this unit)
-p.VPD = 100*sat_H2O_vapor./(P_chamber*1000) - p.H2O_ppth*(10^-3);
-% Will parse times corresponding to chamber sampling in the next section.
-
 
 %% Parsing of Bypass vs Chamber
 % Flag 51 - Sampling Bypass
@@ -165,8 +144,8 @@ p.VPD = 100*sat_H2O_vapor./(P_chamber*1000) - p.H2O_ppth*(10^-3);
 BypassIndices = find(p.Flag==51);
 ChamberIndices = find(p.Flag==50);
 
-[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 60);
-[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 1000);
+[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 0);
+[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 0);
 
 % Separate bypass data from chamber data. All times in p are at 1 Hz.
 
@@ -181,7 +160,6 @@ Chamber_posixtime_1Hz = p.Tplanteng_1(ChamberIndices);
 Chamber_CO2_1Hz       = p.CO2_ppm(ChamberIndices);
 Chamber_H2O_1Hz       = p.H2O_ppth(ChamberIndices);
 Chamber_HCHO_1Hz      = p.hcho(ChamberIndices);
-Chamber_VPD_1Hz       = p.VPD(ChamberIndices);
 
 % Averaging
 time_avg = 10; % Averaging time for data in seconds
@@ -283,8 +261,8 @@ for i = 1:size(Chamber_Equilibrated_Chunks,1)
     chamber_HCHO_pts = [chamber_HCHO_pts; temp];
 end
 
-%% BYPASS HCHO and CONVERSION INTO CHAMBER_OUT_BLANK
-% First, obtain averaged bypass HCHO for each step of an experimental run with
+%% BYPASS HCHO
+% Obtain averaged bypass HCHO for each step of an experimental run with
 % corresponding standard deviation of the mean
 
 [Bypass_posixtime, Bypass_HCHO] = binavg_plant(Bypass_posixtime_1Hz, Bypass_HCHO_1Hz,time_avg);
@@ -360,269 +338,79 @@ for i = 1:size(Bypass_Equilibrated_Chunks,1)
     Bypass_HCHO_avg_std(i)  = std(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)))/sqrt(size(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)),1));
 end
 
-% CONVERSION OF BYPASS BLANK INTO CHAMBER OUT BLANK
-chamber_out_blank = s.blank_slope*Bypass_HCHO_avg + s.blank_intercept;
+% For each bypass step with a given average and std dev, generate n number 
+% of random numbers where n corresponds to the number of chamber
+% measurements in that step
 
-% Error Propagation of chamber_out_blank
-e_blankslopeBypass = sqrt((s.blank_slope_se/s.blank_slope)^2+(Bypass_HCHO_avg_std/Bypass_HCHO_avg)^2)*s.blank_slope*Bypass_HCHO_avg;
-chamber_out_blank_err = sqrt((e_blankslopeBypass).^2 + (s.blank_intercept_se).^2);
+bypass_random_pts = []; % Randomly generated points for the bypass
+for i = 1:size(Chamber_Equilibrated_Chunks,1)
+   temp = size(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2),2);
+   r = normrnd(Bypass_HCHO_avg(i),Bypass_HCHO_avg_std(i),[1,temp])';
+   bypass_random_pts = [bypass_random_pts; r];
+end
 
 
-%% Export HCHO MAT File for Import into R
+%% Export MAT File for Import into R
 % No NaNs should appear in the data!
 
-% co = Chamber Out
-co_plant      = Chamber_HCHO_avg';
-co_plant_std  = Chamber_HCHO_avg_std';
-co_blank      = chamber_out_blank';
-co_blank_std  = chamber_out_blank_err';
-co_total_flow = s.flow_rate;
-co_leaf_area  = s.leaf_area; 
-save('co_R_StepsAveraged.mat','co_plant','co_plant_std','co_blank','co_blank_std','co_total_flow','co_leaf_area')
-
-%%
+chamber_HCHO = Chamber_HCHO_avg';
+chamber_HCHO_std = Chamber_HCHO_avg_std';
+bypass_HCHO = Bypass_HCHO_avg';
+bypass_HCHO_std = Bypass_HCHO_avg_std';
+save('chamber_blank_output_R_StepsAveraged.mat','chamber_HCHO','chamber_HCHO_std',...
+    'bypass_HCHO','bypass_HCHO_std','chamber_HCHO_pts','chamber_groups','bypass_random_pts')
 
 
+%% Commented Out Code
 
-
-
-
-
-
-
-
-
-
-
-
-
-%% Calculation of CO2 and H2O Differences Between Chamber and Bypass
-
-% H2O Difference Calculation
-% Chunk and Interpolation of Bypass H2O Data
-bypass_chunks = chunker(BypassIndices);
-
-%Find average counts for each offline data chunk. Using interpolation 
-%between the two adjacent offline counts averages, put onlines and average
-%offlines on same time basis.
-
-len=size(bypass_chunks,1);
-bypass_avg_chunks=nan(len,1);
-time_avg_bypass=nan(len,1);
-
-for i=1:len
-   j = bypass_chunks(i,1):bypass_chunks(i,2);
-   bypass_avg_chunks(i) = nanmean(p.H2O_ppth(j));
-   time_avg_bypass(i) = nanmean(p.Tplanteng_1(j));
-end
-
-time_avg_bypass_datetime = datetime(time_avg_bypass,'ConvertFrom','posixtime');
-
-% Interpolation of bypass data
-chamber_bypass_H2O = interp1(time_avg_bypass_datetime,bypass_avg_chunks,Chamber_datetime_1Hz);
-
-
-figure,plot(Chamber_datetime_1Hz,Chamber_H2O_1Hz,'.')
-hold on
-plot(Chamber_datetime_1Hz,chamber_bypass_H2O,'.')
-
-% Obtain difference between chamber and bypass H2O
-
-f.H2O_diff = Chamber_H2O_1Hz - chamber_bypass_H2O;
-
-% CO2 Difference Calculation
-% Chunk and Interpolation of Bypass CO2 Data
-bypass_chunks = chunker(BypassIndices);
-
-%Find average counts for each offline data chunk. Using interpolation 
-%between the two adjacent offline counts averages, put onlines and average
-%offlines on same time basis.
-
-len=size(bypass_chunks,1);
-bypass_avg_chunks=nan(len,1);
-time_avg_bypass=nan(len,1);
-
-for i=1:len
-   j = bypass_chunks(i,1):bypass_chunks(i,2);
-   bypass_avg_chunks(i) = nanmean(p.CO2_ppm(j));
-   time_avg_bypass(i) = nanmean(p.Tplanteng_1(j));
-end
-
-time_avg_bypass_datetime = datetime(time_avg_bypass,'ConvertFrom','posixtime');
-
-% Interpolation of bypass data
-chamber_bypass_CO2 = interp1(time_avg_bypass_datetime,bypass_avg_chunks,Chamber_datetime_1Hz);
-
-
-figure,plot(Chamber_datetime_1Hz,Chamber_CO2_1Hz,'.')
-hold on
-plot(Chamber_datetime_1Hz,chamber_bypass_CO2,'.')
-
-% Obtain difference between chamber and bypass CO2
-
-f.CO2_diff = Chamber_CO2_1Hz - chamber_bypass_CO2;
-
-%% Calculate CO2 and H2O Fluxes
-
-% Calculation of Molar Flow Rate (mol/s)
-s.pressure = 1; %atm
-s.temperature = 273.15; %K - Under standard conditions
-s.R = 0.0821; % L*atm / mol*K
-n_out = s.pressure*(s.flow_rate/1000)*(1/60)/(s.R*s.temperature); % mol/s
-
-% Obtain CO2 and H2O Fluxes
-f.flux_CO2 = f.CO2_diff*(10^-6)*n_out*(1/s.leaf_area)*(10^6)*(100)^2; % umol/m^2*s 
-f.flux_H2O = f.H2O_diff*(10^-3)*n_out*(1/s.leaf_area)*(10^3)*(100)^2; % mmol/m^2*s
-
-figure
-plot(Chamber_datetime_1Hz,f.flux_H2O)
-title('H2O Flux')
-
-figure
-plot(Chamber_datetime_1Hz,f.flux_CO2)
-title('CO2 Flux')
-
-
-%% Calculation of Stomatal Conductance
-
-f.gs = f.flux_H2O./Chamber_VPD_1Hz; % Bulk Stomatal Conductance
-
-figure,plot(Chamber_datetime_1Hz,f.gs)
-hold on
-plot(p.plant_datetime,2.3*p.Flag2)
-title('H2O Stomatal Conductance')
-%%
-% %% Chunk and Interpolation of Bypass HCHO Data
+%     % Run Kolmogrov-Smirnov Tests to test for normality. The null hypothesis
+%     % (Ho) is that the distribution is normal.
+%     % h=0 accepts the null hypothesis (i.e., the data is normal). This corresponds to p > 0.05
 % 
-% bypass_HCHO_chunks = chunker(BypassIndices);
-% 
-% %Find average counts for each offline data chunk. Using interpolation 
-% %between the two adjacent offline counts averages, put onlines and average
-% %offlines on same time basis.
-% 
-% l=size(bypass_HCHO_chunks,1);
-% bypass_avg_HCHO_chunks=nan(l,1);
-% bypass_avg_time_chunks=nan(1,1);
-% 
-% for i=1:l
-%    j = bypass_HCHO_chunks(i,1):bypass_HCHO_chunks(i,2);
-%    bypass_avg_HCHO_chunks(i) = nanmean(p.hcho(j));
-%    bypass_avg_time_chunks(i) = nanmean(p.Tplanteng_1(j));
-% end
-% 
-% bypass_avg_datetime_chunks = datetime(bypass_avg_time_chunks,'ConvertFrom','posixtime');
-% 
-% figure,plot(bypass_avg_datetime_chunks,bypass_avg_HCHO_chunks,'.','MarkerSize',15)
-% 
-% %% Convert to Blank Chamber Out Using Bypass HCHO
-% 
-% c_out_blank = s.blank_conversion_slope*bypass_avg_HCHO_chunks + s.blank_conversion_intercept;
-% 
-% c_out_blank_interp = interp1(bypass_avg_datetime_chunks,c_out_blank,Chamber_datetime);
-% 
-% figure,plot(Chamber_datetime,c_out_blank_interp,'.','MarkerSize',15)
-% 
-% %% Calculation of HCHO Flux and Normalized HCHO Flux
-% 
-% % Take HCHO difference between c_out and c_out_blank
-% f.HCHO_diff = Chamber_HCHO - c_out_blank_interp;
-% f.flux_HCHO = f.HCHO_diff*(10^-9)*n_out*(1/s.leaf_area)*(10^9)*(100)^2; % nmol/m^2*s 
-% 
-% f.flux_HCHO_norm_gs = f.flux_HCHO./f.gs;
-% 
-% figure,plot(Chamber_datetime,f.flux_HCHO,'.')
-% hold on
-% plot(Chamber_datetime,f.flux_HCHO_norm_gs,'.')
-% hold on
-% plot(p.plant_datetime,p.Flag2)
-% 
-% figure,plot(Chamber_datetime,c_out_blank_interp,'.','MarkerSize',15)
-% hold on
-% plot(Chamber_datetime,Chamber_HCHO,'.','MarkerSize',15)
-% hold on
-% plot(p.plant_datetime,p.Flag2)
-% 
-% 
-% if isfield(p,'Flag2')
+%     h_kstest_chamber = [];
+%     h_kstest_bypass  = [];
+%     p_kstest_chamber = [];
+%     p_kstest_bypass  = [];
 %     
-%     Chamber_Flag2 = interp1(p.plant_datetime,p.Flag2,Chamber_datetime);
-%     Equilibrated_Indices  = find(Chamber_Flag2==30); % 30 represents times when steps are equilibrated; defined prior to experiment
-% 
-%     % Chunk equilibrated indices to break into their respective steps
-%     equilibrated_chunks = chunker(Equilibrated_Indices);
-%     
-%     o.flux_HCHO = [];
-%     o.flux_HCHO_norm_gs = [];
-%     o.Chamber_HCHO = [];
-%     o.flux_HCHO_std = [];
-%     o.flux_HCHO_norm_gs_std = [];
-%     o.Chamber_HCHO_std = [];
-%     o.Chamber_Blank_HCHO = [];
-%     o.Chamber_Blank_HCHO_std = [];
-%     
-%     for i = 1:size(equilibrated_chunks,1)
-%         o.flux_HCHO(i) = mean(f.flux_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         o.flux_HCHO_norm_gs(i) = mean(f.flux_HCHO_norm_gs(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         o.Chamber_HCHO(i) = mean(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         o.Chamber_Blank_HCHO(i) = mean(c_out_blank_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         
-%         o.flux_HCHO_std(i) = std(f.flux_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         o.flux_HCHO_norm_gs_std(i) = std(f.flux_HCHO_norm_gs(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         o.Chamber_HCHO_std(i) = std(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%         o.Chamber_Blank_HCHO_std(i) = std(c_out_blank_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+%     for i=1:size(equilibrated_chunks,1)
+%         kstest_chamber = Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
+%         kstest_bypass = bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
+%         [h_kstest_chamber(i),p_kstest_chamber(i)] = kstest(kstest_chamber);
+%         [h_kstest_bypass(i),p_kstest_bypass(i)] = kstest(kstest_bypass);
+%         figure,histogram(kstest_chamber,12)
 %     end
-% end
-% 
-% %%
-% 
-% flux_HCHO = o.flux_HCHO';
-% flux_HCHO_norm_gs = o.flux_HCHO_norm_gs';
-% chamber_HCHO = o.Chamber_HCHO';
-% flux_HCHO_std = o.flux_HCHO_std';
-% flux_HCHO_norm_gs_std = o.flux_HCHO_norm_gs_std';
-% chamber_HCHO_std = o.Chamber_HCHO_std';
-% chamber_blank_HCHO = o.Chamber_Blank_HCHO';
-% chamber_blank_HCHO_std = o.Chamber_Blank_HCHO_std';
-% save('plant_output_R.mat','flux_HCHO','flux_HCHO_norm_gs','chamber_HCHO',...
-%     'flux_HCHO_std','flux_HCHO_norm_gs_std','chamber_HCHO_std',...
-%     'chamber_blank_HCHO','chamber_blank_HCHO_std')
-% save('plant_output_MATLAB.mat','o')
-% 
-% figure,plot(chamber_HCHO,flux_HCHO_norm_gs,'.','MarkerSize',15)
-% 
-% figure,plot(chamber_blank_HCHO,chamber_HCHO,'.','MarkerSize',15)
-% hold on
-% syms x
-% fplot(x,[0 20],'r','LineWidth',2)
-% 
 
-%%
-% 
-figure ('DefaultAxesFontSize',16)
-syms x
-hold on
-errorbar(Day1.co_blank,Day1.co_plant,Day1.co_plant_std,Day1.co_plant_std,Day1.co_blank_std,Day1.co_blank_std,'b.','MarkerSize',14)
-fplot(0.756*x+0.28,[0 20],'b-','LineWidth',0.75)
-hold on
-errorbar(Day2.co_blank,Day2.co_plant,Day2.co_plant_std,Day2.co_plant_std,Day2.co_blank_std,Day2.co_blank_std,'r.','MarkerSize',14)
-fplot(0.781*x+0.31,[0 20],'r-','LineWidth',0.75)
-%hold on
-%errorbar(Day3.co_blank,Day3.co_plant,Day3.co_plant_std,Day3.co_plant_std,Day3.co_blank_std,Day3.co_blank_std,'g.','MarkerSize',14)
-%fplot(0.889*x+0.0748,[0 6],'g-','LineWidth',0.75)
+% %On April 16, we decided not to perform t-tests on the chamber vs bypass
+% %since removing points that were deemed statistically insignificant really
+% %didn't change the fits and this procedure would then be hard to justify
+% %in a future manuscript or talk
+%   p_values = [];   
+%     % Run t-tests to see if there's significant differences between bypass
+%     % and chamber measurements. The null hypothesis (Ho) is that there's no
+%     % significant difference between the chamber and bypass HCHO.
+%     j = 1;
+%     for i=1:size(equilibrated_chunks,1)
+%         ttest_chamber = Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
+%         ttest_bypass = bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
+%         [h,pval] = ttest(ttest_chamber,ttest_bypass);
+%         p_values(i) = pval;
+%         
+%         if h % h=1 rejects the null hypothesis (i.e., the bypass and chamber are different). This corresponds to p < 0.05
+%             o.Chamber_HCHO(j) = mean(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+%             o.Bypass_HCHO(j) = mean(bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+%             o.Chamber_HCHO_std(j) = std(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+%             o.Bypass_HCHO_std(j) = std(bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
+%             j = j+1;
+%         end
+%     end
 
-fplot(x,[0 20],'k-','LineWidth',1.5)
+% 90 s
+% chamber_HCHO = o.Chamber_HCHO_90s;
+% chamber_HCHO_std(1:size(chamber_HCHO,1)) = 0.018;
+% bypass_HCHO = o.Bypass_HCHO_90s;
+% bypass_HCHO_std(1:size(chamber_HCHO,1)) = 0.018;
+% save('chamber_blank_output_R_SingleStep.mat','chamber_HCHO','chamber_HCHO_std',...
+%     'bypass_HCHO','bypass_HCHO_std')
 
-title('Compensation Points for Golden Pothos (Plant D)')
-xlabel('Chamber HCHO (without plant) / ppbv')
-ylabel('Chamber HCHO (with plant) / ppbv')
-%xticks([1 2 3 4 5 6])
-%yticks([1 2 3 4 5 6])
-
-set(gca, 'YGrid', 'on', 'XGrid', 'on')
-
-% %%
-% figure, errorbar(Day1.bypass,Day1.chamber,Day1.chamber_err,Day1.chamber_err,Day1.bypass_err,Day1.bypass_err,'.','MarkerSize',15)
-% hold on
-% errorbar(Day2.bypass,Day2.chamber,Day2.chamber_err,Day2.chamber_err,Day2.bypass_err,Day2.bypass_err,'.','MarkerSize',15)
-% syms x
-% fplot(0.961*x +0.25,[0 20],'r','LineWidth',2)
+% o.Chamber_HCHO_90s = Chamber_HCHO(equilibrated_chunks(5,1):equilibrated_chunks(5,2));
+% o.Bypass_HCHO_90s = bypass_HCHO_interp(equilibrated_chunks(5,1):equilibrated_chunks(5,2));

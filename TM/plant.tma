@@ -13,8 +13,6 @@ State Shutdown {
 
 Partition
 # Change valve to sample between air going into air into chamber vs air going out of inlet
-# Sun, et al. 2016, AMT sampled air going into chamber once per hour for 10 minutes
-# Data from 00:30 - 09:30 was only considered due to pressure fluctuation as valve switches
 
 State Valve_Switch{
 		> Valve 1 Off
@@ -29,73 +27,6 @@ State Valve_Switch_Idle{
 }
 
 
-Partition
-
-%{
-  double CO2_integral;
-  #define CO2_GP (0.1)
-  #define CO2_GI (0.2)
-  #define CO2_CLIP_LIMIT 200
-  #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
-  #define CO2_SETPOINT (430)
-  /* UpdatePeriod = 5; */
-%}
-
-State CO2_Idle {}
-
-State CO2_control nolog {
-  +10
-  { double err_term, rate_adj;
-    err_term = (convert(CO2_ppm)-CO2_SETPOINT);
-    CO2_integral += err_term;
-    if (CO2_integral > CO2_INT_LIMIT)
-      CO2_integral = CO2_INT_LIMIT;
-    else if (CO2_integral < -CO2_INT_LIMIT)
-      CO2_integral = -CO2_INT_LIMIT;
-    rate_adj = 60 - err_term * CO2_GP -
-      CO2_integral * CO2_GI;
-    if (rate_adj > CO2_CLIP_LIMIT)
-      rate_adj = CO2_CLIP_LIMIT;
-    else if (rate_adj < 0) rate_adj = 0;
-    if (rate_adj != FC0_Set)
-      ci_sendfcmd(2, "Flow CO2 Set SCCM %.0lf\n", rate_adj);
-    Validate CO2_control;
-  }
-}
-
-Partition
-
-State LCMQ_Test_Idle {}
-
-State LCMQ_Test_Activate {
-            > Flow CO2 Set Volts 0
-			> Valve 1 Off
-			> Flag Set 50
-			> Flag2 Set 1
- +10:00     > Valve 1 On
-            > Flag Set 51
-			> Flag2 Set 2
- +3:00	    > Flow CO2 Set Volts 0.25
-			> Valve 1 Off
-			> Flag Set 50
-			> Flag2 Set 3
- +10:00     > Valve 1 On
-            > Flag Set 51
-			> Flag2 Set 4
- +3:00	    > Flow CO2 Set Volts 0.5
-			> Valve 1 Off
-			> Flag Set 50
-			> Flag2 Set 5
- +10:00     > Valve 1 On
-            > Flag Set 51
-			> Flag2 Set 6
- +3:00	    > Flow CO2 Set Volts 0
- 	        > Valve 1 Off
-			> Flag Set 0
-			> Flag2 Set 0
-			Validate LCMQ_Test_Idle;
-}
-
 
 Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
@@ -103,10 +34,10 @@ Partition
 # ssm is seconds since midnight
 # Allows user the ability to set a series of steps for flowing OVOC
 
-State Auto_Start_Flow_Idle{
+State Overnight_Flow_Idle{
 }
 
-State Auto_Start_Flow_noSteps{
+State Overnight_Flow{
 +10 {
   long unixtime;
   long ssm;
@@ -114,136 +45,48 @@ State Auto_Start_Flow_noSteps{
   ssm = unixtime % 86400;
 
   if (ssm >= 3600*8.0)
-	Validate Auto_Start_Flow_Execute_noSteps;
+	Validate Overnight_Flow_Execute;
   
-  else Validate Auto_Start_Flow_noSteps;
+  else Validate Overnight_Flow;
   }
 }
 
-State Auto_Start_Flow_Execute_noSteps{
-	> Flow CO2 Set Volts 0.11
-	Validate Auto_Start_Flow_Idle;
+State Overnight_Flow_Execute{
+	> Flow CO2 Set Volts 0.2
+	Validate Overnight_Flow_Idle;
 }
 
-State Auto_Start_Flow_withStepsC{
-+10 {
-  long unixtime;
-  long ssm;
-  unixtime = itime();
-  ssm = unixtime % 86400;
 
-  if (ssm >= 3600*8.0)
-	Validate Auto_Start_Flow_Execute_withStepsC;
-  
-  else Validate Auto_Start_Flow_withStepsC;
-  }
+Partition
+# Assign steps for blank runs and runs with leaves
+
+State Blank_Steps_Idle{
 }
 
-State Auto_Start_Flow_Execute_withStepsC{
-	        > Flow CO2 Set Volts 0.1925
+State Blank_Steps{
+	        > Flow CO2 Set Volts 0.30
 			Validate Valve_Switch;
- +05:45:00  > Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.2475
+ +04:00     > Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.40
 			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.3025
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.50
 			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.055
+ +04:00 	> Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.20
 			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.1375
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.05
 			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.09625
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.10
 			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00  > Flow CO2 Set Volts 0
+ +04:00 	> Flag2 Set 30
+ +09:00     > Flow CO2 Set Volts 0
 			> Flag Set 0
 			> Flag2 Set 0
 			Validate Valve_Switch_Idle;
-			Validate Auto_Start_Flow_Idle;		
-}
-
-State Auto_Start_Flow_withStepsB{
-+10 {
-  long unixtime;
-  long ssm;
-  unixtime = itime();
-  ssm = unixtime % 86400;
-
-  if (ssm >= 3600*8.0)
-	Validate Auto_Start_Flow_Execute_withStepsB;
-  
-  else Validate Auto_Start_Flow_withStepsB;
-  }
-}
-
-State Auto_Start_Flow_Execute_withStepsB{
-	        > Flow CO2 Set Volts 0.11
-			Validate Valve_Switch;
- +05:45:00  > Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.22
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.44
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.66
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.44
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.66
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00  > Flow CO2 Set Volts 0
-			> Flag Set 0
-			> Flag2 Set 0
-			Validate Valve_Switch_Idle;
-			Validate Auto_Start_Flow_Idle;		
-}
-
-
-State Auto_Start_Flow_withStepsA{
-+10 {
-  long unixtime;
-  long ssm;
-  unixtime = itime();
-  ssm = unixtime % 86400;
-
-  if (ssm >= 3600*8.0)
-	Validate Auto_Start_Flow_Execute_withStepsA;
-  
-  else Validate Auto_Start_Flow_withStepsA;
-  }
-}
-
-State Auto_Start_Flow_Execute_withStepsA{
-	        > Flow CO2 Set Volts 0.11
-			Validate Valve_Switch;
- +05:45:00  > Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.22
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.44
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.88
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.44
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00	> Flow CO2 Set Volts 0.66
-			> Flag2 Set 0
- +01:05:00	> Flag2 Set 30
- +01:15:00  > Flow CO2 Set Volts 0
-			> Flag Set 0
-			> Flag2 Set 0
-			Validate Valve_Switch_Idle;
-			Validate Auto_Start_Flow_Idle;		
+			Validate Blank_Steps_Idle;
 }
 
 Partition

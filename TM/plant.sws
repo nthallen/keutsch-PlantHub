@@ -1,22 +1,11 @@
 SW_Variable: SWStat
 SWS_VALVE_SWITCHING_ACTIVE   1   Valve Switching Activate: Validate Valve_Switch; break;
 SWS_VALVE_SWITCHING_IDLE	 2   Valve Switching Idle: Validate Valve_Switch_Idle; break;
-
-SWS_AUTO_START_FLOW_IDLE	             3   Auto Start Flow Idle: Validate Auto_Start_Flow_Idle; break;
-SWS_AUTO_START_FLOW_ACTIVE_NO_STEPS      4   Auto Start Flow Activate NoSteps: Validate Auto_Start_Flow_noSteps; break;
-SWS_AUTO_START_FLOW_EXECUTE_NO_STEPS     5   Auto Start Flow Execute NoSteps: Validate Auto_Start_Flow_Execute_noSteps; break;
-SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSA   6   Auto Start Flow Activate WithSteps A: Validate Auto_Start_Flow_withStepsA; break;
-SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSA  7   Auto Start Flow Execute WithSteps A: Validate Auto_Start_Flow_Execute_withStepsA; break;
-SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSB   8   Auto Start Flow Activate WithSteps B: Validate Auto_Start_Flow_withStepsB; break;
-SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSB  9   Auto Start Flow Execute WithSteps B: Validate Auto_Start_Flow_Execute_withStepsB; break;
-SWS_AUTO_START_FLOW_ACTIVE_WITH_STEPSC  10   Auto Start Flow Activate WithSteps C: Validate Auto_Start_Flow_withStepsC; break;
-SWS_AUTO_START_FLOW_EXECUTE_WITH_STEPSC 11   Auto Start Flow Execute WithSteps C: Validate Auto_Start_Flow_Execute_withStepsC; break;
-
-SWS_CO2_CONTROL_IDLE	     12   CO2 Control Idle: Validate CO2_Idle; break;
-SWS_CO2_CONTROL_INITIALIZE   13   CO2 Control Initialize: Validate CO2_control; break;
-
-SWS_LCMQ_TEST_IDLE	     14   LCMQ Test Idle: Validate LCMQ_Test_Idle; break;
-SWS_LCMQ_TEST_ACTIVATE   15   LCMQ Test Activate: Validate LCMQ_Test_Activate; break;
+SWS_OVERNIGHT_FLOW_IDLE	     3   Overnight Flow Idle: Validate Overnight_Flow_Idle; break;
+SWS_OVERNIGHT_FLOW_ACTIVATE  4   Overnight Flow Activate: Validate Overnight_Flow; break;
+SWS_OVERNIGHT_FLOW_EXECUTE   5   Overnight Flow Execute: Validate Overnight_Flow_Execute; break;
+SWS_BLANK_STEPS_IDLE         6   Blank Steps Idle: Validate Blank_Steps_Idle; break;
+SWS_BLANK_STEPS_ACTIVATE     7   Blank Steps Activate: Validate Blank_Steps; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
