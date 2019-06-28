@@ -63,6 +63,9 @@ Partition
 State Blank_Steps_Idle{
 }
 
+State LC_Steps_Idle{
+}
+
 State Blank_Steps{
 	        > Flow CO2 Set Volts 0.30
 			Validate Valve_Switch;
@@ -87,6 +90,75 @@ State Blank_Steps{
 			> Flag2 Set 0
 			Validate Valve_Switch_Idle;
 			Validate Blank_Steps_Idle;
+}
+
+State LC_Steps{
+	        > Flow CO2 Set Volts 0.30
+			Validate Valve_Switch;
+ +04:00     > Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.40
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.50
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.20
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.05
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.10
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00     > Flow CO2 Set Volts 0.33
+ 			> Flag2 Set 0
+ +04:00     > Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.47
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.52
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.27
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.08
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.18
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.35
+ 			> Flag2 Set 0
+ +04:00     > Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.43
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.55
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.23
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.09
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.13
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00     > Flow CO2 Set Volts 0.38
+ 			> Flag2 Set 0
+ +04:00     > Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.45
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00     > Flow CO2 Set Volts 0
+			> Flag Set 0
+ +17:00		> Flag2 Set 30
+ +09:00		> Flag Set 0
+			Validate Valve_Switch_Idle;
+			Validate LC_Steps_Idle;
 }
 
 Partition

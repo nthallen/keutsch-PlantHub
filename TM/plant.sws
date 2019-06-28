@@ -6,6 +6,8 @@ SWS_OVERNIGHT_FLOW_ACTIVATE  4   Overnight Flow Activate: Validate Overnight_Flo
 SWS_OVERNIGHT_FLOW_EXECUTE   5   Overnight Flow Execute: Validate Overnight_Flow_Execute; break;
 SWS_BLANK_STEPS_IDLE         6   Blank Steps Idle: Validate Blank_Steps_Idle; break;
 SWS_BLANK_STEPS_ACTIVATE     7   Blank Steps Activate: Validate Blank_Steps; break;
+SWS_LC_STEPS_IDLE            8   LC Steps Idle: Validate LC_Steps_Idle; break;
+SWS_LC_STEPS_ACTIVATE        9   LC Steps Activate: Validate LC_Steps; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
