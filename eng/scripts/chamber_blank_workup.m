@@ -144,8 +144,8 @@ clear('ax1','ax2','ax3','ax4','ax5','ax6','h','hLines','file_exist_check')
 BypassIndices = find(p.Flag==51);
 ChamberIndices = find(p.Flag==50);
 
-[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 0);
-[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 0);
+[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 1);
+[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 180);
 
 % Separate bypass data from chamber data. All times in p are at 1 Hz.
 
@@ -245,22 +245,6 @@ for i = 1:size(Chamber_Equilibrated_Chunks,1)
     Chamber_HCHO_avg_std(i)  = std(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)))/sqrt(size(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)),1));
 end
 
-% Create groups based on equilibrated indices
-chamber_groups = [];
-for i = 1:size(Chamber_Equilibrated_Chunks,1)
-    temp = size(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2),2);
-    v = zeros(temp, 1);
-    v(:) = i;
-    chamber_groups = [chamber_groups; v];
-end
-
-% Pull out equilibrated chamber values
-chamber_HCHO_pts = [];
-for i = 1:size(Chamber_Equilibrated_Chunks,1)
-    temp = Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2));
-    chamber_HCHO_pts = [chamber_HCHO_pts; temp];
-end
-
 %% BYPASS HCHO
 % Obtain averaged bypass HCHO for each step of an experimental run with
 % corresponding standard deviation of the mean
@@ -314,21 +298,35 @@ Bypass_posixtime = temp_matrix(:,1);
 Bypass_HCHO = temp_matrix(:,2);
 Bypass_datetime = datetime(Bypass_posixtime,'ConvertFrom','posixtime');
 
+
+% Chunk the Outlier-Removed Bypass Data to Prepare for Averaging
+a = size(Bypass_datetime,1);
+transitions = find(diff(Bypass_datetime) > minutes(10));
+transitions = [transitions; a];
+bypass_chunks = ones(size(transitions,1),2);
+for i = 1:size(transitions,1)
+    bypass_chunks(i,2) = transitions(i);
+end
+for i = 1:size(transitions,1)-1
+    bypass_chunks(i+1,1) = transitions(i)+1;
+end
+
 % Interpolate Flag2 (representing equilibrated steps) onto Bypass_datetime
 % 30 represents times when steps are equilibrated; defined prior to experiment
-Bypass_Flag2 = interp1(p.plant_datetime,p.Flag2,Bypass_datetime);
-Bypass_Equilibrated_Indices = find(Bypass_Flag2==30);
+% Bypass_Flag2 = interp1(p.plant_datetime,p.Flag2,Bypass_datetime);
+% Bypass_Equilibrated_Indices = find(Bypass_Flag2==30);
 
 % Chunk equilibrated indices to break into their respective steps
-Bypass_Equilibrated_Chunks = chunker(Bypass_Equilibrated_Indices);
+% Bypass_Equilibrated_Chunks = chunker(Bypass_Equilibrated_Indices);
+Bypass_Equilibrated_Chunks = bypass_chunks;
 
 % Show Flag 2 on Data
-if s.engplot
-    figure,plot(Bypass_datetime,Bypass_HCHO)
-    hold on
-    plot(Bypass_datetime,Bypass_Flag2,'.','MarkerSize',20)
-    title('Bypass HCHO with Flag2')
-end
+% if s.engplot
+%     figure,plot(Bypass_datetime,Bypass_HCHO)
+%     hold on
+%     plot(Bypass_datetime,Bypass_Flag2,'.','MarkerSize',20)
+%     title('Bypass HCHO with Flag2')
+% end
 
 Bypass_HCHO_avg = [];
 Bypass_HCHO_avg_std = [];
@@ -336,17 +334,6 @@ Bypass_HCHO_avg_std = [];
 for i = 1:size(Bypass_Equilibrated_Chunks,1)       
     Bypass_HCHO_avg(i)      = mean(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)));
     Bypass_HCHO_avg_std(i)  = std(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)))/sqrt(size(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)),1));
-end
-
-% For each bypass step with a given average and std dev, generate n number 
-% of random numbers where n corresponds to the number of chamber
-% measurements in that step
-
-bypass_random_pts = []; % Randomly generated points for the bypass
-for i = 1:size(Chamber_Equilibrated_Chunks,1)
-   temp = size(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2),2);
-   r = normrnd(Bypass_HCHO_avg(i),Bypass_HCHO_avg_std(i),[1,temp])';
-   bypass_random_pts = [bypass_random_pts; r];
 end
 
 
@@ -358,59 +345,4 @@ chamber_HCHO_std = Chamber_HCHO_avg_std';
 bypass_HCHO = Bypass_HCHO_avg';
 bypass_HCHO_std = Bypass_HCHO_avg_std';
 save('chamber_blank_output_R_StepsAveraged.mat','chamber_HCHO','chamber_HCHO_std',...
-    'bypass_HCHO','bypass_HCHO_std','chamber_HCHO_pts','chamber_groups','bypass_random_pts')
-
-
-%% Commented Out Code
-
-%     % Run Kolmogrov-Smirnov Tests to test for normality. The null hypothesis
-%     % (Ho) is that the distribution is normal.
-%     % h=0 accepts the null hypothesis (i.e., the data is normal). This corresponds to p > 0.05
-% 
-%     h_kstest_chamber = [];
-%     h_kstest_bypass  = [];
-%     p_kstest_chamber = [];
-%     p_kstest_bypass  = [];
-%     
-%     for i=1:size(equilibrated_chunks,1)
-%         kstest_chamber = Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
-%         kstest_bypass = bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
-%         [h_kstest_chamber(i),p_kstest_chamber(i)] = kstest(kstest_chamber);
-%         [h_kstest_bypass(i),p_kstest_bypass(i)] = kstest(kstest_bypass);
-%         figure,histogram(kstest_chamber,12)
-%     end
-
-% %On April 16, we decided not to perform t-tests on the chamber vs bypass
-% %since removing points that were deemed statistically insignificant really
-% %didn't change the fits and this procedure would then be hard to justify
-% %in a future manuscript or talk
-%   p_values = [];   
-%     % Run t-tests to see if there's significant differences between bypass
-%     % and chamber measurements. The null hypothesis (Ho) is that there's no
-%     % significant difference between the chamber and bypass HCHO.
-%     j = 1;
-%     for i=1:size(equilibrated_chunks,1)
-%         ttest_chamber = Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
-%         ttest_bypass = bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2));
-%         [h,pval] = ttest(ttest_chamber,ttest_bypass);
-%         p_values(i) = pval;
-%         
-%         if h % h=1 rejects the null hypothesis (i.e., the bypass and chamber are different). This corresponds to p < 0.05
-%             o.Chamber_HCHO(j) = mean(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%             o.Bypass_HCHO(j) = mean(bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%             o.Chamber_HCHO_std(j) = std(Chamber_HCHO(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%             o.Bypass_HCHO_std(j) = std(bypass_HCHO_interp(equilibrated_chunks(i,1):equilibrated_chunks(i,2)));
-%             j = j+1;
-%         end
-%     end
-
-% 90 s
-% chamber_HCHO = o.Chamber_HCHO_90s;
-% chamber_HCHO_std(1:size(chamber_HCHO,1)) = 0.018;
-% bypass_HCHO = o.Bypass_HCHO_90s;
-% bypass_HCHO_std(1:size(chamber_HCHO,1)) = 0.018;
-% save('chamber_blank_output_R_SingleStep.mat','chamber_HCHO','chamber_HCHO_std',...
-%     'bypass_HCHO','bypass_HCHO_std')
-
-% o.Chamber_HCHO_90s = Chamber_HCHO(equilibrated_chunks(5,1):equilibrated_chunks(5,2));
-% o.Bypass_HCHO_90s = bypass_HCHO_interp(equilibrated_chunks(5,1):equilibrated_chunks(5,2));
+    'bypass_HCHO','bypass_HCHO_std')

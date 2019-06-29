@@ -7,7 +7,7 @@ require(lmodel2)
 source('YorkFit.R')
 
 ##INITIALIZATION############################################
-setwd("D:/Plant/RAW/190605.1")
+setwd("D:/Plant/RAW/190628.3")
 data <- readMat("co_R_StepsAveraged.mat")
 
 # Specify x and y columns and their associated standard deviations (SD)
@@ -73,16 +73,4 @@ print(ggqqplot(York_res,title = 'Normality of the Residuals'))
 
 # Technically, this applies to OLS only
 print(ncvTest(lm(y~x)))
-
-
-## TESTING FOR HOMOSCEDACITY (Uniform variance in both x and y)
-# Want null hypothesis to show that the variances are the same; Use Levene's Test
-
-#yhat         <- York_slope*x_rpts + York_int  # Predicted values from fit
-#York_res     <- y_pts - yhat
-
-#print(leveneTest(as.numeric(York_res),as.factor(ygroups),center=mean))
-
-# Technically, this applies to OLS only
-#print(ncvTest(lm(y~x)))
 

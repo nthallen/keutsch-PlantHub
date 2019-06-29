@@ -165,8 +165,8 @@ p.VPD = 100*sat_H2O_vapor./(P_chamber*1000) - p.H2O_ppth*(10^-3);
 BypassIndices = find(p.Flag==51);
 ChamberIndices = find(p.Flag==50);
 
-[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 60);
-[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 1000);
+[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 1);
+[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 180);
 
 % Separate bypass data from chamber data. All times in p are at 1 Hz.
 
@@ -267,21 +267,6 @@ for i = 1:size(Chamber_Equilibrated_Chunks,1)
     Chamber_HCHO_avg_std(i)  = std(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)))/sqrt(size(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)),1));
 end
 
-% Create groups based on equilibrated indices
-chamber_groups = [];
-for i = 1:size(Chamber_Equilibrated_Chunks,1)
-    temp = size(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2),2);
-    v = zeros(temp, 1);
-    v(:) = i;
-    chamber_groups = [chamber_groups; v];
-end
-
-% Pull out equilibrated chamber values
-chamber_HCHO_pts = [];
-for i = 1:size(Chamber_Equilibrated_Chunks,1)
-    temp = Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2));
-    chamber_HCHO_pts = [chamber_HCHO_pts; temp];
-end
 
 %% BYPASS HCHO and CONVERSION INTO CHAMBER_OUT_BLANK
 % First, obtain averaged bypass HCHO for each step of an experimental run with
@@ -336,21 +321,35 @@ Bypass_posixtime = temp_matrix(:,1);
 Bypass_HCHO = temp_matrix(:,2);
 Bypass_datetime = datetime(Bypass_posixtime,'ConvertFrom','posixtime');
 
+
+% Chunk the Outlier-Removed Bypass Data to Prepare for Averaging
+a = size(Bypass_datetime,1);
+transitions = find(diff(Bypass_datetime) > minutes(10));
+transitions = [transitions; a];
+bypass_chunks = ones(size(transitions,1),2);
+for i = 1:size(transitions,1)
+    bypass_chunks(i,2) = transitions(i);
+end
+for i = 1:size(transitions,1)-1
+    bypass_chunks(i+1,1) = transitions(i)+1;
+end
+
 % Interpolate Flag2 (representing equilibrated steps) onto Bypass_datetime
 % 30 represents times when steps are equilibrated; defined prior to experiment
-Bypass_Flag2 = interp1(p.plant_datetime,p.Flag2,Bypass_datetime);
-Bypass_Equilibrated_Indices = find(Bypass_Flag2==30);
+% Bypass_Flag2 = interp1(p.plant_datetime,p.Flag2,Bypass_datetime);
+% Bypass_Equilibrated_Indices = find(Bypass_Flag2==30);
 
 % Chunk equilibrated indices to break into their respective steps
-Bypass_Equilibrated_Chunks = chunker(Bypass_Equilibrated_Indices);
+% Bypass_Equilibrated_Chunks = chunker(Bypass_Equilibrated_Indices);
+Bypass_Equilibrated_Chunks = bypass_chunks;
 
 % Show Flag 2 on Data
-if s.engplot
-    figure,plot(Bypass_datetime,Bypass_HCHO)
-    hold on
-    plot(Bypass_datetime,Bypass_Flag2,'.','MarkerSize',20)
-    title('Bypass HCHO with Flag2')
-end
+% if s.engplot
+%     figure,plot(Bypass_datetime,Bypass_HCHO)
+%     hold on
+%     plot(Bypass_datetime,Bypass_Flag2,'.','MarkerSize',20)
+%     title('Bypass HCHO with Flag2')
+% end
 
 Bypass_HCHO_avg = [];
 Bypass_HCHO_avg_std = [];
@@ -359,6 +358,8 @@ for i = 1:size(Bypass_Equilibrated_Chunks,1)
     Bypass_HCHO_avg(i)      = mean(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)));
     Bypass_HCHO_avg_std(i)  = std(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)))/sqrt(size(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)),1));
 end
+
+%%
 
 % CONVERSION OF BYPASS BLANK INTO CHAMBER OUT BLANK
 chamber_out_blank = s.blank_slope*Bypass_HCHO_avg + s.blank_intercept;

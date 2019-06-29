@@ -154,9 +154,9 @@ State LC_Steps{
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
  +09:00     > Flow CO2 Set Volts 0
-			> Flag Set 0
+			> Flag2 Set 0
  +17:00		> Flag2 Set 30
- +09:00		> Flag Set 0
+ +09:00		> Flag2 Set 0
 			Validate Valve_Switch_Idle;
 			Validate LC_Steps_Idle;
 }
