@@ -2,3 +2,4 @@ TM "Receive" SWData 0;
 
 TM 1 Hz UCHAR SWStat; collect SWStat = SWData.SWStat;
 TM 1 Hz UCHAR Flag; collect Flag = SWData.Flag;
+TM 1 Hz UCHAR Flag2; collect Flag2 = SWData.Flag2;

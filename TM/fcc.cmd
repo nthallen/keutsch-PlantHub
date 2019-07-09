@@ -43,7 +43,7 @@
       else nl_error(2, "FCC not present");
     }
   : FCC Reset I2C * {
-      FCC0->sbwr(0x29, 1);
+      FCC0->sbwr(0x2B, 1);
     }
   ;
 

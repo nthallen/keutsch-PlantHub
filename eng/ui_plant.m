@@ -3,6 +3,7 @@ f = ne_dialg('Plant Chamber Instrument',1);
 f = ne_dialg(f, 'add', 0, 1, 'gplantsws', 'SW Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pplantswssws', 'SW Stat' );
 f = ne_dialg(f, 'add', 1, 0, 'pplantswsf', 'Flag' );
+f = ne_dialg(f, 'add', 1, 0, 'pplantswsflag2', 'Flag 2' );
 f = ne_dialg(f, 'add', 0, 1, 'gplantfcc', 'FCC' );
 f = ne_dialg(f, 'add', 1, 0, 'pplantfccf', 'Flow 0' );
 f = ne_dialg(f, 'add', 1, 0, 'pplantfccflow1', 'Flow 1' );
