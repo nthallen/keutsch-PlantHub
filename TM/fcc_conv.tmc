@@ -26,3 +26,5 @@ FCC_FC_Status_t Vlv1_Stat; Invalidate Vlv1_Stat;
 { Vlv1_Stat = (FCC0_Status&0x08)?1:2; Validate Vlv1_Stat; }
 FCC_FC_Status_t Vlv2_Stat; Invalidate Vlv2_Stat;
 { Vlv2_Stat = (FCC0_Status&0x80)?1:2; Validate Vlv2_Stat; }
+FCC_FC_Status_t Vlv3_Stat; Invalidate Vlv3_Stat;
+{ Vlv3_Stat = (FCC0_Status&0x40)?1:2; Validate Vlv3_Stat; }
