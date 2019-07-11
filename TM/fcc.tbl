@@ -5,6 +5,7 @@ FCC {
   Flow:   (FC2_Flow,6) (FC0_Flow,6) (FC1_Flow,6) V;
   Status: (FC2_Stat,7) (FC0_Stat,7) (FC1_Stat,7);
   Valve1: (Vlv1_Stat,7) Valve2:     (Vlv2_Stat,7);
+  Valve3: (Vlv3_Stat,7);
   U2_T:   (FCC_U2_T,6)  V;
   U3_T:   (FCC_U3_T,6)  V;
 }

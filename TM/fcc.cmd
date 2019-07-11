@@ -43,7 +43,7 @@
       else nl_error(2, "FCC not present");
     }
   : FCC Reset I2C * {
-      FCC0->sbwr(0x29, 1);
+      FCC0->sbwr(0x2B, 1);
     }
   ;
 
@@ -62,6 +62,7 @@
 &ValveSelect <uint16_t>
   : 1 { $0 = 0; }
   : 2 { $0 = 1; }
+  : 3 { $0 = 2; }
   ;
 
 &OpenClose <uint16_t>
