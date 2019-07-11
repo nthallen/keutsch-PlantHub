@@ -14,6 +14,9 @@ State Shutdown {
 Partition
 # Change valve to sample between air going into air into chamber vs air going out of inlet
 
+State Valve_Switch_Idle{
+}
+
 State Valve_Switch{
 		> Valve 1 Off
 		> Flag Set 50
@@ -23,10 +26,29 @@ State Valve_Switch{
 		Validate Valve_Switch;
 }
 
-State Valve_Switch_Idle{
+
+Partition
+# Change between sampling from the LICOR and either the PTR3 or FILIF
+
+State Instrument_Valve_Switch_Idle{
 }
 
-
+State Instrument_Valve_Switch{
+		> Flag3 Set 70
+		> Valve 3 On
+		> Valve 1 Off
+		> Flag Set 50
+ +10:00 > Valve 1 On
+		> Flag Set 51
+ +03:00	> Flag Set 0
+        > Flag3 Set 71
+		> Valve 3 Off
+		> Flag Set 51
+ +03:00	> Valve 1 Off
+        > Flag Set 50
+ +03:00	> Flag Set 0
+		Validate Instrument_Valve_Switch;
+}
 
 Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
