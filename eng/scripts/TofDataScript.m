@@ -1,7 +1,7 @@
 clear variables
 close all
 
-basePath = 'D:\Plant\RAW\190708.3\';
+basePath = 'D:\Plant\RAW\190711.1\';
 
 
 
@@ -80,8 +80,14 @@ HLX.Cps(HLX.Cps<0) = nan;
 
 %% Pull Out Masses of Interest
 
-% MVK+NH4 = 88.07624
-% 
+% Use SIS Isotopes website to find masses!
 
-[~, MVKindex] = min(abs(HLX.MassList - 88.07624));
+% MVK+NH4      = 88.07624
+% ISOPOOH+NH4  = 136.09738
+% MEK+NH4      = 90.09189
+% ISOPRENE+NH4 = 86.09697
+% MethylSalicylate+NH4 = 170.08173
+% 2-methyl-2-vinyloxirane+NH4 = 102.09189
+
+[~, MVKindex] = min(abs(HLX.MassList - 86.09697));
 figure,plot(HLX.time,HLX.ndcps(:,MVKindex))
