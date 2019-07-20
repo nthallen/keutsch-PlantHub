@@ -38,15 +38,15 @@ State Instrument_Valve_Switch{
 		> Valve 3 On
 		> Valve 1 Off
 		> Flag Set 50
- +00:01 > Valve 1 On
+ +40:00 > Valve 1 On
 		> Flag Set 51
- +15:00	> Flag Set 0
+ +20:00	> Flag Set 0
         > Flag3 Set 71
 		> Valve 3 Off
 		> Flag Set 51
- +04:00	> Valve 1 Off
+ +05:00	> Valve 1 Off
         > Flag Set 50
- +00:01	> Flag Set 0
+ +05:00	> Flag Set 0
         > Flag3 Set 0
 		Validate Instrument_Valve_Switch_Idle;
 }
