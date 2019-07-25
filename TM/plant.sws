@@ -14,11 +14,14 @@ SWS_LC_STEPS_ACTIVATE        11  LC Steps Activate: Validate LC_Steps; break;
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
 
-SW_Variable: Flag
+SW_Variable: Flag1
   : Set %d { $0 = $2; }
   
 SW_Variable: Flag2
   : Set %d { $0 = $2; }
 
 SW_Variable: Flag3
+  : Set %d { $0 = $2; }
+
+SW_Variable: Step
   : Set %d { $0 = $2; }

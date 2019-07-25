@@ -1,5 +1,6 @@
 # SWStat.genui
   1 SWStat        SWStatus SWStat
-  1 Flag          SWStatus Flag
+  1 Flag1         SWStatus Flag1
   1 Flag2         SWStatus Flag2
   1 Flag3         SWStatus Flag3
+  1 Step		  SWStatus Step

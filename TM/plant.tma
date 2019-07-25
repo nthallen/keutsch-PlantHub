@@ -19,10 +19,10 @@ State Valve_Switch_Idle{
 
 State Valve_Switch{
 		> Valve 1 Off
-		> Flag Set 50
+		> Flag1 Set 50
  +10:00 > Valve 1 On
-		> Flag Set 51
- +03:00	> Flag Set 0
+		> Flag1 Set 51
+ +03:00	> Flag1 Set 0
 		Validate Valve_Switch;
 }
 
@@ -37,16 +37,16 @@ State Instrument_Valve_Switch{
 		> Flag3 Set 70
 		> Valve 3 On
 		> Valve 1 Off
-		> Flag Set 50
+		> Flag1 Set 50
  +60:00 > Valve 1 On
-		> Flag Set 51
- +20:00	> Flag Set 0
+		> Flag1 Set 51
+ +20:00	> Flag1 Set 0
         > Flag3 Set 71
 		> Valve 3 Off
-		> Flag Set 51
+		> Flag1 Set 51
  +05:00	> Valve 1 Off
-        > Flag Set 50
- +05:00	> Flag Set 0
+        > Flag1 Set 50
+ +05:00	> Flag1 Set 0
         > Flag3 Set 0
 		Validate Instrument_Valve_Switch_Idle;
 }
@@ -90,6 +90,7 @@ State LC_Steps_Idle{
 }
 
 State Blank_Steps{
+			> Valve 3 On
 	        > Flow CO2 Set Volts 0.60
 			Validate Valve_Switch;
  +04:00     > Flag2 Set 30
@@ -109,71 +110,71 @@ State Blank_Steps{
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
  +09:00     > Flow CO2 Set Volts 0
-			> Flag Set 0
+			> Flag1 Set 0
 			> Flag2 Set 0
 			Validate Valve_Switch_Idle;
 			Validate Blank_Steps_Idle;
 }
 
 State LC_Steps{
-	        > Flow CO2 Set Volts 0.30
+	        > Flow CO2 Set Volts 0.60
 			Validate Valve_Switch;
  +04:00     > Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.40
+ +09:00 	> Flow CO2 Set Volts 0.80
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.50
+ +09:00 	> Flow CO2 Set Volts 1.00
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.20
-			> Flag2 Set 0
- +04:00	    > Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.05
+ +09:00	    > Flow CO2 Set Volts 0.40
 			> Flag2 Set 0
  +04:00	    > Flag2 Set 30
  +09:00	    > Flow CO2 Set Volts 0.10
 			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.20
+			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
- +09:00     > Flow CO2 Set Volts 0.33
+ +09:00     > Flow CO2 Set Volts 0.66
  			> Flag2 Set 0
  +04:00     > Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.47
+ +09:00 	> Flow CO2 Set Volts 0.94
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.52
+ +09:00 	> Flow CO2 Set Volts 1.04
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.27
+ +09:00	    > Flow CO2 Set Volts 0.54
 			> Flag2 Set 0
  +04:00	    > Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.08
+ +09:00	    > Flow CO2 Set Volts 0.16
+			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.36
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.70
+ 			> Flag2 Set 0
+ +04:00     > Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 0.86
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00 	> Flow CO2 Set Volts 1.10
+			> Flag2 Set 0
+ +04:00 	> Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.46
 			> Flag2 Set 0
  +04:00	    > Flag2 Set 30
  +09:00	    > Flow CO2 Set Volts 0.18
 			> Flag2 Set 0
+ +04:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.26
+			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.35
+ +09:00     > Flow CO2 Set Volts 0.76
  			> Flag2 Set 0
  +04:00     > Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.43
-			> Flag2 Set 0
- +04:00 	> Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.55
-			> Flag2 Set 0
- +04:00 	> Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.23
-			> Flag2 Set 0
- +04:00	    > Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.09
-			> Flag2 Set 0
- +04:00	    > Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.13
-			> Flag2 Set 0
- +04:00 	> Flag2 Set 30
- +09:00     > Flow CO2 Set Volts 0.38
- 			> Flag2 Set 0
- +04:00     > Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.45
+ +09:00 	> Flow CO2 Set Volts 0.90
 			> Flag2 Set 0
  +04:00 	> Flag2 Set 30
  +09:00     > Flow CO2 Set Volts 0
