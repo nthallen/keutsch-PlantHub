@@ -20,7 +20,7 @@ State Valve_Switch_Idle{
 State Valve_Switch{
 		> Valve 1 Off
 		> Flag1 Set 50
- +10:00 > Valve 1 On
+ +12:00 > Valve 1 On
 		> Flag1 Set 51
  +03:00	> Flag1 Set 0
 		Validate Valve_Switch;
@@ -93,25 +93,27 @@ State Blank_Steps{
 			> Valve 3 On
 	        > Flow CO2 Set Volts 0.60
 			Validate Valve_Switch;
- +04:00     > Flag2 Set 30
+ +06:00     > Flag2 Set 30
  +09:00 	> Flow CO2 Set Volts 0.80
 			> Flag2 Set 0
- +04:00 	> Flag2 Set 30
+ +06:00 	> Flag2 Set 30
  +09:00 	> Flow CO2 Set Volts 1.00
 			> Flag2 Set 0
- +04:00 	> Flag2 Set 30
+ +06:00 	> Flag2 Set 30
  +09:00	    > Flow CO2 Set Volts 0.40
 			> Flag2 Set 0
- +04:00	    > Flag2 Set 30
- +09:00	    > Flow CO2 Set Volts 0.10
-			> Flag2 Set 0
- +04:00	    > Flag2 Set 30
+ +06:00	    > Flag2 Set 30
  +09:00	    > Flow CO2 Set Volts 0.20
 			> Flag2 Set 0
- +04:00 	> Flag2 Set 30
- +09:00     > Flow CO2 Set Volts 0
-			> Flag1 Set 0
+ +06:00	    > Flag2 Set 30
+ +09:00	    > Flow CO2 Set Volts 0.10
 			> Flag2 Set 0
+ +06:00 	> Flag2 Set 30
+ +09:00     > Flow CO2 Set Volts 0
+            > Flag2 Set 0
+ +06:00		> Flag2 Set 30
+ +09:00     > Flag2 Set 0
+			> Flag1 Set 0
 			Validate Valve_Switch_Idle;
 			Validate Blank_Steps_Idle;
 }
