@@ -208,7 +208,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 8
-			> Flow CO2 Set Volts 1.05
+			> Flow CO2 Set Volts 0.70
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -216,7 +216,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 9
-			> Flow CO2 Set Volts 0.98
+			> Flow CO2 Set Volts 0.875
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
