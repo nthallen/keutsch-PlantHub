@@ -53,7 +53,7 @@ State Instrument_Valve_Switch{
 
 Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
-# Currently hard-coded for 4:00 in the morning (10:00 UTC)
+# Currently hard-coded for 5:00 in the morning (10:00 UTC)
 # ssm is seconds since midnight
 # Allows user the ability to set a series of steps for flowing OVOC
 
@@ -67,7 +67,7 @@ State Overnight_Flow{
   unixtime = itime();
   ssm = unixtime % 86400;
 
-  if (ssm >= 3600*8.0)
+  if (ssm >= 3600*9.0)
 	Validate Overnight_Flow_Execute;
   
   else Validate Overnight_Flow;
@@ -79,6 +79,30 @@ State Overnight_Flow_Execute{
 	Validate Overnight_Flow_Idle;
 }
 
+Partition
+# Automatically start an overnight dark experiment with HCHO steps
+
+State Dark_Side_Idle{
+}
+
+State Dark_Side{
++10 {
+  long unixtime;
+  long ssm;
+  unixtime = itime();
+  ssm = unixtime % 86400;
+
+  if (ssm >= 3600*4.0)
+	Validate Dark_Side_Execute;
+  
+  else Validate Dark_Side;
+  }
+}
+
+State Dark_Side_Execute{
+	Validate LC_Steps;
+	Validate Dark_Side_Idle;
+}
 
 Partition
 # Assign steps for blank runs and runs with leaves

@@ -10,6 +10,9 @@ SWS_BLANK_STEPS_IDLE         8   Blank Steps Idle: Validate Blank_Steps_Idle; br
 SWS_BLANK_STEPS_ACTIVATE     9   Blank Steps Activate: Validate Blank_Steps; break;
 SWS_LC_STEPS_IDLE            10  LC Steps Idle: Validate LC_Steps_Idle; break;
 SWS_LC_STEPS_ACTIVATE        11  LC Steps Activate: Validate LC_Steps; break;
+SWS_DARK_SIDE_IDLE	         12  Dark Side Idle: Validate Dark_Side_Idle; break;
+SWS_DARK_SIDE_ACTIVATE       13  Dark Side Activate: Validate Dark_Side; break;
+SWS_DARK_SIDE_EXECUTE        14  Dark Side Execute: Validate Dark_Side_Execute; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
