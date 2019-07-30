@@ -144,7 +144,7 @@ State Blank_Steps{
 
 State LC_Steps{
 			> Step Set 1
-			> Flow CO2 Set Volts 0.20
+			> Flow CO2 Set Volts 0.35
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -152,7 +152,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 2
-			> Flow CO2 Set Volts 0.44
+			> Flow CO2 Set Volts 0.77
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -160,7 +160,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 3
-			> Flow CO2 Set Volts 0.16
+			> Flow CO2 Set Volts 0.28
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -172,14 +172,6 @@ State LC_Steps{
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
   +4:00		> Step Set 4
-			> Flow CO2 Set Volts 0.32
-			> Valve 3 On
-			> Flag3 Set 70
-			> Valve 1 Off
-			> Flag1 Set 50
- +12:00		> Valve 1 On
-			> Flag1 Set 51
-  +3:00		> Step Set 5
 			> Flow CO2 Set Volts 0.56
 			> Valve 3 On
 			> Flag3 Set 70
@@ -187,8 +179,16 @@ State LC_Steps{
 			> Flag1 Set 50
  +12:00		> Valve 1 On
 			> Flag1 Set 51
+  +3:00		> Step Set 5
+			> Flow CO2 Set Volts 0.91
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
   +3:00		> Step Set 6
-			> Flow CO2 Set Volts 0.48
+			> Flow CO2 Set Volts 0.84
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -200,7 +200,7 @@ State LC_Steps{
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
   +4:00		> Step Set 7
-			> Flow CO2 Set Volts 0.28
+			> Flow CO2 Set Volts 0.49
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -208,7 +208,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 8
-			> Flow CO2 Set Volts 0.40
+			> Flow CO2 Set Volts 0.70
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -216,7 +216,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 9
-			> Flow CO2 Set Volts 0.52
+			> Flow CO2 Set Volts 0.875
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -228,7 +228,7 @@ State LC_Steps{
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
   +4:00		> Step Set 10
-			> Flow CO2 Set Volts 0.36
+			> Flow CO2 Set Volts 0.63
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -236,7 +236,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 11
-			> Flow CO2 Set Volts 0.24
+			> Flow CO2 Set Volts 0.42
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -244,7 +244,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 12
-			> Flow CO2 Set Volts 0.08
+			> Flow CO2 Set Volts 0.14
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -256,7 +256,7 @@ State LC_Steps{
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
   +4:00		> Step Set 13
-			> Flow CO2 Set Volts 0.12
+			> Flow CO2 Set Volts 0.21
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -264,7 +264,7 @@ State LC_Steps{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 14
-			> Flow CO2 Set Volts 0.04
+			> Flow CO2 Set Volts 0.07
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
