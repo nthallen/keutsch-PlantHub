@@ -158,43 +158,58 @@ p.VPD = 100*sat_H2O_vapor./(P_chamber*1000) - p.H2O_ppth*(10^-3);
 % Will parse times corresponding to chamber sampling in the next section.
 
 
-%% Parsing of Bypass vs Chamber
+%% Parsing of Bypass vs Chamber HCHO
 % Flag 51 - Sampling Bypass
 % Flag 50 - Sampling Chamber
+% Flag3 71 - Sampling LICOR
+% Flag3 70 - Sampling PTR3
 
-BypassIndices = find(p.Flag==51);
-ChamberIndices = find(p.Flag==50);
+BypassIndices  = find(p.Flag1==51);
+ChamberIndices = find(p.Flag1==50);
+LICORIndices   = find(p.Flag3==71);
+FILIFIndices    = find(p.Flag3==70);
 
-[BypassIndices, BypassIndices_rm]  = RemoveFirstPoints(BypassIndices, 1);
-[ChamberIndices, ChamberIndices_rm]  = RemoveFirstPoints(ChamberIndices, 180);
+% Parse FILIF Data
+bypass_indices_FILIF = intersect(BypassIndices,FILIFIndices);
+[bypass_indices_FILIF, ~] = RemoveFirstPoints(bypass_indices_FILIF, 10);
+b.datetime_FILIF   = p.plant_datetime(bypass_indices_FILIF);
+b.posixtime_FILIF  = p.Tplanteng_1(bypass_indices_FILIF);
+b.hcho             = p.hcho(bypass_indices_FILIF);
+
+chamber_indices_FILIF = intersect(ChamberIndices,FILIFIndices);
+[chamber_indices_FILIF, ~] = RemoveFirstPoints(chamber_indices_FILIF, 180);
+c.datetime_FILIF   = p.plant_datetime(chamber_indices_FILIF);
+c.posixtime_FILIF  = p.Tplanteng_1(chamber_indices_FILIF);
+c.hcho             = p.hcho(chamber_indices_FILIF);
+
 
 % Separate bypass data from chamber data. All times in p are at 1 Hz.
 
-Bypass_datetime_1Hz  = p.plant_datetime(BypassIndices);
-Bypass_posixtime_1Hz = p.Tplanteng_1(BypassIndices);
-Bypass_CO2_1Hz       = p.CO2_ppm(BypassIndices);
-Bypass_H2O_1Hz       = p.H2O_ppth(BypassIndices);
-Bypass_HCHO_1Hz      = p.hcho(BypassIndices);
-
-Chamber_datetime_1Hz  = p.plant_datetime(ChamberIndices);
-Chamber_posixtime_1Hz = p.Tplanteng_1(ChamberIndices);
-Chamber_CO2_1Hz       = p.CO2_ppm(ChamberIndices);
-Chamber_H2O_1Hz       = p.H2O_ppth(ChamberIndices);
-Chamber_HCHO_1Hz      = p.hcho(ChamberIndices);
-Chamber_VPD_1Hz       = p.VPD(ChamberIndices);
+% Bypass_datetime_1Hz  = p.plant_datetime(BypassIndices);
+% Bypass_posixtime_1Hz = p.Tplanteng_1(BypassIndices);
+% Bypass_CO2_1Hz       = p.CO2_ppm(BypassIndices);
+% Bypass_H2O_1Hz       = p.H2O_ppth(BypassIndices);
+% Bypass_HCHO_1Hz      = p.hcho(BypassIndices);
+% 
+% Chamber_datetime_1Hz  = p.plant_datetime(ChamberIndices);
+% Chamber_posixtime_1Hz = p.Tplanteng_1(ChamberIndices);
+% Chamber_CO2_1Hz       = p.CO2_ppm(ChamberIndices);
+% Chamber_H2O_1Hz       = p.H2O_ppth(ChamberIndices);
+% Chamber_HCHO_1Hz      = p.hcho(ChamberIndices);
+% Chamber_VPD_1Hz       = p.VPD(ChamberIndices);
 
 % Averaging
 time_avg = 10; % Averaging time for data in seconds
 
 if s.engplot
-    figure,plot(Bypass_datetime_1Hz,Bypass_HCHO_1Hz,'.','MarkerSize',20)
+    figure,plot(b.datetime_FILIF,b.hcho,'.','MarkerSize',20)
     hold on
-    plot(Chamber_datetime_1Hz,Chamber_HCHO_1Hz,'.','MarkerSize',20)
+    plot(c.datetime_FILIF,c.hcho,'.','MarkerSize',20)
 end
 
 %% CHAMBER HCHO
 
-[Chamber_posixtime, Chamber_HCHO] = binavg_plant(Chamber_posixtime_1Hz, Chamber_HCHO_1Hz,time_avg);
+[Chamber_posixtime, Chamber_HCHO] = binavg_plant(c.posixtime_FILIF,c.hcho,time_avg);
 
 % Remove NaNs
 temp_matrix = [Chamber_posixtime' Chamber_HCHO];
@@ -236,43 +251,26 @@ plot(Chamber_datetime,Chamber_HCHO,'.','MarkerSize',15)
 title('Chamber Outlier Removal')
 
 % Remove NaNs
-Chamber_posixtime = posixtime(Chamber_datetime);
-temp_matrix = [Chamber_posixtime Chamber_HCHO];
-temp_matrix(any(isnan(temp_matrix),2),:) = [];
-Chamber_posixtime = temp_matrix(:,1);
-Chamber_HCHO = temp_matrix(:,2);
-Chamber_datetime = datetime(Chamber_posixtime,'ConvertFrom','posixtime');
-
-% Interpolate Flag2 (representing equilibrated steps) onto Chamber_datetime
-% 30 represents times when steps are equilibrated; defined prior to experiment
-Chamber_Flag2 = interp1(p.plant_datetime,p.Flag2,Chamber_datetime);
-Chamber_Equilibrated_Indices = find(Chamber_Flag2==30);
-
-% Chunk equilibrated indices to break into their respective steps
-Chamber_Equilibrated_Chunks = chunker(Chamber_Equilibrated_Indices);
-
-% Show Flag 2 on Data
-if s.engplot
-    figure,plot(Chamber_datetime,Chamber_HCHO)
-    hold on
-    plot(Chamber_datetime,Chamber_Flag2,'.','MarkerSize',20)
-    title('Chamber HCHO with Flag2')
-end
+%Chamber_posixtime = posixtime(Chamber_datetime);
+%temp_matrix = [Chamber_posixtime Chamber_HCHO];
+%temp_matrix(any(isnan(temp_matrix),2),:) = [];
+%Chamber_posixtime = temp_matrix(:,1);
+%Chamber_HCHO = temp_matrix(:,2);
+%Chamber_datetime = datetime(Chamber_posixtime,'ConvertFrom','posixtime');
 
 Chamber_HCHO_avg = [];
 Chamber_HCHO_avg_std = [];
 
-for i = 1:size(Chamber_Equilibrated_Chunks,1)       
-    Chamber_HCHO_avg(i)      = mean(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)));
-    Chamber_HCHO_avg_std(i)  = std(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)))/sqrt(size(Chamber_HCHO(Chamber_Equilibrated_Chunks(i,1):Chamber_Equilibrated_Chunks(i,2)),1));
+for i = 1:size(chamber_chunks,1)       
+    Chamber_HCHO_avg(i)      = nanmean(Chamber_HCHO(chamber_chunks(i,1):chamber_chunks(i,2)));
+    Chamber_HCHO_avg_std(i)  = nanstd(Chamber_HCHO(chamber_chunks(i,1):chamber_chunks(i,2)))/sqrt(size(Chamber_HCHO(chamber_chunks(i,1):chamber_chunks(i,2)),1));
 end
 
-
-%% BYPASS HCHO and CONVERSION INTO CHAMBER_OUT_BLANK
+%% BYPASS HCHO
 % First, obtain averaged bypass HCHO for each step of an experimental run with
 % corresponding standard deviation of the mean
 
-[Bypass_posixtime, Bypass_HCHO] = binavg_plant(Bypass_posixtime_1Hz, Bypass_HCHO_1Hz,time_avg);
+[Bypass_posixtime, Bypass_HCHO] = binavg_plant(b.posixtime_FILIF,b.hcho,time_avg);
 
 % Remove NaNs
 temp_matrix = [Bypass_posixtime' Bypass_HCHO];
@@ -334,40 +332,25 @@ for i = 1:size(transitions,1)-1
     bypass_chunks(i+1,1) = transitions(i)+1;
 end
 
-% Interpolate Flag2 (representing equilibrated steps) onto Bypass_datetime
-% 30 represents times when steps are equilibrated; defined prior to experiment
-% Bypass_Flag2 = interp1(p.plant_datetime,p.Flag2,Bypass_datetime);
-% Bypass_Equilibrated_Indices = find(Bypass_Flag2==30);
-
-% Chunk equilibrated indices to break into their respective steps
-% Bypass_Equilibrated_Chunks = chunker(Bypass_Equilibrated_Indices);
-Bypass_Equilibrated_Chunks = bypass_chunks;
-
-% Show Flag 2 on Data
-% if s.engplot
-%     figure,plot(Bypass_datetime,Bypass_HCHO)
-%     hold on
-%     plot(Bypass_datetime,Bypass_Flag2,'.','MarkerSize',20)
-%     title('Bypass HCHO with Flag2')
-% end
-
 Bypass_HCHO_avg = [];
 Bypass_HCHO_avg_std = [];
 
-for i = 1:size(Bypass_Equilibrated_Chunks,1)       
-    Bypass_HCHO_avg(i)      = mean(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)));
-    Bypass_HCHO_avg_std(i)  = std(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)))/sqrt(size(Bypass_HCHO(Bypass_Equilibrated_Chunks(i,1):Bypass_Equilibrated_Chunks(i,2)),1));
+for i = 1:size(bypass_chunks,1)       
+    Bypass_HCHO_avg(i)      = mean(Bypass_HCHO(bypass_chunks(i,1):bypass_chunks(i,2)));
+    Bypass_HCHO_avg_std(i)  = std(Bypass_HCHO(bypass_chunks(i,1):bypass_chunks(i,2)))/sqrt(size(Bypass_HCHO(bypass_chunks(i,1):bypass_chunks(i,2)),1));
 end
 
 %%
 
 % CONVERSION OF BYPASS BLANK INTO CHAMBER OUT BLANK
-chamber_out_blank = s.blank_slope*Bypass_HCHO_avg + s.blank_intercept;
+% chamber_out_blank = s.blank_slope*Bypass_HCHO_avg + s.blank_intercept;
 
 % Error Propagation of chamber_out_blank
-e_blankslopeBypass = sqrt((s.blank_slope_se/s.blank_slope)^2+(Bypass_HCHO_avg_std/Bypass_HCHO_avg)^2)*s.blank_slope*Bypass_HCHO_avg;
-chamber_out_blank_err = sqrt((e_blankslopeBypass).^2 + (s.blank_intercept_se).^2);
+% e_blankslopeBypass = sqrt((s.blank_slope_se/s.blank_slope)^2+(Bypass_HCHO_avg_std/Bypass_HCHO_avg)^2)*s.blank_slope*Bypass_HCHO_avg;
+% chamber_out_blank_err = sqrt((e_blankslopeBypass).^2 + (s.blank_intercept_se).^2);
 
+chamber_out_blank = Bypass_HCHO_avg;
+chamber_out_blank_err = Bypass_HCHO_avg_std;
 
 %% Export HCHO MAT File for Import into R
 % No NaNs should appear in the data!
@@ -489,8 +472,6 @@ title('CO2 Flux')
 f.gs = f.flux_H2O./Chamber_VPD_1Hz; % Bulk Stomatal Conductance
 
 figure,plot(Chamber_datetime_1Hz,f.gs)
-hold on
-plot(p.plant_datetime,2.3*p.Flag2)
 title('H2O Stomatal Conductance')
 %%
 % %% Chunk and Interpolation of Bypass HCHO Data
