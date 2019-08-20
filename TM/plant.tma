@@ -40,7 +40,7 @@ State Instrument_Valve_Switch{
 		> Flag1 Set 50
   +5:00 > Valve 3 On
 		> Flag3 Set 70
- +15:00	> Flag1 Set 50
+ +55:00	> Flag1 Set 50
 		Validate Instrument_Valve_Switch_Idle;
 }
 
