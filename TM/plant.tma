@@ -282,6 +282,57 @@ State LC_Steps{
 			Validate LC_Steps_Idle;
 }
 
+State LC_Steps_ISOPOOH{
+			> Step Set 1
+			> Flow CO2 Set Volts 0.45
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 2
+			> Flow CO2 Set Volts 0.75
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 3
+			> Flow CO2 Set Volts 1.05
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 4
+			> Flow CO2 Set Volts 1.35
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 5
+			> Flow CO2 Set Volts 1.65
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Valve 3 Off
+			> Flag3 Set 71
+  +4:00		> Valve 1 Off
+			> Flag1 Set 50
+  +4:00		> Step Set 0
+            > Flag1 Set 0
+			> Flag3 Set 0
+			Validate LC_Steps_Idle;
+}
+
 Partition
 
 # This partition and the two following monitor the flow
