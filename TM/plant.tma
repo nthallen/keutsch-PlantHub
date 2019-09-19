@@ -108,13 +108,13 @@ State LC_Steps_Idle{
 
 State Blank_Steps{
 			> Valve 3 On
-	        > Flow CO2 Set Volts 0.60
+	        > Flow CO2 Set Volts 0.30
 			Validate Valve_Switch;
  +06:00     > Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 0.80
+ +09:00 	> Flow CO2 Set Volts 0.50
 			> Flag2 Set 0
  +06:00 	> Flag2 Set 30
- +09:00 	> Flow CO2 Set Volts 1.00
+ +09:00 	> Flow CO2 Set Volts 0.70
 			> Flag2 Set 0
  +06:00 	> Flag2 Set 30
  +09:00	    > Flow CO2 Set Volts 0.40
