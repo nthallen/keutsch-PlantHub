@@ -14,6 +14,7 @@ SWS_DARK_SIDE_IDLE	         12  Dark Side Idle: Validate Dark_Side_Idle; break;
 SWS_DARK_SIDE_ACTIVATE       13  Dark Side Activate: Validate Dark_Side; break;
 SWS_DARK_SIDE_EXECUTE        14  Dark Side Execute: Validate Dark_Side_Execute; break;
 SWS_POOH_ACTIVATE			 15	 POOH Activate: Validate LC_Steps_ISOPOOH; break;
+SWS_HOUSEPLANT_ACTIVATE		 16	 Houseplant Activate: Validate LC_Steps_Houseplant; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
