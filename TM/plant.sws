@@ -1,20 +1,21 @@
 SW_Variable: SWStat
 SWS_VALVE_SWITCHING_ACTIVE   1   Valve Switching Activate: Validate Valve_Switch; break;
 SWS_VALVE_SWITCHING_IDLE	 2   Valve Switching Idle: Validate Valve_Switch_Idle; break;
-SWS_INST_VALVE_SWITCH_ACTIVE 3   Instrument Valve Switching Activate: Validate Instrument_Valve_Switch; break;
-SWS_INST_VALVE_SWITCH_IDLE   4   Instrument Valve Switching Idle: Validate Instrument_Valve_Switch_Idle; break;
-SWS_OVERNIGHT_FLOW_IDLE	     5   Overnight Flow Idle: Validate Overnight_Flow_Idle; break;
-SWS_OVERNIGHT_FLOW_ACTIVATE  6   Overnight Flow Activate: Validate Overnight_Flow; break;
-SWS_OVERNIGHT_FLOW_EXECUTE   7   Overnight Flow Execute: Validate Overnight_Flow_Execute; break;
-SWS_BLANK_STEPS_IDLE         8   Blank Steps Idle: Validate Blank_Steps_Idle; break;
-SWS_BLANK_STEPS_ACTIVATE     9   Blank Steps Activate: Validate Blank_Steps; break;
-SWS_LC_STEPS_IDLE            10  LC Steps Idle: Validate LC_Steps_Idle; break;
-SWS_LC_STEPS_ACTIVATE        11  LC Steps Activate: Validate LC_Steps; break;
-SWS_DARK_SIDE_IDLE	         12  Dark Side Idle: Validate Dark_Side_Idle; break;
-SWS_DARK_SIDE_ACTIVATE       13  Dark Side Activate: Validate Dark_Side; break;
-SWS_DARK_SIDE_EXECUTE        14  Dark Side Execute: Validate Dark_Side_Execute; break;
-SWS_POOH_ACTIVATE			 15	 POOH Activate: Validate LC_Steps_ISOPOOH; break;
-SWS_HOUSEPLANT_ACTIVATE		 16	 Houseplant Activate: Validate LC_Steps_Houseplant; break;
+SWS_INST_VALVE_SWITCH_PTR    3   Instrument Valve Switching PTR Activate: Validate Instrument_Valve_Switch_PTR; break;
+SWS_INST_VALVE_SWITCH_FILIF  4   Instrument Valve Switching FILIF Activate: Validate Instrument_Valve_Switch_FILIF; break;
+SWS_INST_VALVE_SWITCH_IDLE   5   Instrument Valve Switching Idle: Validate Instrument_Valve_Switch_Idle; break;
+SWS_OVERNIGHT_FLOW_IDLE	     6   Overnight Flow Idle: Validate Overnight_Flow_Idle; break;
+SWS_OVERNIGHT_FLOW_ACTIVATE  7   Overnight Flow Activate: Validate Overnight_Flow; break;
+SWS_OVERNIGHT_FLOW_EXECUTE   8   Overnight Flow Execute: Validate Overnight_Flow_Execute; break;
+SWS_BLANK_STEPS_IDLE         9   Blank Steps Idle: Validate Blank_Steps_Idle; break;
+SWS_BLANK_STEPS_ACTIVATE     10   Blank Steps Activate: Validate Blank_Steps; break;
+SWS_LC_STEPS_IDLE            11  LC Steps Idle: Validate LC_Steps_Idle; break;
+SWS_LC_STEPS_ACTIVATE        12  LC Steps Activate: Validate LC_Steps; break;
+SWS_DARK_SIDE_IDLE	         13  Dark Side Idle: Validate Dark_Side_Idle; break;
+SWS_DARK_SIDE_ACTIVATE       14  Dark Side Activate: Validate Dark_Side; break;
+SWS_DARK_SIDE_EXECUTE        15  Dark Side Execute: Validate Dark_Side_Execute; break;
+SWS_POOH_ACTIVATE			 16	 POOH Activate: Validate LC_Steps_ISOPOOH; break;
+SWS_HOUSEPLANT_ACTIVATE		 17	 Houseplant Activate: Validate LC_Steps_Houseplant; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;
