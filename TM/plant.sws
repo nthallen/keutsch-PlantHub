@@ -16,6 +16,7 @@ SWS_DARK_SIDE_ACTIVATE       14  Dark Side Activate: Validate Dark_Side; break;
 SWS_DARK_SIDE_EXECUTE        15  Dark Side Execute: Validate Dark_Side_Execute; break;
 SWS_POOH_ACTIVATE			 16	 POOH Activate: Validate LC_Steps_ISOPOOH; break;
 SWS_HOUSEPLANT_ACTIVATE		 17	 Houseplant Activate: Validate LC_Steps_Houseplant; break;
+SWS_OZONE_ACTIVATE		     18	 Ozone Activate: Validate LC_Steps_Ozone; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;

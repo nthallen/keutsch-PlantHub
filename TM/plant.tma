@@ -547,6 +547,22 @@ State LC_Steps_ISOPOOH{
 			Validate LC_Steps_Idle;
 }
 
+State LC_Steps_Ozone{
+			> Step Set 1
+			> Flow CO2 Set Volts 0.3
+			Validate Valve_Switch
+ +180:00	> Step Set 2
+			> Flow CO2 Set Volts 0.4
+ +180:00	> Step Set 3
+			> Flow CO2 Set Volts 0.6
+ +180:00	> Step Set 4
+			> Flow CO2 Set Volts 0.8
+ +180:00	> Step Set 5
+			> Flow CO2 Set Volts 1.0
+ +180:00	> Step Set 0
+			Validate LC_Steps_Idle;
+}
+
 Partition
 
 # This partition and the two following monitor the flow
