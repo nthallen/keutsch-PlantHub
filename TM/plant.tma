@@ -549,16 +549,18 @@ State LC_Steps_ISOPOOH{
 
 State LC_Steps_Ozone{
 			> Step Set 1
-			> Flow CO2 Set Volts 0.0
-	+30:00	> Step Set 2
+			Validate Valve_Switch;
 			> Flow CO2 Set Volts 0.3
-	+30:00	> Step Set 3
+ +3:00:00	> Step Set 2
+			> Flow CO2 Set Volts 0.45
+ +3:00:00	> Step Set 3
 			> Flow CO2 Set Volts 0.6
-	+30:00	> Step Set 4
+ +3:00:00	> Step Set 4
+			> Flow CO2 Set Volts 0.75
+ +3:00:00	> Step Set 5
 			> Flow CO2 Set Volts 0.9
-	+30:00	> Step Set 5
-			> Flow CO2 Set Volts 1.2
-	+30:00	> Step Set 0
+ +3:00:00	> Step Set 0
+			> Flow CO2 Set Volts 0.3
 			Validate LC_Steps_Idle;
 }
 
