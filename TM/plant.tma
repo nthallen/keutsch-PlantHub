@@ -377,7 +377,7 @@ State LC_Steps_Houseplant{
 			> Flag3 Set 71
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Step Set 4
+  +4:00		> Step Set 4
 			> Flow CO2 Set Volts 2.80
 			> Valve 3 On
 			> Flag3 Set 70
@@ -405,7 +405,7 @@ State LC_Steps_Houseplant{
 			> Flag3 Set 71
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Step Set 7
+  +4:00		> Step Set 7
 			> Flow CO2 Set Volts 2.45
 			> Valve 3 On
 			> Flag3 Set 70
@@ -433,7 +433,7 @@ State LC_Steps_Houseplant{
 			> Flag3 Set 71
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Step Set 10
+  +4:00		> Step Set 10
 			> Flow CO2 Set Volts 3.15
 			> Valve 3 On
 			> Flag3 Set 70
@@ -461,7 +461,7 @@ State LC_Steps_Houseplant{
 			> Flag3 Set 71
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Step Set 13
+  +4:00		> Step Set 13
 			> Flow CO2 Set Volts 1.05
 			> Valve 3 On
 			> Flag3 Set 70
@@ -489,7 +489,7 @@ State LC_Steps_Houseplant{
 			> Flag3 Set 71
   +4:00		> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Flag1 Set 0
+  +4:00		> Flag1 Set 0
 			> Flag3 Set 0
 			> Step Set 0
 			Validate LC_Steps_Idle;
