@@ -132,6 +132,7 @@ State Blank_Steps_Idle{
 }
 
 State LC_Steps_Idle{
+			> Flow CO2 Set Volts 0.30
 }
 
 State Blank_Steps{
