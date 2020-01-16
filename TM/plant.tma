@@ -550,7 +550,7 @@ State LC_Steps_ISOPOOH{
 
 State LC_Steps_Ozone{
 			> Step Set 1
-            > Flow CO2 Set Volts 0.3
+            > Flow CO2 Set Volts 0.26
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -562,7 +562,7 @@ State LC_Steps_Ozone{
  +15:00		> Valve 1 Off
 			> Flag1 Set 50
  +15:00		> Step Set 2
-            > Flow CO2 Set Volts 0.45
+            > Flow CO2 Set Volts 0.52
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -574,7 +574,7 @@ State LC_Steps_Ozone{
  +15:00		> Valve 1 Off
 			> Flag1 Set 50
  +15:00		> Step Set 3
-			> Flow CO2 Set Volts 0.6
+			> Flow CO2 Set Volts 0.78
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -586,7 +586,7 @@ State LC_Steps_Ozone{
  +15:00		> Valve 1 Off
 			> Flag1 Set 50
  +15:00		> Step Set 4
-			> Flow CO2 Set Volts 0.75
+			> Flow CO2 Set Volts 1.04
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -598,7 +598,7 @@ State LC_Steps_Ozone{
  +15:00		> Valve 1 Off
 			> Flag1 Set 50
  +15:00		> Step Set 5
-			> Flow CO2 Set Volts 0.9
+			> Flow CO2 Set Volts 1.3
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -609,7 +609,7 @@ State LC_Steps_Ozone{
 			> Flag3 Set 71
  +15:00		> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Flow CO2 Set Volts 0.3
+ +15:00		> Flow CO2 Set Volts 0.26
 			> Flag1 Set 0
 			> Flag3 Set 0
 			> Step Set 0
