@@ -609,7 +609,7 @@ State LC_Steps_Ozone{
 			> Flag3 Set 71
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
- +10:00     > Step Set 6			
+ +10:00     > Step Set 6
             > Flow CO2 Set Volts 0.86
 			> Valve 3 On
 			> Flag3 Set 70
@@ -621,7 +621,7 @@ State LC_Steps_Ozone{
 			> Flag3 Set 71
  +10:00		> Valve 1 Off
 			> Flag1 Set 50			
- +10:00     > Step Set 7			
+ +10:00     > Step Set 7
 			> Flow CO2 Set Volts 0.98
 			> Valve 3 On
 			> Flag3 Set 70
@@ -632,7 +632,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 3 Off
 			> Flag3 Set 71
  +10:00		> Valve 1 Off
-			> Flag1 Set 50		
+			> Flag1 Set 50
  +10:00     > Step Set 8
             > Flow CO2 Set Volts 1.1
 			> Valve 3 On
