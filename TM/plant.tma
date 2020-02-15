@@ -550,7 +550,7 @@ State LC_Steps_ISOPOOH{
 
 State LC_Steps_Ozone{
 			> Step Set 1
-            > Flow CO2 Set Volts 0.26
+            > Flow CO2 Set Volts 0.10
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -562,7 +562,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00		> Step Set 2
-            > Flow CO2 Set Volts 0.35
+            > Flow CO2 Set Volts 0.20
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -574,7 +574,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00		> Step Set 3
-			> Flow CO2 Set Volts 0.44
+			> Flow CO2 Set Volts 0.30
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -586,7 +586,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00		> Step Set 4
-			> Flow CO2 Set Volts 0.53
+			> Flow CO2 Set Volts 0.40
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -598,7 +598,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00		> Step Set 5
-			> Flow CO2 Set Volts 0.62
+			> Flow CO2 Set Volts 0.50
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -610,7 +610,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00     > Step Set 6
-            > Flow CO2 Set Volts 0.71
+            > Flow CO2 Set Volts 0.60
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -622,7 +622,7 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00     > Step Set 7
-			> Flow CO2 Set Volts 0.80
+			> Flow CO2 Set Volts 0.70
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -634,18 +634,18 @@ State LC_Steps_Ozone{
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
  +10:00     > Step Set 8
-            > Flow CO2 Set Volts 0.89
+            > Flow CO2 Set Volts 0.00
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +15:00		> Valve 1 On
+ +20:00		> Valve 1 On
 			> Flag1 Set 51
  +10:00		> Valve 3 Off
 			> Flag3 Set 71
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Flow CO2 Set Volts 0.26
+ +10:00		> Flow CO2 Set Volts 0.30
 			> Flag1 Set 0
 			> Flag3 Set 0
 			> Step Set 0
