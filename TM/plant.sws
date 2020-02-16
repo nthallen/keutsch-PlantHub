@@ -17,7 +17,8 @@ SWS_DARK_SIDE_EXECUTE        15  Dark Side Execute: Validate Dark_Side_Execute; 
 SWS_POOH_ACTIVATE			 16	 POOH Activate: Validate LC_Steps_ISOPOOH; break;
 SWS_HOUSEPLANT_ACTIVATE		 17	 Houseplant Activate: Validate LC_Steps_Houseplant; break;
 SWS_OZONE_ACTIVATE		     18	 Ozone Activate: Validate LC_Steps_Ozone; break;
-SWS_MINICP_OZONE_ACTIVATE    19  MiniCP HCHO Ozone Activate: Validate LC_Steps_miniCP_HCHO_Ozone; break;
+SWS_MINICP_OZONE_ACTIVATE    19  MiniCP HCHO Ozone Activate: Validate LC_Steps_miniCP_HCHO_Ozone; break; 
+SWS_PUMPPURGE_ACTIVATE		 20  Pump Purge Activate: Validate PumpPurge_Activate; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;

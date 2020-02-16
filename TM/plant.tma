@@ -27,6 +27,17 @@ State Valve_Switch{
 		Validate Valve_Switch;
 }
 
+Partition
+# Activate pump purging of FILIF or other instrument using Valve 3. One inlet of Valve 3 must be capped for this to work
+
+State PumpPurge_Activate{
+        > Valve 3 Off
+		> Flag3 Set 71
+ +00:30 > Valve 3 On
+		> Flag3 Set 70
+ +00:30	> Flag3 Set 0
+		Validate PumpPurge_Activate;
+}
 
 Partition
 # Change between sampling from the LICOR and either the PTR3 or FILIF
