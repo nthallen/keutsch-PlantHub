@@ -30,6 +30,9 @@ State Valve_Switch{
 Partition
 # Activate pump purging of FILIF or other instrument using Valve 3. One inlet of Valve 3 must be capped for this to work
 
+State PumpPurge_Idle{
+}
+
 State PumpPurge_Activate{
         > Valve 3 Off
 		> Flag3 Set 71
