@@ -612,6 +612,54 @@ State LC_Steps_Ozone{
 			> Flag3 Set 71
  +10:00		> Valve 1 Off
 			> Flag1 Set 50
+ +10:00		> Step Set 5
+			> Flow CO2 Set Volts 0.40
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +15:00		> Valve 1 On
+			> Flag1 Set 51
+ +10:00		> Valve 3 Off
+			> Flag3 Set 71
+ +10:00		> Valve 1 Off
+			> Flag1 Set 50
+ +10:00		> Step Set 6
+			> Flow CO2 Set Volts 0.40
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +15:00		> Valve 1 On
+			> Flag1 Set 51
+ +10:00		> Valve 3 Off
+			> Flag3 Set 71
+ +10:00		> Valve 1 Off
+			> Flag1 Set 50
+ +10:00		> Step Set 7
+			> Flow CO2 Set Volts 0.40
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +15:00		> Valve 1 On
+			> Flag1 Set 51
+ +10:00		> Valve 3 Off
+			> Flag3 Set 71
+ +10:00		> Valve 1 Off
+			> Flag1 Set 50
+ +10:00		> Step Set 8
+			> Flow CO2 Set Volts 0.40
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +15:00		> Valve 1 On
+			> Flag1 Set 51
+ +10:00		> Valve 3 Off
+			> Flag3 Set 71
+ +10:00		> Valve 1 Off
+			> Flag1 Set 50
  +10:00		> Flag1 Set 0
 			> Flag3 Set 0
 			> Step Set 0
