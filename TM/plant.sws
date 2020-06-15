@@ -20,6 +20,8 @@ SWS_OZONE_ACTIVATE		     18	 Ozone Activate: Validate LC_Steps_Ozone; break;
 SWS_MINICP_OZONE_ACTIVATE    19  MiniCP HCHO Ozone Activate: Validate LC_Steps_miniCP_HCHO_Ozone; break; 
 SWS_PUMPPURGE_ACTIVATE		 20  Pump Purge Activate: Validate PumpPurge_Activate; break;
 SWS_PUMPPURGE_IDLE			 21  Pump Purge Idle: Validate PumpPurge_Idle; break;
+SWS_PTR3_CALIBRATE_ACTIVATE  22  Calibrate PTR3 Activate: Validate Calibrate_PTR3; break;
+SWS_PTR3_CALIBRATE_IDLE      23  Calibrate PTR3 Idle: Validate Calibrate_PTR3_Idle; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
 SWS_SHUTDOWN   255   Shutdown: Validate Shutdown; break;

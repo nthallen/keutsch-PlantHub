@@ -87,6 +87,32 @@ State Instrument_Valve_Switch_FILIF{
 }
 
 Partition
+# PTR3 Calibration - Change between sampling LICOR and PTR3
+# Only use bypass line, so Valve 1 is on throughout this entire algo
+# Need to sync this partition with the LCU Control; Assumes 15 min steps on LCU
+# Flag2 = 90 indicates calibration
+
+State Calibrate_PTR3_Idle{
+		> Flag1 Set 0
+		> Flag2 Set 0
+		> Flag3 Set 0
+}
+
+State Calibrate_PTR3{
+		> Valve 1 On
+		> Flag1 Set 51
+		> Flag2 Set 90
+		> Valve 3 On
+		> Flag3 Set 70
+ +10:00 > Valve 3 Off
+		> Flag3 Set 71
+ +05:00	> Flag3 Set 0
+		Validate Calibrate_PTR3;
+}
+
+
+
+Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
 # Currently hard-coded for 5:00 in the morning (10:00 UTC)
 # ssm is seconds since midnight
