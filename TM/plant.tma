@@ -55,13 +55,13 @@ State Instrument_Valve_Switch_PTR{
 		> Flag3 Set 70
 		> Valve 1 Off
 		> Flag1 Set 50
- +30:00 > Valve 3 Off
+ +05:00 > Valve 3 Off
 		> Flag3 Set 71
  +05:00	> Valve 3 On
 		> Flag3 Set 70
 		> Valve 1 On
 		> Flag1 Set 51
- +30:00	> Valve 3 Off
+ +05:00	> Valve 3 Off
 		> Flag3 Set 71
  +05:00	> Flag1 Set 0
 		> Flag3 Set 0
