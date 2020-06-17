@@ -73,15 +73,15 @@ State Instrument_Valve_Switch_FILIF{
 		> Flag3 Set 70
 		> Valve 1 Off
 		> Flag1 Set 50
- +15:00 > Valve 3 Off
+  +8:00 > Valve 3 Off
 		> Flag3 Set 71
- +00:00	> Valve 3 On
+  +2:00	> Valve 3 On
 		> Flag3 Set 70
 		> Valve 1 On
 		> Flag1 Set 51
- +15:00	> Valve 3 Off
+  +8:00	> Valve 3 Off
 		> Flag3 Set 71
- +00:00	> Flag1 Set 0
+  +2:00	> Flag1 Set 0
 		> Flag3 Set 0
 		Validate Instrument_Valve_Switch_FILIF;
 }
