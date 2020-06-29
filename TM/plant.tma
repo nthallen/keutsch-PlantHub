@@ -150,7 +150,7 @@ State Dark_Side{
 +10 {
   long unixtime;
   long ssm;
-  unixtime = itime();
+  unixtime= itime();
   ssm = unixtime % 86400;
 
   if (ssm >= 3600*4.0)
