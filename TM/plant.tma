@@ -104,9 +104,9 @@ State Calibrate_PTR3{
 		> Flag2 Set 90
 		> Valve 3 On
 		> Flag3 Set 70
- +25:00 > Valve 3 Off
+ +16:00 > Valve 3 Off
 		> Flag3 Set 71
- +05:00	> Flag3 Set 0
+ +04:00	> Flag3 Set 0
 		Validate Calibrate_PTR3;
 }
 
