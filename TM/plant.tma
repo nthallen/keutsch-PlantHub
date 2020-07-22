@@ -625,7 +625,7 @@ State LC_Steps_ISOPOOH{
  +10:00	    > Valve 3 Off
             > Flag3 Set 71
   +4:00     > Valve 1 Off
-            > Flag1 Set 50  
+            > Flag1 Set 50
   +4:00		> Step Set 0
             > Flag1 Set 0
 			> Flag3 Set 0
