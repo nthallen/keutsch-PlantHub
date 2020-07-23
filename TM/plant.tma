@@ -575,54 +575,54 @@ State LC_Steps_Houseplant{
 
 State LC_Steps_ISOPOOH{
 			> Step Set 1
-			> Flow CO2 Set Volts 0.270
+			> Flow CO2 Set Volts 2.90
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Valve 1 On
+ +12:00		> Valve 1 On
 			> Flag1 Set 51
- +10:00	    > Step Set 2
-			> Flow CO2 Set Volts 0.440
+  +3:00	    > Step Set 2
+			> Flow CO2 Set Volts 3.10
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Valve 1 On
+ +12:00		> Valve 1 On
 			> Flag1 Set 51
- +10:00	    > Step Set 3
-			> Flow CO2 Set Volts 0.270
+  +3:00	    > Step Set 3
+			> Flow CO2 Set Volts 3.30
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Valve 1 On
+ +12:00		> Valve 1 On
 			> Flag1 Set 51
- +10:00		> Step Set 4
-			> Flow CO2 Set Volts 0.440
+  +3:00		> Step Set 4
+			> Flow CO2 Set Volts 3.50
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Valve 1 On
+ +12:00		> Valve 1 On
 			> Flag1 Set 51
- +10:00		> Step Set 5
-			> Flow CO2 Set Volts 0.270
+  +3:00		> Step Set 5
+			> Flow CO2 Set Volts 3.70
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Valve 1 On
+ +12:00		> Valve 1 On
 			> Flag1 Set 51
- +10:00		> Step Set 6
-			> Flow CO2 Set Volts 0.440
+  +3:00		> Step Set 6
+			> Flow CO2 Set Volts 3.90
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +10:00		> Valve 1 On
+ +12:00		> Valve 1 On
 			> Flag1 Set 51
- +10:00	    > Valve 3 Off
+  +3:00	    > Valve 3 Off
             > Flag3 Set 71
   +4:00     > Valve 1 Off
             > Flag1 Set 50
@@ -919,4 +919,3 @@ State FC2_Deviating NoLog {
         Validate FC2_Monitor;
       }
 }
-
