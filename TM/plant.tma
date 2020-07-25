@@ -575,7 +575,7 @@ State LC_Steps_Houseplant{
 
 State LC_Steps_ISOPOOH_OnlyHCHO{
 			> Step Set 1
-			> Flow CO2 Set Volts 2.80
+			> Flow CO2 Set Volts 2.0
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -583,7 +583,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00	    > Step Set 2
-			> Flow CO2 Set Volts 3.08
+			> Flow CO2 Set Volts 2.28
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -591,7 +591,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00	    > Step Set 3
-			> Flow CO2 Set Volts 3.36
+			> Flow CO2 Set Volts 2.56
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -599,7 +599,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 4
-			> Flow CO2 Set Volts 3.64
+			> Flow CO2 Set Volts 2.84
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -607,7 +607,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 5
-			> Flow CO2 Set Volts 3.92
+			> Flow CO2 Set Volts 3.12
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -615,7 +615,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 6
-			> Flow CO2 Set Volts 4.20
+			> Flow CO2 Set Volts 3.4
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
