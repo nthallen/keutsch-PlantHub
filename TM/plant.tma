@@ -583,7 +583,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00	    > Step Set 2
-			> Flow CO2 Set Volts 0.30
+			> Flow CO2 Set Volts 0.25
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -591,7 +591,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00	    > Step Set 3
-			> Flow CO2 Set Volts 0.45
+			> Flow CO2 Set Volts 0.35
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -599,7 +599,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 4
-			> Flow CO2 Set Volts 0.60
+			> Flow CO2 Set Volts 0.45
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -607,7 +607,7 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 5
-			> Flow CO2 Set Volts 0.75
+			> Flow CO2 Set Volts 0.55
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
@@ -615,7 +615,39 @@ State LC_Steps_ISOPOOH_OnlyHCHO{
  +12:00		> Valve 1 On
 			> Flag1 Set 51
   +3:00		> Step Set 6
-			> Flow CO2 Set Volts 0.90
+			> Flow CO2 Set Volts 0.65
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 7
+			> Flow CO2 Set Volts 0.75
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 8
+			> Flow CO2 Set Volts 0.85
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 9
+			> Flow CO2 Set Volts 0.95
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +12:00		> Valve 1 On
+			> Flag1 Set 51
+  +3:00		> Step Set 10
+			> Flow CO2 Set Volts 1.05
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
