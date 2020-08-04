@@ -105,7 +105,7 @@ State Calibrate_PTR3{
 		  > Step Set 1
 		  > Valve 3 On
 		  > Flag3 Set 70
-+03:55:00 > Valve 3 Off
+ +45:00   > Valve 3 Off
 		  > Flag3 Set 71
  +05:00	  > Step Set 2
 		  > Valve 3 On
