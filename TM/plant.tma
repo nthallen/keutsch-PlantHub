@@ -684,9 +684,9 @@ State LC_Steps_ISOPOOH_PTR3{
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +00:00		> Valve 1 On
+ +15:00		> Valve 1 On
 			> Flag1 Set 51
- +00:00     > Valve 3 Off
+ +30:00     > Valve 3 Off
             > Flag3 Set 71
   +4:00     > Valve 1 Off
             > Flag1 Set 50
