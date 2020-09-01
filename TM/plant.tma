@@ -88,66 +88,6 @@ State Instrument_Valve_Switch_FILIF{
 }
 
 Partition
-# PTR3 Water Calibration - Change between sampling LICOR and PTR3
-# Only use bypass line, so Valve 1 is on throughout this entire algo
-# Sync with LabVIEW controlling Water Steps
-# Flag2 = 90 indicates calibration
-
-State Calibrate_PTR3_Idle{
-		> Flag1 Set 0
-		> Flag2 Set 0
-		> Flag3 Set 0
-		> Step Set 0
-		> Valve 3 On
-}
-
-State Calibrate_PTR3_MVKDiol{
-          > Flag2 Set 90
-		  > Valve 1 On
-		  > Flag1 Set 51
-		  > Step Set 1
-		  > Valve 3 On
-		  > Flag3 Set 70
-  +20:00  > Valve 3 Off
-		  > Flag3 Set 71
-  +05:00  > Step Set 2
-		  > Valve 3 On
-		  > Flag3 Set 70
-  +20:00  > Valve 3 Off
-		  > Flag3 Set 71
-  +05:00  > Step Set 3
-		  > Valve 3 On
-		  > Flag3 Set 70
-  +20:00  > Valve 3 Off
-		  > Flag3 Set 71
-  +05:00  > Step Set 4
-		  > Valve 3 On
-		  > Flag3 Set 70
-  +00:00  > Valve 3 Off
-		  > Flag3 Set 71
-  +00:00  > Step Set 5
-		  > Valve 3 On
-		  > Flag3 Set 70
-  +00:00  > Valve 3 Off
-		  > Flag3 Set 71
-  +00:00  > Flag3 Set 0
-		Validate Calibrate_PTR3_Idle;
-}
-
-State Calibrate_PTR3_ISOPOOH{
-          > Flag2 Set 90
-		  > Valve 1 On
-		  > Flag1 Set 51
-		  > Step Set 1
-		  > Valve 3 On
-		  > Flag3 Set 70
-  +25:00  > Valve 3 Off
-		  > Flag3 Set 71
-  +04:00  > Flag3 Set 0
-		Validate Calibrate_PTR3_Idle;
-}
-
-Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
 # Currently hard-coded for 5:00 in the morning (10:00 UTC)
 # ssm is seconds since midnight
