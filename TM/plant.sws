@@ -23,7 +23,7 @@ SWS_MINICP_OZONE_ACTIVATE      21  MiniCP HCHO Ozone Activate: Validate LC_Steps
 SWS_PUMPPURGE_ACTIVATE		   22  Pump Purge Activate: Validate PumpPurge_Activate; break;
 SWS_PUMPPURGE_IDLE			   23  Pump Purge Idle: Validate PumpPurge_Idle; break;
 SWS_PTR3_CAL_IDLE              24  PTR3 Calibrate Idle: Validate Calibrate_PTR3_Idle; break;
-SWS_PTR3_CAL_MVKDiol_ACTIVATE  25  PTR3 Calibrate MVKDiol Activate: Validate Cal_PTR3_MVKDiol; break;
+SWS_PTR3_CAL_MVKDiol_ACTIVATE  25  PTR3 Calibrate MVKDiol Activate: Validate Calibrate_PTR3_MVKDiol; break;
 #SWS_PTR3_CAL_POOH_ACTIVATE     26  PTR3 Calibrate POOH Activate: Validate Calibrate_PTR3_ISOPOOH; break;
 
 SWS_TIMEWARP   254   Time Warp: break;
