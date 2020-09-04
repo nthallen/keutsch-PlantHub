@@ -894,7 +894,7 @@ State Calibrate_PTR3_Idle{
 		> Valve 3 On
 }
 
-State Calibrate_PTR3_MVKDiol{
+State Cal_PTR3_MVKDiol{
           > Flag2 Set 90
 		  > Valve 1 On
 		  > Flag1 Set 51
