@@ -75,18 +75,18 @@ State Calibrate_PTR3_Idle{
 #		Validate Calibrate_PTR3_Idle;
 #}
 #
-#State Calibrate_PTR3_ISOPOOH{
-#          > Flag2 Set 90
-#		  > Valve 1 On
-#		  > Flag1 Set 51
-#		  > Step Set 1
-#		  > Valve 3 On
-#		  > Flag3 Set 70
-#  +10:00  > Valve 3 Off
-#		  > Flag3 Set 71
-#  +04:00  > Flag3 Set 0
-#		  Validate Calibrate_PTR3_Idle;
-#}
+State Calibrate_PTR3_ISOPOOH{
+          > Flag2 Set 90
+		  > Valve 1 On
+		  > Flag1 Set 51
+		  > Step Set 1
+		  > Valve 3 On
+		  > Flag3 Set 70
+  +10:00  > Valve 3 Off
+		  > Flag3 Set 71
+  +04:00  > Flag3 Set 0
+		  Validate Calibrate_PTR3_Idle;
+}
 
 Partition
 # Activate pump purging of FILIF or other instrument using Valve 3. One inlet of Valve 3 must be capped for this to work
