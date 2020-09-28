@@ -64,14 +64,14 @@ State Calibrate_PTR3_MVKdiol{
   +04:00  > Step Set 4
           > Valve 3 On
 		  > Flag3 Set 70
-  +00:00  > Valve 3 Off
+  +05:00  > Valve 3 Off
 		  > Flag3 Set 71
-  +00:00  > Step Set 5
+  +04:00  > Step Set 5
           > Valve 3 On
 		  > Flag3 Set 70
-  +00:00  > Valve 3 Off
+  +05:00  > Valve 3 Off
 		  > Flag3 Set 71
-  +00:00  > Flag3 Set 0
+  +04:00  > Flag3 Set 0
 		  Validate Calibrate_PTR3_Idle;
 }
 
