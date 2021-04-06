@@ -172,7 +172,7 @@ State Overnight_Flow{
 }
 
 State Overnight_Flow_Execute{
-	> Flow CO2 Set Volts 0.5
+	> Flow CO2 Set Volts 0.3
 	Validate Overnight_Flow_Idle;
 }
 
