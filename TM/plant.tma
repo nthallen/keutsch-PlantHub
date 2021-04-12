@@ -17,12 +17,12 @@ Partition
 State Valve_Switch_Idle{
 }
 
-State Valve_Switch{
+State Valve_Switch_LICOR{
 			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +20:00		> Valve 1 On
+ +25:00		> Valve 1 On
 			> Flag1 Set 51
  +15:00	    > Valve 3 Off
             > Flag3 Set 71
@@ -30,7 +30,19 @@ State Valve_Switch{
             > Flag1 Set 50
  +04:00     > Flag3 Set 0
             > Flag1 Set 0
-		Validate Valve_Switch;
+		Validate Valve_Switch_LICOR;
+}
+
+State Valve_Switch_NoLICOR{
+			> Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +20:00		> Valve 1 On
+			> Flag1 Set 51
+ +15:00	    > Flag3 Set 0
+            > Flag1 Set 0
+		Validate Valve_Switch_NoLICOR;
 }
 
 Partition
