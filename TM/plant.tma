@@ -20,12 +20,16 @@ State Valve_Switch_Idle{
 State Valve_Switch{
 			> Valve 3 On
 			> Flag3 Set 70
-			> Valve 1 On
-			> Flag1 Set 51
- +25:00		> Valve 1 Off
+			> Valve 1 Off
 			> Flag1 Set 50
- +15:00	    > Flag1 Set 0
-            > Flag3 Set 0
+ +20:00		> Valve 1 On
+			> Flag1 Set 51
+ +15:00	    > Valve 3 Off
+            > Flag3 Set 71
+ +04:00     > Valve 1 Off
+            > Flag1 Set 50
+ +04:00     > Flag3 Set 0
+            > Flag1 Set 0
 		Validate Valve_Switch;
 }
 
