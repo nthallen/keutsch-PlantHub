@@ -22,9 +22,9 @@ State Valve_Switch_LICOR{
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
- +25:00		> Valve 1 On
+ +15:00		> Valve 1 On
 			> Flag1 Set 51
- +25:00	    > Valve 3 Off
+ +15:00	    > Valve 3 Off
             > Flag3 Set 71
  +04:00     > Valve 1 Off
             > Flag1 Set 50
