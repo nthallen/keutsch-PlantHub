@@ -825,9 +825,9 @@ State LC_Steps_ISOPOOH_Yield_PTR3{
 			> Flag1 Set 51
  +25:00     > Valve 3 Off
             > Flag3 Set 71
-  +4:00     > Valve 1 Off
+  +5:00     > Valve 1 Off
             > Flag1 Set 50
-  +4:00		> Step Set 0
+  +5:00		> Step Set 0
             > Flag1 Set 0
 			> Flag3 Set 0
 			Validate LC_Steps_Idle;
@@ -945,9 +945,9 @@ State LC_Steps_ISOPOOH_FILIF{
             > Flag1 Set 51
  +10:00     > Valve 3 Off
             > Flag3 Set 71
-  +4:00     > Valve 1 Off
+  +5:00     > Valve 1 Off
             > Flag1 Set 50
-  +4:00		> Step Set 0
+  +5:00		> Step Set 0
             > Flag1 Set 0
 			> Flag3 Set 0
 			Validate LC_Steps_Idle;
