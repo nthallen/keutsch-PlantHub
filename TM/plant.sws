@@ -16,7 +16,7 @@ SWS_DARK_SIDE_IDLE	           14  Dark Side Idle: Validate Dark_Side_Idle; break
 SWS_DARK_SIDE_ACTIVATE         15  Dark Side Activate: Validate Dark_Side; break;
 SWS_DARK_SIDE_EXECUTE          16  Dark Side Execute: Validate Dark_Side_Execute; break;
 SWS_POOH_PTR3_ACTIVATE		   17  POOH PTR3 WithPOOH Yield Activate: Validate LC_Steps_ISOPOOH_Yield_PTR3; break;
-SWS_POOH_FILIF_ACTIVATE        18  POOH FILIF WithPOOH Activate: Validate LC_Steps_ISOPOOH_FILIF; break;
+SWS_POOH_FILIF_ACTIVATE        18  POOH FILIF WithPOOH NoMicrobes Activate: Validate LC_Steps_ISOPOOH_FILIF; break;
 SWS_POOH_ONLYHCHO_ACTIVATE	   19  POOH FILIF MiniCP Activate: Validate LC_Steps_ISOPOOH_MiniCP_HCHO; break;
 SWS_POOH_ONLYMVK_ACTIVATE      20  POOH PTR3 MVK MiniCP Activate: Validate LC_Steps_ISOPOOH_MiniCP_MVK; break;
 SWS_POOH_DEPOSTION_ACTIVATE    21  POOH PTR3 WithPOOH Deposition Activate: Validate LC_Steps_ISOPOOH_Dep_PTR3; break;
@@ -28,6 +28,8 @@ SWS_PUMPPURGE_IDLE			   26  Pump Purge Idle: Validate PumpPurge_Idle; break;
 SWS_PTR3_CAL_IDLE              27  PTR3 Calibrate Idle: Validate Calibrate_PTR3_Idle; break;
 SWS_PTR3_CAL_POOH_ACTIVATE     28  PTR3 Calibrate POOH Activate: Validate Calibrate_PTR3_ISOPOOH; break;
 SWS_PTR3_CAL_MVKDIOL_ACTIVATE  29  PTR3 Calibrate MVKdiol Activate: Validate Calibrate_PTR3_MVKdiol; break;
+SWS_POOH_PTR3_MICROBES_ACTIVATE		     30  POOH PTR3 WithPOOH Microbes Activate: Validate LC_Steps_ISOPOOH_Yield_PTR3_Microbes; break;
+SWS_POOH_FILIF_MICROBES_ACTIVATE        31  POOH FILIF WithPOOH Microbes Activate: Validate LC_Steps_ISOPOOH_FILIF_Microbes; break;
 
 
 SWS_TIMEWARP   254   Time Warp: break;
