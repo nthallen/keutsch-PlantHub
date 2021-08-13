@@ -861,7 +861,14 @@ State LC_Steps_ISOPOOH_Yield_PTR3_Microbes{
 			> Valve 1 Off
 			> Flag1 Set 50
  +10:00		        > Valve 1 On
-			> Flag1 Set 51
+		        > Flag1 Set 51
+ +10:00                 > Step Set 2
+                        > Valve 3 On
+			> Flag3 Set 70
+			> Valve 1 Off
+			> Flag1 Set 50
+ +10:00                 > Valve 1 On
+                        > Flag1 Set 51
  +10:00                 > Valve 3 Off
                         > Flag3 Set 71
   +5:00                 > Valve 1 Off
