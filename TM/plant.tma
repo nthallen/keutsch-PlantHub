@@ -890,7 +890,10 @@ State LC_Steps_ISOPOOH_Dep_PTR3{
             > Flag1 Set 51
  +4:00      > Step Set 2
 			> Flow CO2 Set Volts 0.0
-			> Valve 3 On
+			> Flag3 Set 0
+			> Flag1 Set 0
+			> Valve 1 Off
+ +4:00			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
@@ -904,7 +907,10 @@ State LC_Steps_ISOPOOH_Dep_PTR3{
             > Flag1 Set 51
  +4:00      > Step Set 3
 			> Flow CO2 Set Volts 0.0
-			> Valve 3 On
+			> Flag3 Set 0
+			> Flag1 Set 0
+			> Valve 1 Off
+ +4:00			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
@@ -918,7 +924,10 @@ State LC_Steps_ISOPOOH_Dep_PTR3{
             > Flag1 Set 51
  +4:00      > Step Set 4
 			> Flow CO2 Set Volts 0.0
-			> Valve 3 On
+			> Flag3 Set 0
+			> Flag1 Set 0
+			> Valve 1 Off
+ +4:00			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
@@ -931,8 +940,11 @@ State LC_Steps_ISOPOOH_Dep_PTR3{
  +4:00      > Valve 1 On
             > Flag1 Set 51
  +4:00      > Step Set 5
- 			> Flow CO2 Set Volts 0.0
-			> Valve 3 On
+			> Flow CO2 Set Volts 0.0
+			> Flag3 Set 0
+			> Flag1 Set 0
+			> Valve 1 Off
+ +4:00			> Valve 3 On
 			> Flag3 Set 70
 			> Valve 1 Off
 			> Flag1 Set 50
