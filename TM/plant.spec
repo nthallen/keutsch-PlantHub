@@ -15,6 +15,7 @@ Module TMbase mode=ignore SWSnot=
 # Module savelog
 
 SCRIPT = interact
+DISTRIB = services
 TGTDIR = /home/plant
 IGNORE = Makefile '*.exe'
 
