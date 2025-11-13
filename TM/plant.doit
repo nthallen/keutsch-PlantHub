@@ -3,8 +3,8 @@ client plantclt
 
 # PhRTG configuration: only run when not in text mode
 server [!screen] cmd/server playbacksrvr
-server [!screen] - phrtg
-extraction [!screen] plantrtgext
+# server [!screen] - phrtg
+# extraction [!screen] plantrtgext
 
 memo
 batchfile interact

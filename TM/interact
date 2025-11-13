@@ -1,15 +1,16 @@
 # Startup script for plant chamber experiment
-  Launch memo memo -o $Experiment.log
-  Launch TM/DCo TMbfr
-  memo=/dev/huarp/$Experiment/memo
-  echo "Running script interact" >$memo
+FCC_USB=/dev/ttyUSB0
 
-  [ -e /dev/serusb1 ] && [ ! -e /dev/huarp/Plant/SB1 ] &&
-    Launch SB subbusd_serusb -b 115200 -p /dev/serusb1 -N SB -h SB
-  Launch DG/cmd plantcol
-  Launch cmd/server plantsrvr
-  [ -e /dev/serusb2 ] &&
-    Launch - LICOR -d /dev/serusb2
-  Launch - lgr -N `mlf_find LOG`
-  Launch - tmdf
-  Launch - plantalgo -v
+  Launch memo memo -o $Experiment.log -l4
+  [ -z "$launch_err" ] && msg "Running script interact"
+  Launch tm_bfr bfr -H bfr: -S:
+
+  [ -e $FCC_USB ] &&
+    Launch -    subbusd_serusb -b 115200 -p $FCC_USB -n SB -s SB
+  Launch tm_gen plantcol
+  Launch cmd    plantsrvr
+# [ -e /dev/serusb2 ] &&
+#   Launch - LICOR -d /dev/serusb2
+  Launch -TMC-  lgr -N `mlf_find LOG`
+  Launch -      tmdf
+# Launch -TMC-  plantalgo
