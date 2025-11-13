@@ -23,8 +23,6 @@
   : Auto Start Flow Execute { $0 = SWS_AUTO_START_FLOW_EXECUTE; }
   : FCC Test Idle { $0 = SWS_FCC_TEST_IDLE; }
   : FCC Test Execute { $0 = SWS_FCC_TEST; }
-  : CO2 Control Idle { $0 = SWS_CO2_CONTROL_IDLE; }
-  : CO2 Control Initialize { $0 = SWS_CO2_CONTROL_INITIALIZE; }
   : Time Warp { $0 = SWS_TIMEWARP; }
   : Shutdown { $0 = SWS_SHUTDOWN; }
   ;

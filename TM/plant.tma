@@ -1,6 +1,7 @@
 %{
-  #include "msg.h"
-  #include "tmctime.h"
+  #include "nl.h"
+  #include "dasio/tmctime.h"
+  #include "dasio/cmd_writer.h"
 %}
 
 State Init {
@@ -49,39 +50,39 @@ State Valve_Switch_Idle{
 }
 
 
-Partition
-
-%{
-  double CO2_integral;
-  #define CO2_GP (1)
-  #define CO2_GI (0.2)
-  #define CO2_CLIP_LIMIT 200
-  #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
-  #define CO2_SETPOINT (430)
-  /* UpdatePeriod = 5; */
-%}
-
-State CO2_Idle {}
-
-State CO2_control nolog {
-  +10
-  { double err_term, rate_adj;
-    err_term = (convert(CO2_ppm)-CO2_SETPOINT);
-    CO2_integral += 0.001 * err_term;
-    if (CO2_integral > CO2_INT_LIMIT)
-      CO2_integral = CO2_INT_LIMIT;
-    else if (CO2_integral < -CO2_INT_LIMIT)
-      CO2_integral = -CO2_INT_LIMIT;
-    rate_adj = 60 - err_term * CO2_GP -
-      CO2_integral * CO2_GI;
-    if (rate_adj > CO2_CLIP_LIMIT)
-      rate_adj = CO2_CLIP_LIMIT;
-    else if (rate_adj < 0) rate_adj = 0;
-    if (rate_adj != FC0_Set)
-      ci_sendfcmd(2, "Flow CO2 Set SCCM %.0lf\n", rate_adj);
-    Validate CO2_control;
-  }
-}
+# Partition
+# 
+# %{
+#   double CO2_integral;
+#   #define CO2_GP (1)
+#   #define CO2_GI (0.2)
+#   #define CO2_CLIP_LIMIT 200
+#   #define CO2_INT_LIMIT (CO2_CLIP_LIMIT/CO2_GI)
+#   #define CO2_SETPOINT (430)
+#   /* UpdatePeriod = 5; */
+# %}
+# 
+# State CO2_Idle {}
+# 
+# State CO2_control nolog {
+#   +10
+#   { double err_term, rate_adj;
+#     err_term = (convert(CO2_ppm)-CO2_SETPOINT);
+#     CO2_integral += 0.001 * err_term;
+#     if (CO2_integral > CO2_INT_LIMIT)
+#       CO2_integral = CO2_INT_LIMIT;
+#     else if (CO2_integral < -CO2_INT_LIMIT)
+#       CO2_integral = -CO2_INT_LIMIT;
+#     rate_adj = 60 - err_term * CO2_GP -
+#       CO2_integral * CO2_GI;
+#     if (rate_adj > CO2_CLIP_LIMIT)
+#       rate_adj = CO2_CLIP_LIMIT;
+#     else if (rate_adj < 0) rate_adj = 0;
+#     if (rate_adj != FC0_Set)
+#       ci_sendfcmd(Cmd_Send_Quiet, "Flow CO2 Set SCCM %.0lf\n", rate_adj);
+#     Validate CO2_control;
+#   }
+# }
 
 Partition
 # Automatically start flows and other functions at a specified time of day (such as early morning to allow for equilibration)
@@ -153,7 +154,7 @@ State FC0_Monitor NoLog {
 }
 
 State FC0_Deviating NoLog {
-  +0  { ci_sendfcmd(2, "Flow CO2 Set Volts %.2lf\n",
+  +0  { ci_sendfcmd(Cmd_Send_Quiet, "Flow CO2 Set Volts %.2lf\n",
           convert(FC0_Set));
       }
   +1  Hold Until (FC0_adV < 0.2) or 10
@@ -177,7 +178,7 @@ State FC1_Monitor NoLog {
 }
 
 State FC1_Deviating NoLog {
-  +0  { ci_sendfcmd(2, "Flow OVOC Set Volts %.2lf\n",
+  +0  { ci_sendfcmd(Cmd_Send_Quiet, "Flow OVOC Set Volts %.2lf\n",
           convert(FC1_Set));
       }
   +1  Hold Until (FC1_adV < 0.2) or 10
@@ -201,7 +202,7 @@ State FC2_Monitor NoLog {
 }
 
 State FC2_Deviating NoLog {
-  +0  { ci_sendfcmd(2, "Flow Zero Set Volts %.2lf\n",
+  +0  { ci_sendfcmd(Cmd_Send_Quiet, "Flow Zero Set Volts %.2lf\n",
           convert(FC2_Set));
       }
   +1  Hold Until (FC2_adV < 0.2) or 10

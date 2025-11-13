@@ -1,4 +1,4 @@
-function fig = gplanttm(varargin);
+function fig = gplanttm(varargin)
 % gplanttm(...)
 % T Mbase
 ffig = ne_group(varargin,'T Mbase','pplanttmtd','pplanttmcpu','pplanttmram','pplanttmd');

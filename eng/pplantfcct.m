@@ -1,4 +1,4 @@
-function pplantfcct(varargin);
+function pplantfcct(varargin)
 % pplantfcct( [...] );
 % FCC Temps
 h = timeplot({'FCC_U2_T','FCC_U3_T'}, ...

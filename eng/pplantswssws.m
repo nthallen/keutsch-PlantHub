@@ -1,4 +1,4 @@
-function pplantswssws(varargin);
+function pplantswssws(varargin)
 % pplantswssws( [...] );
 % SW Status SW Stat
 h = timeplot({'SWStat'}, ...

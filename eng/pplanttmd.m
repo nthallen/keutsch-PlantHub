@@ -1,4 +1,4 @@
-function pplanttmd(varargin);
+function pplanttmd(varargin)
 % pplanttmd( [...] );
 % T Mbase Disk
 h = timeplot({'Disk'}, ...

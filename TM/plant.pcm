@@ -1,44 +1,35 @@
 
 --------Frame Statistics-----------
 Major Frame: 1 minor frames, 1 Hz
-Minor Frame: 59 bytes, 1 Hz
+Minor Frame: 33 bytes, 1 Hz
 Effective Frame Dimensions:
-  1 Rows 59 Columns
+  1 Rows 33 Columns
   1 rows/sec
-  472 bits/sec
-  Data:  440 bits/sec  93 %
-  Synch: 32 bits/sec  7 %
+  264 bits/sec
+  Data:  232 bits/sec  88 %
+  Synch: 32 bits/sec  12 %
   Empty: 0 bits/sec  0 %
 -------End of Frame Statistics-----
 
 
 --------PCM Definition-------------
 1/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
-1/1 Hz 26 bytes Group LICOR (1,0,2,26)
-1/1 Hz 2 bytes Member LICOR_Status (1,0,2,2)
-1/1 Hz 4 bytes Member LICOR_P (1,0,4,4)
-1/1 Hz 4 bytes Member LICOR_T_mV (1,0,8,4)
-1/1 Hz 4 bytes Member H2O_ppth (1,0,12,4)
-1/1 Hz 4 bytes Member H2O_mV (1,0,16,4)
-1/1 Hz 4 bytes Member CO2_ppm (1,0,20,4)
-1/1 Hz 4 bytes Member CO2_mV (1,0,24,4)
-1/1 Hz 17 bytes Group fcc (1,0,28,17)
-1/1 Hz 1 bytes Member FCC0_Status (1,0,28,1)
-1/1 Hz 2 bytes Member FC2_Set (1,0,29,2)
-1/1 Hz 2 bytes Member FC1_Set (1,0,31,2)
-1/1 Hz 2 bytes Member FC0_Set (1,0,33,2)
-1/1 Hz 2 bytes Member FCC_U3_T (1,0,35,2)
-1/1 Hz 2 bytes Member FCC_U2_T (1,0,37,2)
-1/1 Hz 2 bytes Member FC2_Flow (1,0,39,2)
-1/1 Hz 2 bytes Member FC1_Flow (1,0,41,2)
-1/1 Hz 2 bytes Member FC0_Flow (1,0,43,2)
-1/1 Hz 4 bytes Datum SysTDrift (1,0,45,4)
-1/1 Hz 2 bytes Datum Disk (1,0,49,2)
-1/1 Hz 2 bytes Datum freemem (1,0,51,2)
-1/1 Hz 1 bytes Datum CPU_Pct (1,0,53,1)
-1/1 Hz 1 bytes Datum Flag (1,0,54,1)
-1/1 Hz 1 bytes Datum LICOR_Stale (1,0,55,1)
-1/1 Hz 1 bytes Datum SWStat (1,0,56,1)
-1/1 Hz 2 bytes Datum Synch (1,0,57,2)
+1/1 Hz 17 bytes Group fcc (1,0,2,17)
+1/1 Hz 1 bytes Member FCC0_Status (1,0,2,1)
+1/1 Hz 2 bytes Member FC2_Set (1,0,3,2)
+1/1 Hz 2 bytes Member FC1_Set (1,0,5,2)
+1/1 Hz 2 bytes Member FC0_Set (1,0,7,2)
+1/1 Hz 2 bytes Member FCC_U3_T (1,0,9,2)
+1/1 Hz 2 bytes Member FCC_U2_T (1,0,11,2)
+1/1 Hz 2 bytes Member FC2_Flow (1,0,13,2)
+1/1 Hz 2 bytes Member FC1_Flow (1,0,15,2)
+1/1 Hz 2 bytes Member FC0_Flow (1,0,17,2)
+1/1 Hz 4 bytes Datum SysTDrift (1,0,19,4)
+1/1 Hz 2 bytes Datum CPU_Pct (1,0,23,2)
+1/1 Hz 2 bytes Datum Disk (1,0,25,2)
+1/1 Hz 2 bytes Datum memused (1,0,27,2)
+1/1 Hz 1 bytes Datum Flag (1,0,29,1)
+1/1 Hz 1 bytes Datum SWStat (1,0,30,1)
+1/1 Hz 2 bytes Datum Synch (1,0,31,2)
 -------End of PCM Definition-------
 

@@ -1,4 +1,4 @@
-function pplantfccflow2(varargin);
+function pplantfccflow2(varargin)
 % pplantfccflow2( [...] );
 % FCC Flow 2
 h = timeplot({'FC2_Flow','FC2_Set'}, ...

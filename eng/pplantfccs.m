@@ -1,4 +1,4 @@
-function pplantfccs(varargin);
+function pplantfccs(varargin)
 % pplantfccs( [...] );
 % FCC Status
 h = ne_dstat({

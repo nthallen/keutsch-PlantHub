@@ -1,4 +1,4 @@
-function pplanttmtd(varargin);
+function pplanttmtd(varargin)
 % pplanttmtd( [...] );
 % T Mbase T Drift
 h = timeplot({'SysTDrift'}, ...

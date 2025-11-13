@@ -1,4 +1,4 @@
-function fig = gplantsws(varargin);
+function fig = gplantsws(varargin)
 % gplantsws(...)
 % SW Status
 ffig = ne_group(varargin,'SW Status','pplantswssws','pplantswsf');

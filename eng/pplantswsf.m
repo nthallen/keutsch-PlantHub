@@ -1,4 +1,4 @@
-function pplantswsf(varargin);
+function pplantswsf(varargin)
 % pplantswsf( [...] );
 % SW Status Flag
 h = timeplot({'Flag'}, ...
